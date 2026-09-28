@@ -88,17 +88,23 @@ def _get_with_retry(sess: requests.Session, url: str, params: dict | None = None
     for attempt in range(max_retries):
         try:
             resp = sess.get(url, params=params, timeout=timeout)
-            if resp.status_code == 200:
-                return resp
-            if resp.status_code == 404:
-                resp.raise_for_status()
-            if resp.status_code in (429, 500, 502, 503, 504):
-                time.sleep(backoff * (2**attempt))
-                continue
-            resp.raise_for_status()
         except requests.RequestException as e:
             last_exc = e
             time.sleep(backoff * (2**attempt))
+            continue
+
+        if resp.status_code == 200:
+            return resp
+        if resp.status_code == 404:
+            # 404は「そのファイルがそもそも存在しない」ことを意味し、
+            # 待っても解決しない(未来のデータがまだ公開されていない/上場前など)。
+            # リトライする意味が無いので即座に諦める。
+            resp.raise_for_status()
+        if resp.status_code in (429, 500, 502, 503, 504):
+            time.sleep(backoff * (2**attempt))
+            continue
+        resp.raise_for_status()
+
     if last_exc:
         raise last_exc
     raise RuntimeError(f"failed to GET {url} after {max_retries} retries")

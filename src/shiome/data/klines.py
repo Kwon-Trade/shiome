@@ -158,6 +158,10 @@ def download_and_build(market: str, symbols: list[str], interval: str, start: dt
     results = []
     for symbol in tqdm(symbols, desc=f"{market} klines({interval})"):
         r = download_symbol_klines(market, symbol, interval, start, end)
-        r["parquet"] = build_symbol_parquet(market, symbol, interval)
+        out_path = RAW_DIR.parent / "processed" / market / "klines" / interval / f"{symbol}.parquet"
+        if r["downloaded"] > 0 or not out_path.exists():
+            r["parquet"] = build_symbol_parquet(market, symbol, interval)
+        else:
+            r["parquet"] = out_path
         results.append(r)
     return results
