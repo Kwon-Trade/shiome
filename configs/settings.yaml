@@ -1,0 +1,42 @@
+# 「潮目」バックテスト設定
+# 日付・URL・コストなど、ルールに書く前提のパラメータをここに集約する
+
+date_range:
+  start: "2022-01-01"
+  end: null  # null = 実行時点の直近まで
+
+split:
+  rule_building_end: "2024-12-31"   # ここまでが「ルール作り期間」
+  holdout_start: "2025-01-01"       # ここからが「答え合わせ期間」
+
+urls:
+  # data.binance.vision(CDN)とfapi.binance.comはこの実行環境からブロックされているため、
+  # 同じ実体であるS3バケットへ直接アクセスする(ファンディングレートもS3の一括データを使う)。
+  vision_base: "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision"
+  vision_bucket_listing: "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision"
+
+intervals:
+  klines: "1h"
+  futures_metrics_native: "5m"
+
+download:
+  max_workers: 20
+  request_timeout_sec: 30
+  max_retries: 5
+  retry_backoff_sec: 2
+
+cost_model:
+  round_trip_fee_pct: 0.10   # 往復手数料 0.10%
+  # 24h平均出来高(USD)の段階に応じた片道スリッページ上乗せ(%)
+  # 出来高が小さいほど大きく上乗せする
+  slippage_tiers_usd_volume:
+    - {min_usd: 100000000, slippage_pct: 0.02}   # 1億ドル以上
+    - {min_usd: 20000000,  slippage_pct: 0.05}
+    - {min_usd: 5000000,   slippage_pct: 0.10}
+    - {min_usd: 1000000,   slippage_pct: 0.25}
+    - {min_usd: 0,         slippage_pct: 0.50}    # それ未満
+
+validation:
+  min_sample_size: 30          # これ未満は「判定保留」
+  horizons_hours: [4, 24, 72]
+  random_symbol_split_seed: 42

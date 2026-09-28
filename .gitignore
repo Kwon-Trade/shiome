@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# raw & processed market data (large, regenerable via scripts)
+/data/
+/state/
+
+# local scratch
+*.log
+.DS_Store
