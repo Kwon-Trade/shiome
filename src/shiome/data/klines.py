@@ -124,6 +124,12 @@ def read_kline_zip(path: Path) -> pd.DataFrame:
     if has_header:
         df.columns = [c.strip().lower().replace(" ", "_") for c in df.columns]
         df = df.rename(columns=HEADER_RENAME_MAP)
+    # 2025年頃から一部(特に現物)のファイルはopen_time/close_timeがマイクロ秒単位になっている。
+    # ミリ秒基準に統一する(ミリ秒なら西暦3000年でも1e13程度に収まるはずなので、それを超えたら1000で割る)。
+    for col in ("open_time", "close_time"):
+        too_large = df[col] > 1e14
+        if too_large.any():
+            df.loc[too_large, col] = df.loc[too_large, col] // 1000
     return df
 
 
