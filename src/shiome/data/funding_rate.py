@@ -112,7 +112,7 @@ def download_and_build(symbols: list[str], start: dt.date, end: dt.date) -> list
     results = []
     for symbol in tqdm(symbols, desc="funding rate"):
         r = download_symbol_funding_rate(symbol, start, end)
-        out_path = PROCESSED_DIR / "futures_um" / "funding_rate" / f"{symbol}.parquet"
+        out_path = RAW_DIR.parent / "processed" / "futures_um" / "funding_rate" / f"{symbol}.parquet"
         if r["downloaded"] > 0 or not out_path.exists():
             r["parquet"] = build_symbol_parquet(symbol)
         else:
