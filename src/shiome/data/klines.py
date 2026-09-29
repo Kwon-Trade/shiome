@@ -60,27 +60,39 @@ def raw_dir(market: str, symbol: str, interval: str) -> Path:
     return RAW_DIR / market / "klines" / interval / symbol
 
 
-def plan_download_keys(market: str, symbol: str, interval: str, start: dt.date, end: dt.date) -> list[str]:
-    """monthly優先、当月分(まだmonthlyが出ていない分)はdailyで埋める計画を作る。"""
+def plan_download_keys(market: str, remote_symbol: str, interval: str, start: dt.date, end: dt.date) -> list[str]:
+    """monthly優先、当月分(まだmonthlyが出ていない分)はdailyで埋める計画を作る。
+
+    remote_symbolはBinance上の実際のティッカー(例: 現物なら"PEPEUSDT")。
+    """
     today = dt.date.today()
     last_full_month_end = dt.date(today.year, today.month, 1) - dt.timedelta(days=1)
 
     keys: list[str] = []
     for m in month_range(start, min(end, last_full_month_end)):
-        keys.append(monthly_key(market, symbol, interval, m.year, m.month))
+        keys.append(monthly_key(market, remote_symbol, interval, m.year, m.month))
 
     daily_start = max(start, dt.date(today.year, today.month, 1))
     if daily_start <= end:
         for d in day_range(daily_start, end):
-            keys.append(daily_key(market, symbol, interval, d))
+            keys.append(daily_key(market, remote_symbol, interval, d))
 
     return keys
 
 
-def download_symbol_klines(market: str, symbol: str, interval: str, start: dt.date, end: dt.date) -> dict:
-    """1銘柄分のklinesファイルをダウンロード。結果件数を返す(成功/失敗/スキップ)。"""
+def download_symbol_klines(
+    market: str, symbol: str, interval: str, start: dt.date, end: dt.date, remote_symbol: str | None = None
+) -> dict:
+    """1銘柄分のklinesファイルをダウンロード。結果件数を返す(成功/失敗/スキップ)。
+
+    symbol: ローカル保存・結果報告に使う名前(先物のリベース表記など、呼び出し側の基準の名前)。
+    remote_symbol: 実際にBinance上に存在するティッカー。省略時はsymbolと同じ。
+        現物側で「1000PEPEUSDT」のようなリベース銘柄を扱う場合、実際の現物ティッカーは
+        「PEPEUSDT」なので、remote_symbolにそちらを渡す
+        (shiome.data.symbols.futures_to_spot_symbol()で変換できる)。
+    """
     settings = load_settings()
-    keys = plan_download_keys(market, symbol, interval, start, end)
+    keys = plan_download_keys(market, remote_symbol or symbol, interval, start, end)
     dest_dir = raw_dir(market, symbol, interval)
 
     result = {"symbol": symbol, "total": len(keys), "downloaded": 0, "skipped": 0, "failed": []}
@@ -160,10 +172,23 @@ def build_symbol_parquet(market: str, symbol: str, interval: str) -> Path | None
     return out_path
 
 
-def download_and_build(market: str, symbols: list[str], interval: str, start: dt.date, end: dt.date) -> list[dict]:
+def download_and_build(
+    market: str,
+    symbols: list[str],
+    interval: str,
+    start: dt.date,
+    end: dt.date,
+    remote_symbol_map: dict[str, str] | None = None,
+) -> list[dict]:
+    """remote_symbol_map: {ローカル名: Binance上の実際のティッカー} (省略した銘柄はそのまま使う)。
+
+    現物側で「1000PEPEUSDT」のようなリベース銘柄を扱うときに使う。
+    """
+    remote_symbol_map = remote_symbol_map or {}
     results = []
     for symbol in tqdm(symbols, desc=f"{market} klines({interval})"):
-        r = download_symbol_klines(market, symbol, interval, start, end)
+        remote_symbol = remote_symbol_map.get(symbol)
+        r = download_symbol_klines(market, symbol, interval, start, end, remote_symbol=remote_symbol)
         out_path = RAW_DIR.parent / "processed" / market / "klines" / interval / f"{symbol}.parquet"
         if r["downloaded"] > 0 or not out_path.exists():
             r["parquet"] = build_symbol_parquet(market, symbol, interval)

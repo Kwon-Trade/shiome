@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from shiome.config import date_range, ensure_dirs, load_settings, load_symbols  # noqa: E402
 from shiome.data import funding_rate, futures_metrics, klines  # noqa: E402
+from shiome.data.symbols import futures_to_spot_symbol  # noqa: E402
 
 
 def main() -> None:
@@ -32,7 +33,8 @@ def main() -> None:
     print(f"期間: {start} 〜 {end}\n")
 
     print("[1/4] 現物 1時間足klines")
-    r1 = klines.download_and_build("spot", large_cap, interval, start, end)
+    spot_remote_map = {s: futures_to_spot_symbol(s) for s in large_cap if futures_to_spot_symbol(s) != s}
+    r1 = klines.download_and_build("spot", large_cap, interval, start, end, remote_symbol_map=spot_remote_map)
     _print_summary(r1)
 
     print("\n[2/4] 先物(USD-M) 1時間足klines")
