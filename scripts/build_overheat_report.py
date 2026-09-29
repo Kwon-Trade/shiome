@@ -165,6 +165,58 @@ def short_liq_table(res: dict, periods: list[str]) -> str:
 <tbody>{''.join(rows)}</tbody></table></div>"""
 
 
+def pp(v, d: int = 2) -> str:
+    return "—" if v is None or (isinstance(v, float) and np.isnan(v)) else f"{v * 100:+.{d}f}%"
+
+
+def ws(v) -> str:
+    return "—" if v is None or (isinstance(v, float) and np.isnan(v)) else f"{v * 100:.1f}%"
+
+
+def findings_short(res: dict) -> str:
+    v = lambda per, key, k: g(res, "periods", per, "variants", key, k)  # noqa: E731
+    k7 = "1|7d|nostop"
+    items = []
+    items.append(
+        "<strong>「FRが過熱した銘柄をすぐ空売りして7日持つ」は、勝つ回数と負ける回数がほぼ半々で、負けの方が大きい。</strong>"
+        f"勝率 {ws(v('2022-23', k7, 'win'))}(2022〜23)・{ws(v('2024', k7, 'win'))}(2024)、"
+        f"平均の勝ち {pp(v('2022-23', k7, 'avg_win'))}・平均の負け {pp(v('2022-23', k7, 'avg_loss'))}(2022〜23)で、"
+        f"1回あたりの平均損益は {pp(v('2022-23', k7, 'pnl'))}・{pp(v('2024', k7, 'pnl'))}。"
+        f"+30%以上踏み上げられたのは {g(res, 'periods', '2022-23', 'variants', k7, 'squeeze_n')}回({ws(v('2022-23', k7, 'squeeze_rate'))})・"
+        f"{g(res, 'periods', '2024', 'variants', k7, 'squeeze_n')}回({ws(v('2024', k7, 'squeeze_rate'))})で、最大では売値の {pp(v('2022-23', k7, 'mae_max'), 0)} まで上がった例もある。")
+    items.append(
+        "<strong>全銘柄をまんべんなく空売りした場合と比べても、ほとんど差がない。</strong>"
+        f"差は {pp(v('2022-23', k7, 'diff'))}(2022〜23)・{pp(v('2024', k7, 'diff'))}(2024)で、95%の幅はどちらも0をまたぐ。"
+        "「FRが高い銘柄を選んだ」ことによる上乗せは確認できない。")
+    j = g(res, "periods", "2022-23", "n_judgeable", default=0)
+    e2 = g(res, "periods", "2022-23", "n_entry2", default=0)
+    items.append(
+        "<strong>②「失速を確認してから」でも良くならなかった。</strong>"
+        f"2022〜23年は判定できた {j}件のうち {e2}件({e2 / max(j, 1) * 100:.1f}%)で72時間以内に3条件がそろっており、"
+        "条件がゆるく、実際には①を数時間遅らせただけに近い。"
+        f"7日・損切りなしの平均損益は ② {pp(v('2022-23', '2|7d|nostop', 'pnl'))} ・ ① {pp(v('2022-23', k7, 'pnl'))}(2022〜23)。")
+    items.append(
+        "<strong>+15%の損切りは、大きな踏み上げを防ぐが、成績をプラスにはしない。</strong>"
+        f"7日・損切りありの平均損益は {pp(v('2022-23', '1|7d|stop', 'pnl'))}(2022〜23)・{pp(v('2024', '1|7d|stop', 'pnl'))}(2024)。"
+        f"受け取ったFRは1回あたり平均 {pp(v('2022-23', k7, 'fr_recv'))} 程度で、値動きに比べて小さい。")
+    st = lambda per, side, k: g(res, "storm", per, k7, side, k)  # noqa: E731
+    items.append(
+        "<strong>荒れ予報ありのときは、勝ち負けとも大きく、踏み上げも多い(事前の予想どおり)。</strong>"
+        f"7日・損切りなしで、+30%踏み上げの割合は 荒れ予報あり {ws(st('2022-23', 'storm', 'squeeze_rate'))} ・なし {ws(st('2022-23', 'calm', 'squeeze_rate'))}(2022〜23)、"
+        f"{ws(st('2024', 'storm', 'squeeze_rate'))} ・ {ws(st('2024', 'calm', 'squeeze_rate'))}(2024)。"
+        f"平均損益は 荒れ予報あり {pp(st('2022-23', 'storm', 'pnl'))} ・なし {pp(st('2022-23', 'calm', 'pnl'))}(2022〜23)、"
+        f"{pp(st('2024', 'storm', 'pnl'))} ・ {pp(st('2024', 'calm', 'pnl'))}(2024)で、損益の良し悪しは年によって逆になった。")
+    lq = lambda per, side, k: g(res, "liq", per, side, k)  # noqa: E731
+    sq = lambda per, side, k: g(res, "short_liq", per, side, k)  # noqa: E731
+    items.append(
+        "<strong>推定した清算価格帯は、はっきりした差を生まなかった。</strong>"
+        f"下にロングの清算帯が「近い」ときの下げの深さ(平均)は {ws(lq('2022-23', 'near', 'mfe_mean'))}、「遠い」ときは {ws(lq('2022-23', 'far', 'mfe_mean'))}(2022〜23)、"
+        f"{ws(lq('2024', 'near', 'mfe_mean'))}・{ws(lq('2024', 'far', 'mfe_mean'))}(2024)で、予想と違い深くならなかった。"
+        f"すぐ上にショートの清算帯が「多い」ときの+30%踏み上げの割合は {ws(sq('2022-23', 'near', 'squeeze_rate'))}(少ないとき {ws(sq('2022-23', 'far', 'squeeze_rate'))})・"
+        f"2024年は {ws(sq('2024', 'near', 'squeeze_rate'))}({ws(sq('2024', 'far', 'squeeze_rate'))})で、2024年だけやや高い。清算価格帯はあくまで推定。")
+    return "<ul class='key-list'>" + "".join(f"<li>{x}</li>" for x in items) + "</ul>"
+
+
 def main() -> None:
     final = CS_DIR / f"{PREFIX}_final_full.json"
     mode = "final" if final.exists() else "dev"
@@ -198,6 +250,11 @@ def main() -> None:
     <div class="verdict-card {vcls}"><div class="verdict-big">{big}</div>
       <div class="verdict-text"><strong>答え合わせ候補</strong><br>{vtxt}</div></div>
   </header>
+
+  <section>
+    <h2>分かったこと</h2>
+    {findings_short(res) if has_2024 else "<p class='note'>(2024年を含めた計算の後に表示)</p>"}
+  </section>
 
   <section>
     <h2>数字の読み方</h2>
@@ -250,6 +307,32 @@ def main() -> None:
     print("保存:", OUT)
 
 
+def findings_long(res: dict) -> str:
+    v = lambda per, key, k: g(res, "periods", per, "variants", key, k)  # noqa: E731
+    k7, k24 = "1|7d|nostop", "1|24h|nostop"
+    items = []
+    for key, name in ((k24, "すぐ買って24時間"), (k7, "すぐ買って7日")):
+        items.append(
+            f"<strong>「FRが大きくマイナスの銘柄を{name}持つ」</strong>: "
+            f"勝率 {ws(v('2022-23', key, 'win'))}(2022〜23)・{ws(v('2024', key, 'win'))}(2024)、"
+            f"平均の勝ち {pp(v('2022-23', key, 'avg_win'))}・平均の負け {pp(v('2022-23', key, 'avg_loss'))}(2022〜23)、"
+            f"1回あたりの平均損益 {pp(v('2022-23', key, 'pnl'))}・{pp(v('2024', key, 'pnl'))}、"
+            f"全銘柄の平均を買った場合との差 {pp(v('2022-23', key, 'diff'))}・{pp(v('2024', key, 'diff'))}。"
+            f"−30%以上下げたのは {g(res, 'periods', '2022-23', 'variants', key, 'squeeze_n')}回・{g(res, 'periods', '2024', 'variants', key, 'squeeze_n')}回。")
+    j = g(res, "periods", "2022-23", "n_judgeable", default=0)
+    e2 = g(res, "periods", "2022-23", "n_entry2", default=0)
+    items.append(
+        "<strong>②「下げ止まりを確認してから」</strong>: "
+        f"2022〜23年は判定できた {j}件のうち {e2}件({e2 / max(j, 1) * 100:.1f}%)で72時間以内に3条件がそろった。"
+        f"7日・損切りなしの平均損益は ② {pp(v('2022-23', '2|7d|nostop', 'pnl'))}・① {pp(v('2022-23', k7, 'pnl'))}(2022〜23)、"
+        f"② {pp(v('2024', '2|7d|nostop', 'pnl'))}・① {pp(v('2024', k7, 'pnl'))}(2024)。")
+    items.append(
+        "<strong>FRの受け取り</strong>: FRがマイナスなので買い側が受け取る。7日で1回あたり平均 "
+        f"{pp(v('2022-23', k7, 'fr_recv'))}(2022〜23)・{pp(v('2024', k7, 'fr_recv'))}(2024)。FR込みの平均損益は "
+        f"{pp(v('2022-23', k7, 'pnl_fr'))}・{pp(v('2024', k7, 'pnl_fr'))}(候補の判定には使わない参考値)。")
+    return "<ul class='key-list'>" + "".join(f"<li>{x}</li>" for x in items) + "</ul>"
+
+
 def write_long(res: dict, mode: str) -> None:
     has_2024 = mode == "final"
     periods = ["2022", "2023", "2022-23"] + (["2024"] if has_2024 else [])
@@ -275,6 +358,11 @@ def write_long(res: dict, mode: str) -> None:
     <div class="verdict-card {vcls}"><div class="verdict-big">{big}</div>
       <div class="verdict-text"><strong>答え合わせ候補</strong><br>{vtxt}</div></div>
   </header>
+
+  <section>
+    <h2>分かったこと</h2>
+    {findings_long(res) if has_2024 else "<p class='note'>(2024年を含めた計算の後に表示)</p>"}
+  </section>
 
   <section>
     <h2>事前に分かっていたこと</h2>
