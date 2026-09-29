@@ -7,7 +7,7 @@ import pandas as pd
 
 from shiome.config import PROCESSED_DIR, load_settings
 
-HORIZONS = (4, 24, 72)
+HORIZONS = (4, 24, 72, 168)
 
 
 def _cost_pct(volume_usd: float) -> float:
