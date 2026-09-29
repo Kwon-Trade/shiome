@@ -1,0 +1,196 @@
+<title>潮目 過熱ロング</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #F5F6F8; --surface: #FFFFFF; --surface-2: #EEF0F4; --border: #DDE1E8;
+  --fg: #1B1F27; --fg-muted: #63697A; --fg-faint: #9099AA;
+  --accent: #2C4870; --accent-soft: #EAF0FA;
+  --good: #1E7A4C; --good-soft: #E6F5EC;
+  --bad: #B23A2E; --bad-soft: #FBEAE8;
+  --warn: #9A6B12; --warn-soft: #FBF1DE;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161B; --surface: #1B1E26; --surface-2: #21242D; --border: #333846;
+    --fg: #E7E9EE; --fg-muted: #9BA1B0; --fg-faint: #6B7180;
+    --accent: #7FA6DE; --accent-soft: #22304A;
+    --good: #5FBE8B; --good-soft: #16281F;
+    --bad: #E28074; --bad-soft: #2E1B19;
+    --warn: #D9B25E; --warn-soft: #2E2716;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14161B; --surface: #1B1E26; --surface-2: #21242D; --border: #333846;
+  --fg: #E7E9EE; --fg-muted: #9BA1B0; --fg-faint: #6B7180;
+  --accent: #7FA6DE; --accent-soft: #22304A;
+  --good: #5FBE8B; --good-soft: #16281F;
+  --bad: #E28074; --bad-soft: #2E1B19;
+  --warn: #D9B25E; --warn-soft: #2E2716;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  margin: 0; padding: 0 16px; padding-block: 32px;
+}
+.page { max-width: 920px; margin: 0 auto; }
+h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(28px, 5vw, 38px); font-weight: 600; letter-spacing: -0.01em; }
+h2 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+h3 { font-size: 18px; font-weight: 600; }
+h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+p { line-height: 1.7; color: var(--fg); max-width: 68ch; }
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-muted); margin-bottom: 10px;
+}
+header.hero { padding-block: 8px 28px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+.hero-sub { color: var(--fg-muted); margin-top: 10px; font-size: 15px; }
+.verdict-card {
+  background: var(--bad-soft); border: 1px solid var(--bad);
+  border-radius: 12px; padding: 22px 24px; margin-top: 20px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 20px;
+}
+.verdict-big { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 700; color: var(--bad); }
+.verdict-text { flex: 1; min-width: 240px; color: var(--fg); line-height: 1.7; }
+.verdict-text strong { color: var(--fg); }
+.stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0 32px; }
+.stat-tile {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 18px; flex: 1; min-width: 140px;
+}
+.stat-tile .label { font-size: 12px; color: var(--fg-muted); margin-bottom: 4px; }
+.stat-tile .value { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+section { margin-bottom: 40px; }
+section > p.lede { color: var(--fg-muted); margin-top: -4px; margin-bottom: 18px; }
+.group-block {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px; margin-bottom: 20px;
+}
+.group-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.n-sym { color: var(--fg-muted); font-size: 14px; font-weight: 400; font-family: 'IBM Plex Sans', sans-serif; }
+.group-verdict { font-size: 14px; color: var(--fg-muted); font-family: 'IBM Plex Mono', monospace; }
+.group-verdict strong { color: var(--fg); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 720px; }
+thead th {
+  text-align: left; font-weight: 600; color: var(--fg-muted); font-size: 11.5px;
+  text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+}
+tbody td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+td.num { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.center { text-align: center; }
+.vs { display: block; font-size: 11px; color: var(--fg-faint); }
+.phase-name { font-weight: 600; }
+.phase-dir { font-size: 12px; color: var(--fg-muted); margin-top: 2px; }
+.badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; }
+.badge-fail { background: var(--bad-soft); color: var(--bad); }
+.badge-pending { background: var(--warn-soft); color: var(--warn); }
+.badge-pass { background: var(--good-soft); color: var(--good); }
+.badge-no-data { background: var(--surface-2); color: var(--fg-faint); }
+.mini-badge { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 13px; }
+.mini-pass { color: var(--good); }
+.mini-fail { color: var(--bad); }
+.mini-no-data { color: var(--fg-faint); }
+.spotlight { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+.spotlight-chart { width: 100%; height: auto; margin: 12px 0 4px; }
+.gridline { stroke: var(--border); stroke-width: 1; }
+.axis-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; fill: var(--fg-faint); }
+.axis-label-g { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; fill: var(--fg-muted); }
+.bar-baseline { fill: var(--fg-faint); }
+.bar-phase { fill: var(--accent); }
+.bar-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; fill: var(--fg); font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 18px; font-size: 13px; color: var(--fg-muted); margin-top: 6px; }
+.legend-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.sw-baseline { background: var(--fg-faint); }
+.sw-phase { background: var(--accent); }
+.supp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.supp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+.supp-note { font-size: 13px; color: var(--fg-muted); margin: 4px 0 12px; line-height: 1.6; }
+.supp-table { font-size: 13px; min-width: 0; }
+.supp-table th, .supp-table td { padding: 6px 8px; }
+.method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.method-card { background: var(--surface-2); border-radius: 10px; padding: 14px 16px; }
+.method-card .k { font-size: 12px; color: var(--fg-muted); margin-bottom: 4px; }
+.method-card .v { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; }
+.check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.check-list li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.6; }
+.check-icon { color: var(--good); font-weight: 700; flex-shrink: 0; }
+footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--fg-faint); font-size: 12.5px; line-height: 1.8; }
+
+.verdict-card.neutral { background: var(--accent-soft); border-color: var(--accent); }
+.verdict-card.neutral .verdict-big { color: var(--accent); }
+.verdict-card.good { background: var(--good-soft); border-color: var(--good); }
+.verdict-card.good .verdict-big { color: var(--good); }
+.win { font-family: 'IBM Plex Mono', monospace; font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.win.up { color: var(--good); } .win.down { color: var(--bad); } .win.flat { color: var(--fg-muted); }
+.ci { display: block; font-size: 11px; color: var(--fg-faint); font-family: 'IBM Plex Mono', monospace; }
+.pos { color: var(--good); } .neg { color: var(--bad); }
+.hyp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; }
+.hyp-card h3 { margin-bottom: 4px; }
+.hyp-card .sub { color: var(--fg-muted); font-size: 13.5px; margin: 0 0 12px; }
+.hyp-card table { min-width: 680px; }
+.key-list { display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0; list-style: none; }
+.key-list li { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; line-height: 1.7; }
+.read-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 14px; }
+.read-grid > * { min-width: 0; }
+.read-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; line-height: 1.7; font-size: 14px; }
+.read-card strong { display: block; font-size: 15px; margin-bottom: 4px; }
+.tag-cand { background: var(--good-soft); color: var(--good); }
+.tag-no { background: var(--surface-2); color: var(--fg-faint); }
+.period-sep td { border-top: 2px solid var(--border); }
+details summary { cursor: pointer; color: var(--accent); font-size: 14px; margin: 8px 0; }
+.note { font-size: 13px; color: var(--fg-muted); line-height: 1.7; }
+</style>
+<div class="page">
+  <header class="hero">
+    <div class="eyebrow">SHIOME — ラウンドB: H17L 過熱ロング</div>
+    <h1>FRが大きくマイナスの銘柄を買ったら</h1>
+    <p class="hero-sub">H17(過熱ショート)の裏返し。毎日0・8・16時(UTC)に、FR(資金調達率)が全銘柄の下位5%に新しく入った銘柄を買った場合を、「すぐ買う」と「下げ止まりを確認してから買う」で比べた。2022〜23年で形を作り、2024年は1回だけ確認。2025年以降のデータは読み込んでいない。対象 389銘柄。</p>
+    <div class="verdict-card neutral"><div class="verdict-big">0件</div>
+      <div class="verdict-text"><strong>答え合わせ候補</strong><br>8通りのどれも、2022〜23年と2024年の両方で「勝率50%超・コスト込みでプラス・全銘柄平均を買った場合より良い」を満たさなかった。</div></div>
+  </header>
+
+  <section>
+    <h2>分かったこと</h2>
+    <ul class='key-list'><li><strong>「FRが大きくマイナスの銘柄をすぐ買って24時間持つ」</strong>: 勝率 44.9%(2022〜23)・44.3%(2024)、平均の勝ち +4.92%・平均の負け -4.34%(2022〜23)、1回あたりの平均損益 -0.18%・-0.14%、全銘柄の平均を買った場合との差 +0.01%・+0.06%。−30%以上下げたのは 9回・9回。</li><li><strong>「FRが大きくマイナスの銘柄をすぐ買って7日持つ」</strong>: 勝率 44.6%(2022〜23)・45.6%(2024)、平均の勝ち +12.13%・平均の負け -9.79%(2022〜23)、1回あたりの平均損益 -0.02%・+0.21%、全銘柄の平均を買った場合との差 -0.16%・-0.09%。−30%以上下げたのは 159回・222回。</li><li><strong>②「下げ止まりを確認してから」</strong>: 2022〜23年は判定できた 3286件のうち 3198件(97.3%)で72時間以内に3条件がそろった。7日・損切りなしの平均損益は ② +0.03%・① -0.02%(2022〜23)、② +0.33%・① +0.21%(2024)。</li><li><strong>FRの受け取り</strong>: FRがマイナスなので買い側が受け取る。7日で1回あたり平均 +0.36%(2022〜23)・-0.01%(2024)。FR込みの平均損益は +0.34%・+0.20%(候補の判定には使わない参考値)。</li></ul>
+  </section>
+
+  <section>
+    <h2>事前に分かっていたこと</h2>
+    <ul class="key-list">
+      <li>第1ラウンドの局面③「ショート踏み上げ準備」(価格が横ばい〜下落 + 建玉が増加 + FRがマイナス + 現物CVDが上昇 → 上がると予想)は不合格だった。
+      24時間後の方向的中率は、2022〜2024年で51.7〜52.9%、2025年以降で47.1〜53.2%。どれもコストを上回らなかった。</li>
+      <li>この判定は2025年以降のデータで行ったため、H17L を2025年以降で答え合わせしても、似た局面の成績をすでに一部見ていることになる。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>8通りの結果(全銘柄)</h2>
+    <p class="lede">候補の条件: 2022〜23年と2024年の両方で、件数30件以上・勝率50%超・平均損益(コスト込み、FRは含めない)がプラス・全銘柄平均を買った場合との差がプラス。最大逆行は、買った値段から最も下がった幅。FR込みは、FRがマイナスのときに買い側が受け取る分を足した参考値。</p>
+    <div class="table-wrap"><table>
+<thead><tr><th>入り方</th><th>年</th><th>件数</th><th>勝率</th><th>平均の勝ち / 負け</th><th>平均損益<span class='vs'>コスト込み</span></th>
+<th>FR込み</th><th>全銘柄平均を<br>買った場合との差</th><th>最大逆行<span class='vs'>平均 / 中央値 / 最大</span></th><th>−30%以上<br>の下げ</th><th>候補</th></tr></thead>
+<tbody><tr class='period-sep'><td>① すぐ買う<span class='vs'>24時間持つ・損切りなし</span></td><td>2022</td><td class='num'>1501</td><td class='num'><span class='win down'>45.4%</span></td><td class='num'><span class='pos'>+5.22%</span> / <span class='neg'>-5.12%</span></td><td class='num'><span class='neg'>-0.43%</span><span class='ci'>-1.30〜+0.30%</span></td><td class='num'><span class='neg'>-0.31%</span></td><td class='num'><span class='pos'>+0.09%</span><span class='ci'>-0.28〜+0.45%</span></td><td class='num'><span class='pos'>+5.2%</span> / <span class='pos'>+3.8%</span> / <span class='pos'>+50%</span></td><td class='num'>7<span class='ci'>0.5%</span></td><td class='center'><span class='badge tag-no'>—</span></td></tr><tr><td></td><td>2023</td><td class='num'>1831</td><td class='num'><span class='win down'>44.6%</span></td><td class='num'><span class='pos'>+4.67%</span> / <span class='neg'>-3.72%</span></td><td class='num'><span class='pos'>+0.02%</span><span class='ci'>-0.38〜+0.41%</span></td><td class='num'><span class='pos'>+0.10%</span></td><td class='num'><span class='neg'>-0.05%</span><span class='ci'>-0.34〜+0.21%</span></td><td class='num'><span class='pos'>+4.1%</span> / <span class='pos'>+2.9%</span> / <span class='pos'>+38%</span></td><td class='num'>2<span class='ci'>0.1%</span></td><td class='center'></td></tr><tr><td></td><td>2022〜23</td><td class='num'>3332</td><td class='num'><span class='win down'>44.9%</span></td><td class='num'><span class='pos'>+4.92%</span> / <span class='neg'>-4.34%</span></td><td class='num'><span class='neg'>-0.18%</span><span class='ci'>-0.63〜+0.24%</span></td><td class='num'><span class='neg'>-0.09%</span></td><td class='num'><span class='pos'>+0.01%</span><span class='ci'>-0.22〜+0.25%</span></td><td class='num'><span class='pos'>+4.6%</span> / <span class='pos'>+3.3%</span> / <span class='pos'>+50%</span></td><td class='num'>9<span class='ci'>0.3%</span></td><td class='center'></td></tr><tr><td></td><td>2024(確認)</td><td class='num'>3021</td><td class='num'><span class='win down'>44.3%</span></td><td class='num'><span class='pos'>+5.30%</span> / <span class='neg'>-4.47%</span></td><td class='num'><span class='neg'>-0.14%</span><span class='ci'>-0.70〜+0.43%</span></td><td class='num'><span class='neg'>-0.09%</span></td><td class='num'><span class='pos'>+0.06%</span><span class='ci'>-0.18〜+0.32%</span></td><td class='num'><span class='pos'>+5.2%</span> / <span class='pos'>+3.9%</span> / <span class='pos'>+37%</span></td><td class='num'>9<span class='ci'>0.3%</span></td><td class='center'></td></tr><tr class='period-sep'><td>① すぐ買う<span class='vs'>24時間持つ・−15%で損切り</span></td><td>2022</td><td class='num'>1501</td><td class='num'><span class='win down'>45.1%</span></td><td class='num'><span class='pos'>+5.15%</span> / <span class='neg'>-5.06%</span></td><td class='num'><span class='neg'>-0.45%</span><span class='ci'>-1.30〜+0.29%</span></td><td class='num'><span class='neg'>-0.34%</span></td><td class='num'><span class='pos'>+0.07%</span><span class='ci'>-0.27〜+0.43%</span></td><td class='num'><span class='pos'>+5.0%</span> / <span class='pos'>+3.8%</span> / <span class='pos'>+35%</span></td><td class='num'>1<span class='ci'>0.1%</span></td><td class='center'><span class='badge tag-no'>—</span></td></tr><tr><td></td><td>2023</td><td class='num'>1831</td><td class='num'><span class='win down'>44.5%</span></td><td class='num'><span class='pos'>+4.67%</span> / <span class='neg'>-3.84%</span></td><td class='num'><span class='neg'>-0.05%</span><span class='ci'>-0.46〜+0.35%</span></td><td class='num'><span class='pos'>+0.02%</span></td><td class='num'><span class='neg'>-0.10%</span><span class='ci'>-0.37〜+0.17%</span></td><td class='num'><span class='pos'>+4.1%</span> / <span class='pos'>+2.9%</span> / <span class='pos'>+28%</span></td><td class='num'>0<span class='ci'>0.0%</span></td><td class='center'></td></tr><tr><td></td><td>2022〜23</td><td class='num'>3332</td><td class='num'><span class='win down'>44.7%</span></td><td class='num'><span class='pos'>+4.89%</span> / <span class='neg'>-4.38%</span></td><td class='num'><span class='neg'>-0.23%</span><span class='ci'>-0.66〜+0.18%</span></td><td class='num'><span class='neg'>-0.14%</span></td><td class='num'><span class='neg'>-0.02%</span><span class='ci'>-0.24〜+0.21%</span></td><td class='num'><span class='pos'>+4.5%</span> / <span class='pos'>+3.3%</span> / <span class='pos'>+35%</span></td><td class='num'>1<span class='ci'>0.0%</span></td><td class='center'></td></tr><tr><td></td><td>2024(確認)</td><td class='num'>3021</td><td class='num'><span class='win down'>44.1%</span></td><td class='num'><span class='pos'>+5.27%</span> / <span class='neg'>-4.70%</span></td><td class='num'><span class='neg'>-0.30%</span><span class='ci'>-0.86〜+0.26%</span></td><td class='num'><span class='neg'>-0.25%</span></td><td class='num'><span class='neg'>-0.01%</span><span class='ci'>-0.24〜+0.24%</span></td><td class='num'><span class='pos'>+5.1%</span> / <span class='pos'>+3.9%</span> / <span class='pos'>+33%</span></td><td class='num'>3<span class='ci'>0.1%</span></td><td class='center'></td></tr><tr class='period-sep'><td>① すぐ買う<span class='vs'>7日持つ・損切りなし</span></td><td>2022</td><td class='num'>1501</td><td class='num'><span class='win down'>41.2%</span></td><td class='num'><span class='pos'>+12.75%</span> / <span class='neg'>-11.65%</span></td><td class='num'><span class='neg'>-1.60%</span><span class='ci'>-4.47〜+1.00%</span></td><td class='num'><span class='neg'>-1.14%</span></td><td class='num'><span class='neg'>-0.08%</span><span class='ci'>-0.91〜+0.71%</span></td><td class='num'><span class='pos'>+13.0%</span> / <span class='pos'>+10.3%</span> / <span class='pos'>+100%</span></td><td class='num'>108<span class='ci'>7.2%</span></td><td class='center'><span class='badge tag-no'>—</span></td></tr><tr><td></td><td>2023</td><td class='num'>1831</td><td class='num'><span class='win down'>47.4%</span></td><td class='num'><span class='pos'>+11.68%</span> / <span class='neg'>-8.09%</span></td><td class='num'><span class='pos'>+1.27%</span><span class='ci'>-0.80〜+3.34%</span></td><td class='num'><span class='pos'>+1.55%</span></td><td class='num'><span class='neg'>-0.23%</span><span class='ci'>-0.83〜+0.43%</span></td><td class='num'><span class='pos'>+9.7%</span> / <span class='pos'>+7.7%</span> / <span class='pos'>+65%</span></td><td class='num'>51<span class='ci'>2.8%</span></td><td class='center'></td></tr><tr><td></td><td>2022〜23</td><td class='num'>3332</td><td class='num'><span class='win down'>44.6%</span></td><td class='num'><span class='pos'>+12.13%</span> / <span class='neg'>-9.79%</span></td><td class='num'><span class='neg'>-0.02%</span><span class='ci'>-1.66〜+1.78%</span></td><td class='num'><span class='pos'>+0.34%</span></td><td class='num'><span class='neg'>-0.16%</span><span class='ci'>-0.69〜+0.37%</span></td><td class='num'><span class='pos'>+11.2%</span> / <span class='pos'>+8.7%</span> / <span class='pos'>+100%</span></td><td class='num'>159<span class='ci'>4.8%</span></td><td class='center'></td></tr><tr><td></td><td>2024(確認)</td><td class='num'>2974</td><td class='num'><span class='win down'>45.6%</span></td><td class='num'><span class='pos'>+13.71%</span> / <span class='neg'>-11.08%</span></td><td class='num'><span class='pos'>+0.21%</span><span class='ci'>-2.37〜+2.76%</span></td><td class='num'><span class='pos'>+0.20%</span></td><td class='num'><span class='neg'>-0.09%</span><span class='ci'>-0.72〜+0.48%</span></td><td class='num'><span class='pos'>+13.0%</span> / <span class='pos'>+10.4%</span> / <span class='pos'>+76%</span></td><td class='num'>222<span class='ci'>7.5%</span></td><td class='center'></td></tr><tr class='period-sep'><td>① すぐ買う<span class='vs'>7日持つ・−15%で損切り</span></td><td>2022</td><td class='num'>1501</td><td class='num'><span class='win down'>38.2%</span></td><td class='num'><span class='pos'>+12.86%</span> / <span class='neg'>-10.27%</span></td><td class='num'><span class='neg'>-1.43%</span><span class='ci'>-3.72〜+0.64%</span></td><td class='num'><span class='neg'>-1.08%</span></td><td class='num'><span class='neg'>-0.06%</span><span class='ci'>-0.70〜+0.65%</span></td><td class='num'><span class='pos'>+10.1%</span> / <span class='pos'>+10.3%</span> / <span class='pos'>+36%</span></td><td class='num'>2<span class='ci'>0.1%</span></td><td class='center'><span class='badge tag-no'>—</span></td></tr><tr><td></td><td>2023</td><td class='num'>1831</td><td class='num'><span class='win down'>45.7%</span></td><td class='num'><span class='pos'>+11.83%</span> / <span class='neg'>-8.62%</span></td><td class='num'><span class='pos'>+0.73%</span><span class='ci'>-1.31〜+2.75%</span></td><td class='num'><span class='pos'>+0.98%</span></td><td class='num'><span class='neg'>-0.36%</span><span class='ci'>-0.98〜+0.28%</span></td><td class='num'><span class='pos'>+8.9%</span> / <span class='pos'>+7.7%</span> / <span class='pos'>+47%</span></td><td class='num'>17<span class='ci'>0.9%</span></td><td class='center'></td></tr><tr><td></td><td>2022〜23</td><td class='num'>3332</td><td class='num'><span class='win down'>42.3%</span></td><td class='num'><span class='pos'>+12.25%</span> / <span class='neg'>-9.42%</span></td><td class='num'><span class='neg'>-0.24%</span><span class='ci'>-1.71〜+1.26%</span></td><td class='num'><span class='pos'>+0.05%</span></td><td class='num'><span class='neg'>-0.22%</span><span class='ci'>-0.69〜+0.26%</span></td><td class='num'><span class='pos'>+9.4%</span> / <span class='pos'>+8.7%</span> / <span class='pos'>+47%</span></td><td class='num'>19<span class='ci'>0.6%</span></td><td class='center'></td></tr><tr><td></td><td>2024(確認)</td><td class='num'>2974</td><td class='num'><span class='win down'>41.9%</span></td><td class='num'><span class='pos'>+13.98%</span> / <span class='neg'>-11.03%</span></td><td class='num'><span class='neg'>-0.56%</span><span class='ci'>-2.89〜+1.68%</span></td><td class='num'><span class='neg'>-0.57%</span></td><td class='num'><span class='neg'>-0.23%</span><span class='ci'>-0.80〜+0.27%</span></td><td class='num'><span class='pos'>+10.7%</span> / <span class='pos'>+10.4%</span> / <span class='pos'>+41%</span></td><td class='num'>12<span class='ci'>0.4%</span></td><td class='center'></td></tr><tr class='period-sep'><td>② 下げ止まりを確認してから<span class='vs'>24時間持つ・損切りなし</span></td><td>2022</td><td class='num'>1447</td><td class='num'><span class='win down'>41.2%</span></td><td class='num'><span class='pos'>+4.79%</span> / <span class='neg'>-4.67%</span></td><td class='num'><span class='neg'>-0.78%</span><span class='ci'>-1.61〜-0.03%</span></td><td class='num'><span class='neg'>-0.70%</span></td><td class='num'><span class='neg'>-0.06%</span><span class='ci'>-0.32〜+0.27%</span></td><td class='num'><span class='pos'>+5.0%</span> / <span class='pos'>+3.7%</span> / <span class='pos'>+40%</span></td><td class='num'>6<span class='ci'>0.4%</span></td><td class='center'><span class='badge tag-no'>—</span></td></tr><tr><td></td><td>2023</td><td class='num'>1751</td><td class='num'><span class='win down'>44.9%</span></td><td class='num'><span class='pos'>+4.10%</span> / <span class='neg'>-3.25%</span></td><td class='num'><span class='pos'>+0.05%</span><span class='ci'>-0.34〜+0.48%</span></td><td class='num'><span class='pos'>+0.08%</span></td><td class='num'><span class='neg'>-0.10%</span><span class='ci'>-0.33〜+0.14%</span></td><td class='num'><span class='pos'>+3.7%</span> / <span class='pos'>+2.7%</span> / <span class='pos'>+38%</span></td><td class='num'>1<span class='ci'>0.1%</span></td><td class='center'></td></tr><tr><td></td><td>2022〜23</td><td class='num'>3198</td><td class='num'><span class='win down'>43.2%</span></td><td class='num'><span class='pos'>+4.40%</span> / <span class='neg'>-3.92%</span></td><td class='num'><span class='neg'>-0.32%</span><span class='ci'>-0.72〜+0.08%</span></td><td class='num'><span class='neg'>-0.27%</span></td><td class='num'><span class='neg'>-0.08%</span><span class='ci'>-0.28〜+0.12%</span></td><td class='num'><span class='pos'>+4.3%</span> / <span class='pos'>+3.0%</span> / <span class='pos'>+40%</span></td><td class='num'>7<span class='ci'>0.2%</span></td><td class='center'></td></tr><tr><td></td><td>2024(確認)</td><td class='num'>2650</td><td class='num'><span class='win down'>45.0%</span></td><td class='num'><span class='pos'>+4.51%</span> / <span class='neg'>-4.15%</span></td><td class='num'><span class='neg'>-0.25%</span><span class='ci'>-0.73〜+0.23%</span></td><td class='num'><span class='neg'>-0.24%</span></td><td class='num'><span class='pos'>+0.01%</span><span class='ci'>-0.15〜+0.16%</span></td><td class='num'><span class='pos'>+4.8%</span> / <span class='pos'>+3.7%</span> / <span class='pos'>+39%</span></td><td class='num'>8<span class='ci'>0.3%</span></td><td class='center'></td></tr><tr class='period-sep'><td>② 下げ止まりを確認してから<span class='vs'>24時間持つ・−15%で損切り</span></td><td>2022</td><td class='num'>1447</td><td class='num'><span class='win down'>40.8%</span></td><td class='num'><span class='pos'>+4.66%</span> / <span class='neg'>-4.70%</span></td><td class='num'><span class='neg'>-0.88%</span><span class='ci'>-1.69〜-0.18%</span></td><td class='num'><span class='neg'>-0.80%</span></td><td class='num'><span class='neg'>-0.14%</span><span class='ci'>-0.39〜+0.14%</span></td><td class='num'><span class='pos'>+4.9%</span> / <span class='pos'>+3.7%</span> / <span class='pos'>+34%</span></td><td class='num'>2<span class='ci'>0.1%</span></td><td class='center'><span class='badge tag-no'>—</span></td></tr><tr><td></td><td>2023</td><td class='num'>1751</td><td class='num'><span class='win down'>44.8%</span></td><td class='num'><span class='pos'>+4.10%</span> / <span class='neg'>-3.30%</span></td><td class='num'><span class='pos'>+0.02%</span><span class='ci'>-0.40〜+0.46%</span></td><td class='num'><span class='pos'>+0.05%</span></td><td class='num'><span class='neg'>-0.12%</span><span class='ci'>-0.36〜+0.13%</span></td><td class='num'><span class='pos'>+3.7%</span> / <span class='pos'>+2.7%</span> / <span class='pos'>+38%</span></td><td class='num'>1<span class='ci'>0.1%</span></td><td class='center'></td></tr><tr><td></td><td>2022〜23</td><td class='num'>3198</td><td class='num'><span class='win down'>43.0%</span></td><td class='num'><span class='pos'>+4.34%</span> / <span class='neg'>-3.96%</span></td><td class='num'><span class='neg'>-0.39%</span><span class='ci'>-0.78〜+0.00%</span></td><td class='num'><span class='neg'>-0.34%</span></td><td class='num'><span class='neg'>-0.13%</span><span class='ci'>-0.32〜+0.05%</span></td><td class='num'><span class='pos'>+4.2%</span> / <span class='pos'>+3.0%</span> / <span class='pos'>+38%</span></td><td class='num'>3<span class='ci'>0.1%</span></td><td class='center'></td></tr><tr><td></td><td>2024(確認)</td><td class='num'>2650</td><td class='num'><span class='win down'>44.7%</span></td><td class='num'><span class='pos'>+4.49%</span> / <span class='neg'>-4.40%</span></td><td class='num'><span class='neg'>-0.42%</span><span class='ci'>-0.90〜+0.04%</span></td><td class='num'><span class='neg'>-0.42%</span></td><td class='num'><span class='neg'>-0.08%</span><span class='ci'>-0.23〜+0.07%</span></td><td class='num'><span class='pos'>+4.7%</span> / <span class='pos'>+3.7%</span> / <span class='pos'>+39%</span></td><td class='num'>2<span class='ci'>0.1%</span></td><td class='center'></td></tr><tr class='period-sep'><td>② 下げ止まりを確認してから<span class='vs'>7日持つ・損切りなし</span></td><td>2022</td><td class='num'>1447</td><td class='num'><span class='win down'>42.2%</span></td><td class='num'><span class='pos'>+12.04%</span> / <span class='neg'>-11.33%</span></td><td class='num'><span class='neg'>-1.48%</span><span class='ci'>-4.47〜+1.16%</span></td><td class='num'><span class='neg'>-1.10%</span></td><td class='num'><span class='neg'>-0.10%</span><span class='ci'>-0.80〜+0.60%</span></td><td class='num'><span class='pos'>+12.7%</span> / <span class='pos'>+9.8%</span> / <span class='pos'>+100%</span></td><td class='num'>99<span class='ci'>6.8%</span></td><td class='center'><span class='badge tag-no'>—</span></td></tr><tr><td></td><td>2023</td><td class='num'>1751</td><td class='num'><span class='win down'>47.9%</span></td><td class='num'><span class='pos'>+11.33%</span> / <span class='neg'>-7.94%</span></td><td class='num'><span class='pos'>+1.28%</span><span class='ci'>-0.68〜+3.24%</span></td><td class='num'><span class='pos'>+1.50%</span></td><td class='num'><span class='neg'>-0.20%</span><span class='ci'>-0.84〜+0.45%</span></td><td class='num'><span class='pos'>+9.2%</span> / <span class='pos'>+7.3%</span> / <span class='pos'>+62%</span></td><td class='num'>37<span class='ci'>2.1%</span></td><td class='center'></td></tr><tr><td></td><td>2022〜23</td><td class='num'>3198</td><td class='num'><span class='win down'>45.3%</span></td><td class='num'><span class='pos'>+11.63%</span> / <span class='neg'>-9.56%</span></td><td class='num'><span class='pos'>+0.03%</span><span class='ci'>-1.75〜+1.72%</span></td><td class='num'><span class='pos'>+0.32%</span></td><td class='num'><span class='neg'>-0.16%</span><span class='ci'>-0.61〜+0.30%</span></td><td class='num'><span class='pos'>+10.8%</span> / <span class='pos'>+8.4%</span> / <span class='pos'>+100%</span></td><td class='num'>136<span class='ci'>4.3%</span></td><td class='center'></td></tr><tr><td></td><td>2024(確認)</td><td class='num'>2611</td><td class='num'><span class='win down'>46.8%</span></td><td class='num'><span class='pos'>+13.06%</span> / <span class='neg'>-10.85%</span></td><td class='num'><span class='pos'>+0.33%</span><span class='ci'>-2.22〜+2.87%</span></td><td class='num'><span class='pos'>+0.25%</span></td><td class='num'><span class='neg'>-0.03%</span><span class='ci'>-0.54〜+0.50%</span></td><td class='num'><span class='pos'>+12.5%</span> / <span class='pos'>+10.2%</span> / <span class='pos'>+64%</span></td><td class='num'>186<span class='ci'>7.1%</span></td><td class='center'></td></tr><tr class='period-sep'><td>② 下げ止まりを確認してから<span class='vs'>7日持つ・−15%で損切り</span></td><td>2022</td><td class='num'>1447</td><td class='num'><span class='win down'>39.0%</span></td><td class='num'><span class='pos'>+11.88%</span> / <span class='neg'>-10.15%</span></td><td class='num'><span class='neg'>-1.55%</span><span class='ci'>-3.90〜+0.67%</span></td><td class='num'><span class='neg'>-1.27%</span></td><td class='num'><span class='neg'>-0.18%</span><span class='ci'>-0.71〜+0.41%</span></td><td class='num'><span class='pos'>+10.0%</span> / <span class='pos'>+9.8%</span> / <span class='pos'>+34%</span></td><td class='num'>4<span class='ci'>0.3%</span></td><td class='center'><span class='badge tag-no'>—</span></td></tr><tr><td></td><td>2023</td><td class='num'>1751</td><td class='num'><span class='win down'>46.5%</span></td><td class='num'><span class='pos'>+11.38%</span> / <span class='neg'>-8.42%</span></td><td class='num'><span class='pos'>+0.78%</span><span class='ci'>-1.21〜+2.80%</span></td><td class='num'><span class='pos'>+0.97%</span></td><td class='num'><span class='neg'>-0.44%</span><span class='ci'>-1.15〜+0.24%</span></td><td class='num'><span class='pos'>+8.5%</span> / <span class='pos'>+7.3%</span> / <span class='pos'>+40%</span></td><td class='num'>11<span class='ci'>0.6%</span></td><td class='center'></td></tr><tr><td></td><td>2022〜23</td><td class='num'>3198</td><td class='num'><span class='win down'>43.1%</span></td><td class='num'><span class='pos'>+11.58%</span> / <span class='neg'>-9.26%</span></td><td class='num'><span class='neg'>-0.27%</span><span class='ci'>-1.81〜+1.30%</span></td><td class='num'><span class='neg'>-0.05%</span></td><td class='num'><span class='neg'>-0.32%</span><span class='ci'>-0.74〜+0.10%</span></td><td class='num'><span class='pos'>+9.2%</span> / <span class='pos'>+8.4%</span> / <span class='pos'>+40%</span></td><td class='num'>15<span class='ci'>0.5%</span></td><td class='center'></td></tr><tr><td></td><td>2024(確認)</td><td class='num'>2611</td><td class='num'><span class='win down'>43.1%</span></td><td class='num'><span class='pos'>+13.29%</span> / <span class='neg'>-10.93%</span></td><td class='num'><span class='neg'>-0.49%</span><span class='ci'>-2.74〜+1.75%</span></td><td class='num'><span class='neg'>-0.57%</span></td><td class='num'><span class='neg'>-0.29%</span><span class='ci'>-0.82〜+0.24%</span></td><td class='num'><span class='pos'>+10.3%</span> / <span class='pos'>+10.2%</span> / <span class='pos'>+39%</span></td><td class='num'>9<span class='ci'>0.3%</span></td><td class='center'></td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>②「下げ止まりを確認してから」の様子</h2>
+    <p class="lede">②は、安値更新が6時間止まり・建玉が6時間前より増えておらず・直近6時間の現物の成り行き買いが売りを上回ったときに買う(きっかけから72時間まで)。</p>
+    <div class="table-wrap"><table>
+<thead><tr><th>年</th><th>きっかけ</th><th>②を判定できた</th><th>②で空売りした</th><th>①(②を判定できたものだけ)<span class='vs'>7日・損切りなし: 勝率・平均損益</span></th>
+<th>②が見送ったものを①で売っていたら<span class='vs'>7日・損切りなし</span></th></tr></thead>
+<tbody><tr><td>2022</td><td class='num'>1501</td><td class='num'>1491</td><td class='num'>1447<span class='ci'>見送り 44</span></td><td class='num'><span class='win down'>41.2%</span> ・ <span class='neg'>-1.59%</span></td><td class='num'>44件 ・ <span class='neg'>-4.66%</span></td></tr><tr><td>2023</td><td class='num'>1831</td><td class='num'>1795</td><td class='num'>1751<span class='ci'>見送り 44</span></td><td class='num'><span class='win down'>47.4%</span> ・ <span class='pos'>+1.09%</span></td><td class='num'>44件 ・ <span class='neg'>-1.60%</span></td></tr><tr><td>2022〜23</td><td class='num'>3332</td><td class='num'>3286</td><td class='num'>3198<span class='ci'>見送り 88</span></td><td class='num'><span class='win down'>44.6%</span> ・ <span class='neg'>-0.13%</span></td><td class='num'>88件 ・ <span class='neg'>-3.13%</span></td></tr><tr><td>2024(確認)</td><td class='num'>3025</td><td class='num'>2724</td><td class='num'>2661<span class='ci'>見送り 63</span></td><td class='num'><span class='win down'>45.2%</span> ・ <span class='neg'>-0.04%</span></td><td class='num'>58件 ・ <span class='neg'>-8.74%</span></td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>試した回数</h2>
+    <p>H17L の8通りを加えて、候補判定の対象は41通り(ラウンドA 24 + H17 8 + H2r 1 + H17L 8)。補助分析10通りを含めると51通り。定義と記録は <code>docs/hypotheses_v2.md</code> の H17L の節。</p>
+  </section>
+  <footer>作成: scripts/build_overheat_report.py long ／ 計算: scripts/run_overheat.py --side long(final) ／ 2025年以降のデータは読み込んでいない。</footer>
+</div>
