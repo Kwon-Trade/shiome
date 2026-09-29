@@ -18,7 +18,7 @@ from tqdm import tqdm  # noqa: E402
 from shiome.config import PROCESSED_DIR, load_settings  # noqa: E402
 from shiome.eventstudy.combos import evaluate  # noqa: E402
 from shiome.eventstudy.samples import build_symbol_samples  # noqa: E402
-from shiome.eventstudy.stats import compare_single, group_breakdown  # noqa: E402
+from shiome.eventstudy.stats import compare_single, extremeness_by_year, group_breakdown  # noqa: E402
 from shiome.validation.regroup import historical_volume_groups  # noqa: E402
 
 OUT_DIR = PROCESSED_DIR / "event_study"
@@ -46,6 +46,9 @@ def main() -> None:
 
     print("単独指標の比較(ブロック・ブートストラップ込み)...")
     compare_single(samples).to_parquet(OUT_DIR / "single.parquet", index=False)
+
+    print("極端さ(両端で起きやすいか)の年別比較...")
+    extremeness_by_year(samples).to_parquet(OUT_DIR / "extremeness.parquet", index=False)
 
     print("グループ別の内訳...")
     group_breakdown(samples).to_parquet(OUT_DIR / "by_group.parquet", index=False)

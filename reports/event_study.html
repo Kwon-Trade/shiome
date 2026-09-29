@@ -1,0 +1,297 @@
+<title>潮目 逆引き分析</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #F5F6F8; --surface: #FFFFFF; --surface-2: #EEF0F4; --border: #DDE1E8;
+  --fg: #1B1F27; --fg-muted: #63697A; --fg-faint: #9099AA;
+  --accent: #2C4870; --accent-soft: #EAF0FA;
+  --good: #1E7A4C; --good-soft: #E6F5EC;
+  --bad: #B23A2E; --bad-soft: #FBEAE8;
+  --warn: #9A6B12; --warn-soft: #FBF1DE;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161B; --surface: #1B1E26; --surface-2: #21242D; --border: #333846;
+    --fg: #E7E9EE; --fg-muted: #9BA1B0; --fg-faint: #6B7180;
+    --accent: #7FA6DE; --accent-soft: #22304A;
+    --good: #5FBE8B; --good-soft: #16281F;
+    --bad: #E28074; --bad-soft: #2E1B19;
+    --warn: #D9B25E; --warn-soft: #2E2716;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14161B; --surface: #1B1E26; --surface-2: #21242D; --border: #333846;
+  --fg: #E7E9EE; --fg-muted: #9BA1B0; --fg-faint: #6B7180;
+  --accent: #7FA6DE; --accent-soft: #22304A;
+  --good: #5FBE8B; --good-soft: #16281F;
+  --bad: #E28074; --bad-soft: #2E1B19;
+  --warn: #D9B25E; --warn-soft: #2E2716;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  margin: 0; padding: 0 16px; padding-block: 32px;
+}
+.page { max-width: 920px; margin: 0 auto; }
+h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(28px, 5vw, 38px); font-weight: 600; letter-spacing: -0.01em; }
+h2 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+h3 { font-size: 18px; font-weight: 600; }
+h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+p { line-height: 1.7; color: var(--fg); max-width: 68ch; }
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-muted); margin-bottom: 10px;
+}
+header.hero { padding-block: 8px 28px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+.hero-sub { color: var(--fg-muted); margin-top: 10px; font-size: 15px; }
+.verdict-card {
+  background: var(--bad-soft); border: 1px solid var(--bad);
+  border-radius: 12px; padding: 22px 24px; margin-top: 20px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 20px;
+}
+.verdict-big { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 700; color: var(--bad); }
+.verdict-text { flex: 1; min-width: 240px; color: var(--fg); line-height: 1.7; }
+.verdict-text strong { color: var(--fg); }
+.stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0 32px; }
+.stat-tile {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 18px; flex: 1; min-width: 140px;
+}
+.stat-tile .label { font-size: 12px; color: var(--fg-muted); margin-bottom: 4px; }
+.stat-tile .value { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+section { margin-bottom: 40px; }
+section > p.lede { color: var(--fg-muted); margin-top: -4px; margin-bottom: 18px; }
+.group-block {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px; margin-bottom: 20px;
+}
+.group-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.n-sym { color: var(--fg-muted); font-size: 14px; font-weight: 400; font-family: 'IBM Plex Sans', sans-serif; }
+.group-verdict { font-size: 14px; color: var(--fg-muted); font-family: 'IBM Plex Mono', monospace; }
+.group-verdict strong { color: var(--fg); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 720px; }
+thead th {
+  text-align: left; font-weight: 600; color: var(--fg-muted); font-size: 11.5px;
+  text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+}
+tbody td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+td.num { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.center { text-align: center; }
+.vs { display: block; font-size: 11px; color: var(--fg-faint); }
+.phase-name { font-weight: 600; }
+.phase-dir { font-size: 12px; color: var(--fg-muted); margin-top: 2px; }
+.badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; }
+.badge-fail { background: var(--bad-soft); color: var(--bad); }
+.badge-pending { background: var(--warn-soft); color: var(--warn); }
+.badge-pass { background: var(--good-soft); color: var(--good); }
+.badge-no-data { background: var(--surface-2); color: var(--fg-faint); }
+.mini-badge { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 13px; }
+.mini-pass { color: var(--good); }
+.mini-fail { color: var(--bad); }
+.mini-no-data { color: var(--fg-faint); }
+.spotlight { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+.spotlight-chart { width: 100%; height: auto; margin: 12px 0 4px; }
+.gridline { stroke: var(--border); stroke-width: 1; }
+.axis-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; fill: var(--fg-faint); }
+.axis-label-g { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; fill: var(--fg-muted); }
+.bar-baseline { fill: var(--fg-faint); }
+.bar-phase { fill: var(--accent); }
+.bar-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; fill: var(--fg); font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 18px; font-size: 13px; color: var(--fg-muted); margin-top: 6px; }
+.legend-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.sw-baseline { background: var(--fg-faint); }
+.sw-phase { background: var(--accent); }
+.supp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.supp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+.supp-note { font-size: 13px; color: var(--fg-muted); margin: 4px 0 12px; line-height: 1.6; }
+.supp-table { font-size: 13px; min-width: 0; }
+.supp-table th, .supp-table td { padding: 6px 8px; }
+.method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.method-card { background: var(--surface-2); border-radius: 10px; padding: 14px 16px; }
+.method-card .k { font-size: 12px; color: var(--fg-muted); margin-bottom: 4px; }
+.method-card .v { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; }
+.check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.check-list li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.6; }
+.check-icon { color: var(--good); font-weight: 700; flex-shrink: 0; }
+footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--fg-faint); font-size: 12.5px; line-height: 1.8; }
+
+:root { --hot: #C2542D; --cold: #3F6FB0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --hot: #E07A55; --cold: #6E9BD8; } }
+:root[data-theme="dark"] { --hot: #E07A55; --cold: #6E9BD8; }
+.verdict-card.neutral { background: var(--accent-soft); border-color: var(--accent); }
+.verdict-card.neutral .verdict-big { color: var(--accent); font-size: 30px; }
+.key-list { display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0; list-style: none; }
+.key-list li { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; line-height: 1.7; }
+.key-list li strong { color: var(--fg); }
+.rank-table { min-width: 620px; }
+.lift-table { min-width: 640px; }
+.lift-table td.lift { text-align: center; font-size: 12.5px; padding: 8px 4px; }
+.lift-table th { text-align: center; }
+.lift-table th:first-child, .lift-name { text-align: left; white-space: nowrap; }
+.lift-scale { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--fg-muted); margin-top: 10px; }
+.lift-scale span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+.hyp { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+.hyp h4 { margin-bottom: 6px; }
+.hyp p { margin: 0; font-size: 14px; }
+.hyp .tag { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--fg-muted); letter-spacing: .04em; }
+.warn-icon { color: var(--warn); }
+.hyp-grid, .quad-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 14px; }
+.stack-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+</style>
+
+<div class="page">
+  <header class="hero">
+    <div class="eyebrow">SHIOME — 逆引き分析(イベントスタディ)</div>
+    <h1>急騰・急落の直前に、何が起きていたか</h1>
+    <p class="hero-sub">2022〜2024年(ルール作り期間)だけを使い、各銘柄の24時間値動きで上位5%・下位5%に入った「大イベント」の直前の指標を、普通の時点と比べた。2025年以降のデータは読み込んでいない。</p>
+    <div class="verdict-card neutral">
+      <div class="verdict-big">方向は×・前兆は○</div>
+      <div class="verdict-text">
+        「上がるか下がるか」を事前に教えてくれる指標は見つかりませんでした。一方で、
+        <strong>「これから大きく動く(上か下かは問わない)」前兆</strong>ははっきり見えました。
+        特に小型・ミームでは、FR(資金調達率)の極端さが最も強い前兆でした。
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-tile"><div class="label">対象銘柄</div><div class="value">51銘柄</div></div>
+      <div class="stat-tile"><div class="label">急騰の直前</div><div class="value">5,053件</div></div>
+      <div class="stat-tile"><div class="label">急落の直前</div><div class="value">5,048件</div></div>
+      <div class="stat-tile"><div class="label">普通の時点</div><div class="value">10,099件</div></div>
+    </div>
+  </header>
+
+  <section>
+    <h2>わかったこと</h2>
+    <ul class="key-list">
+      <li><strong>方向を教える指標は無い。</strong>急騰の直前と急落の直前で、どの指標もほぼ同じ方向にずれていました。例えばFRが極端に高いと急騰は約1.7倍、急落も約1.5倍起きやすく、どちらに動くかは分かりません。わずかに方向の手がかりになったのは先物CVD(急騰前にやや買い越し)だけで、差はごく小さいものでした。</li>
+      <li><strong>「大きく動く前兆」は複数ある。</strong>FR(水準・7日平均との差)、建玉の変化率が上下どちらかに極端なとき、上位トレーダー比率差が高いときに、急騰も急落も1.3〜2倍起きやすくなっていました。2022・2023・2024年のどの年でも同じ傾向で、特定の年だけの現象ではありません。</li>
+      <li><strong>最も強い前兆は「直前にすでに荒れていること」。</strong>参考として入れた「過去24時間の値幅」が上位10%のとき、急騰は約2.2倍、急落は約2.0倍でした。荒れた相場はさらに荒れやすい、というよく知られた性質です。デリバティブ指標の多くは、大型・中型ではこれ以上の情報をほとんど足しませんでした。</li>
+      <li><strong>例外は小型・ミームのFR。</strong>小型・ミームでは、FRだけで2024年の見分け精度(AUC)が急騰0.72・急落0.67に達し、値幅だけ(0.67・0.60)を上回りました。逆にFRが普段どおり(真ん中の帯)のときは、大変動が普段の0.3〜0.5倍に減っていました。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>指標ランキング(デリバティブ指標)</h2>
+    <p class="lede">AUCは「イベント直前の値が、普通の時点の値より大きい(または極端な)確率」。0.5なら差なし、0.6なら中程度の差。
+      各指標について「高い/低いと起きやすい」と「両端で起きやすい」の強い方、6・12・24時間前のうち最も差が大きい時点を載せています。
+      「安定」は、週単位で再抽出した95%区間が0.5をまたがない、または3年とも同じ向きに差があることを示します。</p>
+    <div class="stack-grid">
+      <div class="supp-card"><h4>急騰の直前</h4><div class="table-wrap"><table class="rank-table"><thead><tr><th>順位</th><th>指標と形</th><th>時点</th>
+      <th>AUC</th><th>差の強さ</th><th>安定性</th></tr></thead><tbody><tr><td class="num">1</td><td><div class="phase-name">FR(7日平均との差)</div>
+          <div class="phase-dir">両端(高すぎ・低すぎ)で起きやすい</div></td><td class="num">6h前</td>
+          <td class="num">0.585</td><td>強め</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">年別の最小AUC 0.566(3年分)</span></td></tr><tr><td class="num">2</td><td><div class="phase-name">FR(水準)</div>
+          <div class="phase-dir">両端(高すぎ・低すぎ)で起きやすい</div></td><td class="num">6h前</td>
+          <td class="num">0.575</td><td>中</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">年別の最小AUC 0.536(3年分)</span></td></tr><tr><td class="num">3</td><td><div class="phase-name">上位トレーダー比率−全体比率</div>
+          <div class="phase-dir">高いと起きやすい</div></td><td class="num">24h前</td>
+          <td class="num">0.569</td><td>中</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">95%区間 0.547〜0.596</span></td></tr><tr><td class="num">4</td><td><div class="phase-name">建玉の24h変化率</div>
+          <div class="phase-dir">両端(高すぎ・低すぎ)で起きやすい</div></td><td class="num">12h前</td>
+          <td class="num">0.551</td><td>中</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">年別の最小AUC 0.536(3年分)</span></td></tr><tr><td class="num">5</td><td><div class="phase-name">先物と現物の価格差</div>
+          <div class="phase-dir">両端(高すぎ・低すぎ)で起きやすい</div></td><td class="num">6h前</td>
+          <td class="num">0.539</td><td>弱い</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">年別の最小AUC 0.527(3年分)</span></td></tr><tr><td class="num">6</td><td><div class="phase-name">先物CVD(24h買い越し比率)</div>
+          <div class="phase-dir">高いと起きやすい</div></td><td class="num">12h前</td>
+          <td class="num">0.525</td><td>弱い</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">95%区間 0.502〜0.549</span></td></tr><tr><td class="num">7</td><td><div class="phase-name">現物CVD(24h買い越し比率)</div>
+          <div class="phase-dir">高いと起きやすい</div></td><td class="num">6h前</td>
+          <td class="num">0.515</td><td>ほぼ差なし</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">95%区間 0.501〜0.531</span></td></tr></tbody></table></div></div>
+      <div class="supp-card"><h4>急落の直前</h4><div class="table-wrap"><table class="rank-table"><thead><tr><th>順位</th><th>指標と形</th><th>時点</th>
+      <th>AUC</th><th>差の強さ</th><th>安定性</th></tr></thead><tbody><tr><td class="num">1</td><td><div class="phase-name">FR(7日平均との差)</div>
+          <div class="phase-dir">両端(高すぎ・低すぎ)で起きやすい</div></td><td class="num">24h前</td>
+          <td class="num">0.560</td><td>中</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">年別の最小AUC 0.548(3年分)</span></td></tr><tr><td class="num">2</td><td><div class="phase-name">FR(水準)</div>
+          <div class="phase-dir">両端(高すぎ・低すぎ)で起きやすい</div></td><td class="num">24h前</td>
+          <td class="num">0.554</td><td>中</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">年別の最小AUC 0.520(3年分)</span></td></tr><tr><td class="num">3</td><td><div class="phase-name">上位トレーダー比率−全体比率</div>
+          <div class="phase-dir">両端(高すぎ・低すぎ)で起きやすい</div></td><td class="num">24h前</td>
+          <td class="num">0.547</td><td>弱い</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">年別の最小AUC 0.531(2年分)</span></td></tr><tr><td class="num">4</td><td><div class="phase-name">建玉の24h変化率</div>
+          <div class="phase-dir">両端(高すぎ・低すぎ)で起きやすい</div></td><td class="num">24h前</td>
+          <td class="num">0.539</td><td>弱い</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">年別の最小AUC 0.517(3年分)</span></td></tr><tr><td class="num">5</td><td><div class="phase-name">現物CVD(24h買い越し比率)</div>
+          <div class="phase-dir">低いと起きやすい</div></td><td class="num">12h前</td>
+          <td class="num">0.482</td><td>ほぼ差なし</td><td><span class="mini-badge mini-no-data">不安定</span><span class="vs">95%区間 0.465〜0.502</span></td></tr><tr><td class="num">6</td><td><div class="phase-name">先物と現物の価格差</div>
+          <div class="phase-dir">両端(高すぎ・低すぎ)で起きやすい</div></td><td class="num">12h前</td>
+          <td class="num">0.512</td><td>ほぼ差なし</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">年別の最小AUC 0.500(3年分)</span></td></tr><tr><td class="num">7</td><td><div class="phase-name">先物CVD(24h買い越し比率)</div>
+          <div class="phase-dir">高いと起きやすい</div></td><td class="num">6h前</td>
+          <td class="num">0.507</td><td>ほぼ差なし</td><td><span class="mini-badge mini-no-data">不安定</span><span class="vs">95%区間 0.487〜0.529</span></td></tr></tbody></table></div></div>
+    </div>
+    <h3 style="margin-top:24px;margin-bottom:8px;">参考: 価格だけの指標</h3>
+    <div class="stack-grid">
+      <div class="supp-card"><h4>急騰の直前</h4><div class="table-wrap"><table class="rank-table"><thead><tr><th>順位</th><th>指標と形</th><th>時点</th>
+      <th>AUC</th><th>差の強さ</th><th>安定性</th></tr></thead><tbody><tr><td class="num">1</td><td><div class="phase-name">参考: 過去24hの値幅</div>
+          <div class="phase-dir">高いと起きやすい</div></td><td class="num">6h前</td>
+          <td class="num">0.626</td><td>強め</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">95%区間 0.596〜0.653</span></td></tr><tr><td class="num">2</td><td><div class="phase-name">参考: 過去24hの値動き</div>
+          <div class="phase-dir">両端(高すぎ・低すぎ)で起きやすい</div></td><td class="num">6h前</td>
+          <td class="num">0.609</td><td>強め</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">年別の最小AUC 0.604(3年分)</span></td></tr></tbody></table></div></div>
+      <div class="supp-card"><h4>急落の直前</h4><div class="table-wrap"><table class="rank-table"><thead><tr><th>順位</th><th>指標と形</th><th>時点</th>
+      <th>AUC</th><th>差の強さ</th><th>安定性</th></tr></thead><tbody><tr><td class="num">1</td><td><div class="phase-name">参考: 過去24hの値幅</div>
+          <div class="phase-dir">高いと起きやすい</div></td><td class="num">6h前</td>
+          <td class="num">0.592</td><td>強め</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">95%区間 0.559〜0.624</span></td></tr><tr><td class="num">2</td><td><div class="phase-name">参考: 過去24hの値動き</div>
+          <div class="phase-dir">両端(高すぎ・低すぎ)で起きやすい</div></td><td class="num">6h前</td>
+          <td class="num">0.577</td><td>中</td><td><span class="mini-badge mini-pass">安定</span><span class="vs">年別の最小AUC 0.574(3年分)</span></td></tr></tbody></table></div></div>
+    </div>
+  </section>
+
+  <section class="spotlight">
+    <div class="eyebrow">10段階で見た起きやすさ</div>
+    <h2>指標の高さ別に、急騰・急落が何倍起きていたか</h2>
+    <p>各指標を銘柄ごとの過去90日の中での順位で10段階に分け(1=最も低い、10=最も高い)、それぞれの段階で大イベントが普通の時点の何倍起きていたかを示します。1.00が「普通と同じ」。両端が赤く真ん中が青い指標は「極端なときほど大きく動く」形です。</p>
+    <div class="table-wrap"><table class="lift-table"><thead><tr><th>指標(6時間前)</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead>
+      <tbody><tr><td class='lift-name'>FR(水準)<span class='vs'>急騰</span></td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 22%, transparent)">1.32</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 5%, transparent)">1.07</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 9%, transparent)">1.12</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 4%, transparent)">0.95</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 13%, transparent)">0.82</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 24%, transparent)">0.66</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 6%, transparent)">0.91</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 4%, transparent)">0.94</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 2%, transparent)">1.03</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 52%, transparent)">1.75</td></tr><tr><td class='lift-name'>FR(水準)<span class='vs'>急落</span></td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 14%, transparent)">1.20</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 10%, transparent)">1.15</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 3%, transparent)">1.04</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 14%, transparent)">0.80</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 5%, transparent)">0.93</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 15%, transparent)">0.78</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 2%, transparent)">0.97</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 1%, transparent)">0.98</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 4%, transparent)">1.06</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 33%, transparent)">1.47</td></tr><tr><td class='lift-name'>FR(7日平均との差)<span class='vs'>急騰</span></td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 33%, transparent)">1.46</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 14%, transparent)">1.20</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 12%, transparent)">1.16</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 5%, transparent)">0.92</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 14%, transparent)">0.80</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 36%, transparent)">0.49</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 7%, transparent)">0.90</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 5%, transparent)">0.93</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 2%, transparent)">1.03</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 26%, transparent)">1.38</td></tr><tr><td class='lift-name'>FR(7日平均との差)<span class='vs'>急落</span></td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 35%, transparent)">1.50</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 4%, transparent)">1.06</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 6%, transparent)">1.08</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 1%, transparent)">0.99</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 7%, transparent)">0.89</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 27%, transparent)">0.62</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 6%, transparent)">0.92</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 0%, transparent)">1.00</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 1%, transparent)">1.02</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 9%, transparent)">1.13</td></tr><tr><td class='lift-name'>建玉の24h変化率<span class='vs'>急騰</span></td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 29%, transparent)">1.42</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 7%, transparent)">1.10</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 4%, transparent)">1.06</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 1%, transparent)">0.99</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 15%, transparent)">0.78</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 13%, transparent)">0.82</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 7%, transparent)">0.90</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 14%, transparent)">0.81</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 7%, transparent)">0.91</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 21%, transparent)">1.30</td></tr><tr><td class='lift-name'>建玉の24h変化率<span class='vs'>急落</span></td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 17%, transparent)">1.24</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 0%, transparent)">1.01</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 7%, transparent)">0.90</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 13%, transparent)">0.81</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 10%, transparent)">0.86</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 6%, transparent)">0.91</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 2%, transparent)">0.98</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 2%, transparent)">0.97</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 2%, transparent)">1.03</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 23%, transparent)">1.33</td></tr><tr><td class='lift-name'>上位トレーダー比率−全体比率<span class='vs'>急騰</span></td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 13%, transparent)">0.81</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 22%, transparent)">0.69</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 11%, transparent)">0.84</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 2%, transparent)">0.97</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 9%, transparent)">0.87</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 5%, transparent)">1.07</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 2%, transparent)">0.97</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 3%, transparent)">0.96</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 8%, transparent)">1.12</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 32%, transparent)">1.45</td></tr><tr><td class='lift-name'>上位トレーダー比率−全体比率<span class='vs'>急落</span></td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 2%, transparent)">1.03</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 8%, transparent)">0.89</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 6%, transparent)">0.91</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 3%, transparent)">0.95</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 10%, transparent)">0.86</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 8%, transparent)">0.89</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 8%, transparent)">0.88</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 9%, transparent)">0.87</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 7%, transparent)">0.91</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 34%, transparent)">1.49</td></tr><tr><td class='lift-name'>先物CVD<span class='vs'>急騰</span></td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 12%, transparent)">0.82</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 13%, transparent)">0.81</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 2%, transparent)">0.97</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 5%, transparent)">1.07</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 2%, transparent)">0.97</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 2%, transparent)">1.03</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 4%, transparent)">1.06</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 8%, transparent)">1.12</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 7%, transparent)">1.10</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 4%, transparent)">1.05</td></tr><tr><td class='lift-name'>先物CVD<span class='vs'>急落</span></td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 10%, transparent)">0.86</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 1%, transparent)">1.01</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 2%, transparent)">0.98</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 3%, transparent)">1.05</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 1%, transparent)">0.98</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 7%, transparent)">1.10</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 0%, transparent)">1.00</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 5%, transparent)">1.08</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 1%, transparent)">0.99</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 2%, transparent)">0.98</td></tr><tr><td class='lift-name'>[参考] 過去24hの値幅<span class='vs'>急騰</span></td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 36%, transparent)">0.48</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 23%, transparent)">0.67</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 14%, transparent)">0.80</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 18%, transparent)">0.74</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 10%, transparent)">0.86</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 25%, transparent)">0.65</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 6%, transparent)">1.09</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 24%, transparent)">1.35</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 40%, transparent)">1.57</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 70%, transparent)">2.19</td></tr><tr><td class='lift-name'>[参考] 過去24hの値幅<span class='vs'>急落</span></td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 19%, transparent)">0.73</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 19%, transparent)">0.72</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 18%, transparent)">0.74</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 14%, transparent)">0.79</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 6%, transparent)">0.92</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 17%, transparent)">0.76</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 2%, transparent)">1.02</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 17%, transparent)">1.24</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 24%, transparent)">1.34</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 69%, transparent)">1.98</td></tr></tbody></table></div>
+    <div class="lift-scale"><span><i class="sw" style="background: color-mix(in oklab, var(--hot) 60%, transparent)"></i>普通より起きやすい</span>
+      <span><i class="sw" style="background: color-mix(in oklab, var(--cold) 60%, transparent)"></i>普通より起きにくい</span></div>
+    <h3 style="margin-top:22px;margin-bottom:8px;">小型・ミームだけで見たFR</h3>
+    <div class="table-wrap"><table class="lift-table"><thead><tr><th>指標(6時間前)</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead>
+      <tbody><tr><td class='lift-name'>FR(水準)<span class='vs'>急騰</span></td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 69%, transparent)">1.99</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 36%, transparent)">1.52</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 38%, transparent)">1.54</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 2%, transparent)">1.03</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 16%, transparent)">0.77</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 43%, transparent)">0.39</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 1%, transparent)">1.01</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 6%, transparent)">1.08</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 24%, transparent)">1.34</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 70%, transparent)">2.02</td></tr><tr><td class='lift-name'>FR(水準)<span class='vs'>急落</span></td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 57%, transparent)">1.81</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 64%, transparent)">1.92</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 15%, transparent)">1.22</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 12%, transparent)">0.83</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 15%, transparent)">0.79</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 32%, transparent)">0.54</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 7%, transparent)">1.10</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 4%, transparent)">1.06</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 1%, transparent)">1.02</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 51%, transparent)">1.73</td></tr><tr><td class='lift-name'>FR(7日平均との差)<span class='vs'>急騰</span></td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 70%, transparent)">2.07</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 35%, transparent)">1.50</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 21%, transparent)">1.31</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 7%, transparent)">0.90</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 18%, transparent)">0.74</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 52%, transparent)">0.26</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 5%, transparent)">1.07</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 7%, transparent)">1.10</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 28%, transparent)">1.40</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 32%, transparent)">1.46</td></tr><tr><td class='lift-name'>FR(7日平均との差)<span class='vs'>急落</span></td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 64%, transparent)">1.91</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 38%, transparent)">1.54</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 22%, transparent)">1.31</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 8%, transparent)">1.11</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 14%, transparent)">0.80</td><td class="num lift" style="background: color-mix(in oklab, var(--cold) 47%, transparent)">0.33</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 2%, transparent)">1.04</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 17%, transparent)">1.24</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 23%, transparent)">1.33</td><td class="num lift" style="background: color-mix(in oklab, var(--hot) 3%, transparent)">1.05</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>組み合わせのランキング</h2>
+    <p class="lede">2〜3指標の組み合わせを、2022〜2023年のデータで重み付けを決め、2024年のデータで見分け精度(AUC)を測りました。
+      数十通りの組み合わせから「たまたま良く見える」ものを選ばないための手順です(2024年もルール作り期間内)。</p>
+    <div class="quad-grid">
+      <div class="supp-card"><h4>急騰: デリバティブ指標のみ</h4><table class="supp-table"><thead><tr><th>組み合わせ</th><th>時点</th><th>2024年の件数</th><th>AUC</th></tr></thead>
+      <tbody><tr><td>FR水準 + FR差</td><td class='num'>6h前</td><td class='num'>1,806</td><td class='num'>0.611</td></tr><tr><td>FR水準 + FR差 + 上位比率差</td><td class='num'>24h前</td><td class='num'>1,228</td><td class='num'>0.608</td></tr><tr><td>FR水準 + FR差</td><td class='num'>24h前</td><td class='num'>1,806</td><td class='num'>0.606</td></tr><tr><td>建玉変化 + FR水準 + 上位比率差</td><td class='num'>24h前</td><td class='num'>1,143</td><td class='num'>0.605</td></tr><tr><td>FR差</td><td class='num'>6h前</td><td class='num'>1,806</td><td class='num'>0.604</td></tr></tbody></table></div>
+      <div class="supp-card"><h4>急落: デリバティブ指標のみ</h4><table class="supp-table"><thead><tr><th>組み合わせ</th><th>時点</th><th>2024年の件数</th><th>AUC</th></tr></thead>
+      <tbody><tr><td>現物CVD + FR水準 + 上位比率差</td><td class='num'>24h前</td><td class='num'>1,045</td><td class='num'>0.585</td></tr><tr><td>FR水準 + 上位比率差 + 価格差</td><td class='num'>24h前</td><td class='num'>1,045</td><td class='num'>0.581</td></tr><tr><td>FR水準 + FR差</td><td class='num'>24h前</td><td class='num'>1,699</td><td class='num'>0.580</td></tr><tr><td>FR水準 + 上位比率差</td><td class='num'>24h前</td><td class='num'>1,128</td><td class='num'>0.579</td></tr><tr><td>FR水準 + FR差 + 上位比率差</td><td class='num'>24h前</td><td class='num'>1,128</td><td class='num'>0.578</td></tr></tbody></table></div>
+      <div class="supp-card"><h4>急騰: 価格指標も含む</h4><table class="supp-table"><thead><tr><th>組み合わせ</th><th>時点</th><th>2024年の件数</th><th>AUC</th></tr></thead>
+      <tbody><tr><td>FR差 + [参考]値幅</td><td class='num'>6h前</td><td class='num'>1,806</td><td class='num'>0.655</td></tr><tr><td>FR水準 + FR差 + [参考]値幅</td><td class='num'>6h前</td><td class='num'>1,806</td><td class='num'>0.654</td></tr><tr><td>建玉変化 + FR水準 + [参考]値幅</td><td class='num'>6h前</td><td class='num'>1,387</td><td class='num'>0.654</td></tr><tr><td>建玉変化 + FR差 + [参考]値幅</td><td class='num'>6h前</td><td class='num'>1,387</td><td class='num'>0.652</td></tr><tr><td>現物CVD + 建玉変化 + [参考]値幅</td><td class='num'>6h前</td><td class='num'>1,252</td><td class='num'>0.652</td></tr></tbody></table></div>
+      <div class="supp-card"><h4>急落: 価格指標も含む</h4><table class="supp-table"><thead><tr><th>組み合わせ</th><th>時点</th><th>2024年の件数</th><th>AUC</th></tr></thead>
+      <tbody><tr><td>FR水準 + [参考]値動き + [参考]値幅</td><td class='num'>12h前</td><td class='num'>1,700</td><td class='num'>0.620</td></tr><tr><td>現物CVD + [参考]値動き + [参考]値幅</td><td class='num'>12h前</td><td class='num'>1,576</td><td class='num'>0.616</td></tr><tr><td>FR差 + [参考]値動き + [参考]値幅</td><td class='num'>12h前</td><td class='num'>1,699</td><td class='num'>0.614</td></tr><tr><td>[参考]値動き + [参考]値幅</td><td class='num'>12h前</td><td class='num'>1,700</td><td class='num'>0.613</td></tr><tr><td>FR水準 + [参考]値動き + [参考]値幅</td><td class='num'>24h前</td><td class='num'>1,699</td><td class='num'>0.608</td></tr></tbody></table></div>
+    </div>
+    <h3 style="margin-top:24px;margin-bottom:8px;">グループ別: FRは値幅に何を足すか(6時間前・2024年で評価)</h3>
+    <div class="table-wrap"><table><thead><tr><th>グループ</th><th>方向</th><th>値幅のみ</th><th>FR差+FR水準</th><th>値幅+FR差</th><th>FRの上乗せ</th></tr></thead>
+      <tbody><tr><td>大型</td><td>急騰</td><td class='num'>0.625</td><td class='num'>0.582</td><td class='num'>0.627</td><td class='num'>+0.002</td></tr><tr><td>大型</td><td>急落</td><td class='num'>0.618</td><td class='num'>0.538</td><td class='num'>0.617</td><td class='num'>-0.000</td></tr><tr><td>中型アルト</td><td>急騰</td><td class='num'>0.640</td><td class='num'>0.545</td><td class='num'>0.643</td><td class='num'>+0.003</td></tr><tr><td>中型アルト</td><td>急落</td><td class='num'>0.582</td><td class='num'>0.510</td><td class='num'>0.581</td><td class='num'>-0.001</td></tr><tr><td>小型・ミーム</td><td>急騰</td><td class='num'>0.669</td><td class='num'>0.716</td><td class='num'>0.716</td><td class='num'>+0.047</td></tr><tr><td>小型・ミーム</td><td>急落</td><td class='num'>0.600</td><td class='num'>0.674</td><td class='num'>0.643</td><td class='num'>+0.043</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>次に答え合わせへ回す仮説の候補</h2>
+    <p class="lede">どれも「上か下か」ではなく「大きく動くか」を予想する仮説です。売買の方向を決める道具ではなく、ポジションを小さくする・様子を見るといった判断の材料になります。</p>
+    <div class="hyp-grid">
+      <div class="hyp"><div class="tag">候補A・最有力</div><h4>小型・ミームのFR極端 → 大変動</h4>
+        <p>小型・ミームで、FR(水準または7日平均との差)が過去90日の上位10%か下位10%にあるとき、24時間以内に上下どちらかの大変動(上位/下位5%級)が普段の約2倍起きる。</p></div>
+      <div class="hyp"><div class="tag">候補B</div><h4>値幅+FRの「嵐の予報」</h4>
+        <p>全グループで、直前24時間の値幅が上位20%、かつFRが上下10%の極端にあるとき、大変動が起きる率が普段より高い。</p></div>
+      <div class="hyp"><div class="tag">候補C・逆側</div><h4>FR平常 → 静かな相場</h4>
+        <p>FRが過去90日の真ん中あたり(40〜60%)にあるとき、24時間以内の大変動が普段より少ない(小型・ミームでは最も静かな帯で普段の0.3〜0.5倍)。「動かない日」を見分ける仮説。</p></div>
+      <div class="hyp"><div class="tag">候補D・弱い</div><h4>大型・中型のFR上位 → 急騰寄り</h4>
+        <p>大型・中型でFRが上位10%のとき、急騰(約1.6〜1.7倍)の方が急落(約1.3〜1.5倍)より起きやすい。差は小さく、方向の仮説としては最も弱い。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>注意点</h2>
+    <ul class="check-list">
+      <li><span class="check-icon warn-icon">!</span><span>対象は2022〜2024年に180日以上のデータがある51銘柄です。2025年以降に上場した銘柄は含みません。</span></li>
+      <li><span class="check-icon warn-icon">!</span><span>上位トレーダー比率のデータは2023年以降しかなく、この指標だけ件数が少なめです。</span></li>
+      <li><span class="check-icon warn-icon">!</span><span>大きな相場変動は多くの銘柄で同じ週に起きます。p値はその分だけ甘く出るため、判定には週単位の再抽出による区間も使いました。</span></li>
+      <li><span class="check-icon warn-icon">!</span><span>AUC 0.6〜0.7は「外れも多いが、偶然よりは明らかに当たる」程度です。これはまだルール作り期間の中だけの結果で、2025年以降での答え合わせは済んでいません。</span></li>
+    </ul>
+  </section>
+
+  <footer>潮目バックテスト — 逆引き分析。大イベントは銘柄ごとに24時間後の値動きの上位5%・下位5%、始まりの1時間のみ(同じ銘柄・方向は24時間あける)。
+    普通の時点は上位/下位5%以外から銘柄ごとにイベントと同数を無作為抽出。指標は銘柄ごとの過去90日パーセンタイル順位で比較。</footer>
+</div>

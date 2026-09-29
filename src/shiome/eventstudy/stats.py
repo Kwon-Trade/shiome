@@ -106,3 +106,33 @@ def decile_lift(samples: pd.DataFrame, direction: str, feature: str, offset: int
         "event_share": ev_share, "random_share": rd_share,
         "lift": np.where(rd_share > 0, ev_share / np.where(rd_share > 0, rd_share, 1), np.nan),
     })
+
+
+def extremeness_by_year(samples: pd.DataFrame) -> pd.DataFrame:
+    """「中央(50)からのずれの大きさ」で比べたAUCを年ごとに出す。
+
+    高すぎても低すぎても起きやすい(両端で起きやすい)指標は、ずれの大きさで比べると差が出る。
+    年ごとに出すのは、特定の年だけの現象でないか(安定しているか)を確かめるため。
+    """
+    years = pd.to_datetime(samples["open_time"], unit="ms").dt.year
+    rows = []
+    for direction in ("surge", "crash"):
+        for k in OFFSETS:
+            for col, label in ALL_FEATURES:
+                pct = f"{col}__pct__t{k}"
+                row = {"direction": direction, "offset_h": k, "feature": col, "label": label,
+                       "is_reference": col in REFERENCE_COLS}
+                year_aucs = []
+                for y in (None, 2022, 2023, 2024):
+                    mask = np.ones(len(samples), bool) if y is None else (years == y).to_numpy()
+                    sub = samples[mask]
+                    ev = (sub.loc[sub["kind"] == direction, pct] - 50).abs().dropna().to_numpy()
+                    rd = (sub.loc[sub["kind"] == "random", pct] - 50).abs().dropna().to_numpy()
+                    auc = _auc(ev, rd) if len(ev) >= 30 and len(rd) >= 30 else float("nan")
+                    row["auc_all" if y is None else f"auc_{y}"] = auc
+                    if y is not None and not np.isnan(auc):
+                        year_aucs.append(auc)
+                row["min_year_auc"] = min(year_aucs) if year_aucs else float("nan")
+                row["n_years"] = len(year_aucs)
+                rows.append(row)
+    return pd.DataFrame(rows)
