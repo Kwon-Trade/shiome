@@ -1,0 +1,196 @@
+<title>潮目 答え合わせ</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #F5F6F8; --surface: #FFFFFF; --surface-2: #EEF0F4; --border: #DDE1E8;
+  --fg: #1B1F27; --fg-muted: #63697A; --fg-faint: #9099AA;
+  --accent: #2C4870; --accent-soft: #EAF0FA;
+  --good: #1E7A4C; --good-soft: #E6F5EC;
+  --bad: #B23A2E; --bad-soft: #FBEAE8;
+  --warn: #9A6B12; --warn-soft: #FBF1DE;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161B; --surface: #1B1E26; --surface-2: #21242D; --border: #333846;
+    --fg: #E7E9EE; --fg-muted: #9BA1B0; --fg-faint: #6B7180;
+    --accent: #7FA6DE; --accent-soft: #22304A;
+    --good: #5FBE8B; --good-soft: #16281F;
+    --bad: #E28074; --bad-soft: #2E1B19;
+    --warn: #D9B25E; --warn-soft: #2E2716;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14161B; --surface: #1B1E26; --surface-2: #21242D; --border: #333846;
+  --fg: #E7E9EE; --fg-muted: #9BA1B0; --fg-faint: #6B7180;
+  --accent: #7FA6DE; --accent-soft: #22304A;
+  --good: #5FBE8B; --good-soft: #16281F;
+  --bad: #E28074; --bad-soft: #2E1B19;
+  --warn: #D9B25E; --warn-soft: #2E2716;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  margin: 0; padding: 0 16px; padding-block: 32px;
+}
+.page { max-width: 920px; margin: 0 auto; }
+h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(28px, 5vw, 38px); font-weight: 600; letter-spacing: -0.01em; }
+h2 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+h3 { font-size: 18px; font-weight: 600; }
+h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+p { line-height: 1.7; color: var(--fg); max-width: 68ch; }
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-muted); margin-bottom: 10px;
+}
+header.hero { padding-block: 8px 28px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+.hero-sub { color: var(--fg-muted); margin-top: 10px; font-size: 15px; }
+.verdict-card {
+  background: var(--bad-soft); border: 1px solid var(--bad);
+  border-radius: 12px; padding: 22px 24px; margin-top: 20px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 20px;
+}
+.verdict-big { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 700; color: var(--bad); }
+.verdict-text { flex: 1; min-width: 240px; color: var(--fg); line-height: 1.7; }
+.verdict-text strong { color: var(--fg); }
+.stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0 32px; }
+.stat-tile {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 18px; flex: 1; min-width: 140px;
+}
+.stat-tile .label { font-size: 12px; color: var(--fg-muted); margin-bottom: 4px; }
+.stat-tile .value { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+section { margin-bottom: 40px; }
+section > p.lede { color: var(--fg-muted); margin-top: -4px; margin-bottom: 18px; }
+.group-block {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px; margin-bottom: 20px;
+}
+.group-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.n-sym { color: var(--fg-muted); font-size: 14px; font-weight: 400; font-family: 'IBM Plex Sans', sans-serif; }
+.group-verdict { font-size: 14px; color: var(--fg-muted); font-family: 'IBM Plex Mono', monospace; }
+.group-verdict strong { color: var(--fg); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 720px; }
+thead th {
+  text-align: left; font-weight: 600; color: var(--fg-muted); font-size: 11.5px;
+  text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+}
+tbody td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+td.num { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.center { text-align: center; }
+.vs { display: block; font-size: 11px; color: var(--fg-faint); }
+.phase-name { font-weight: 600; }
+.phase-dir { font-size: 12px; color: var(--fg-muted); margin-top: 2px; }
+.badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; }
+.badge-fail { background: var(--bad-soft); color: var(--bad); }
+.badge-pending { background: var(--warn-soft); color: var(--warn); }
+.badge-pass { background: var(--good-soft); color: var(--good); }
+.badge-no-data { background: var(--surface-2); color: var(--fg-faint); }
+.mini-badge { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 13px; }
+.mini-pass { color: var(--good); }
+.mini-fail { color: var(--bad); }
+.mini-no-data { color: var(--fg-faint); }
+.spotlight { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+.spotlight-chart { width: 100%; height: auto; margin: 12px 0 4px; }
+.gridline { stroke: var(--border); stroke-width: 1; }
+.axis-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; fill: var(--fg-faint); }
+.axis-label-g { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; fill: var(--fg-muted); }
+.bar-baseline { fill: var(--fg-faint); }
+.bar-phase { fill: var(--accent); }
+.bar-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; fill: var(--fg); font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 18px; font-size: 13px; color: var(--fg-muted); margin-top: 6px; }
+.legend-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.sw-baseline { background: var(--fg-faint); }
+.sw-phase { background: var(--accent); }
+.supp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.supp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+.supp-note { font-size: 13px; color: var(--fg-muted); margin: 4px 0 12px; line-height: 1.6; }
+.supp-table { font-size: 13px; min-width: 0; }
+.supp-table th, .supp-table td { padding: 6px 8px; }
+.method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.method-card { background: var(--surface-2); border-radius: 10px; padding: 14px 16px; }
+.method-card .k { font-size: 12px; color: var(--fg-muted); margin-bottom: 4px; }
+.method-card .v { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; }
+.check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.check-list li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.6; }
+.check-icon { color: var(--good); font-weight: 700; flex-shrink: 0; }
+footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--fg-faint); font-size: 12.5px; line-height: 1.8; }
+
+.verdict-card.neutral { background: var(--accent-soft); border-color: var(--accent); }
+.verdict-card.neutral .verdict-big { color: var(--accent); }
+.verdict-card.good { background: var(--good-soft); border-color: var(--good); }
+.verdict-card.good .verdict-big { color: var(--good); }
+.win { font-family: 'IBM Plex Mono', monospace; font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.win.up { color: var(--good); } .win.down { color: var(--bad); } .win.flat { color: var(--fg-muted); }
+.ci { display: block; font-size: 11px; color: var(--fg-faint); font-family: 'IBM Plex Mono', monospace; }
+.pos { color: var(--good); } .neg { color: var(--bad); }
+.hyp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; }
+.hyp-card h3 { margin-bottom: 4px; }
+.hyp-card .sub { color: var(--fg-muted); font-size: 13.5px; margin: 0 0 12px; }
+.hyp-card table { min-width: 680px; }
+.key-list { display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0; list-style: none; }
+.key-list li { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; line-height: 1.7; }
+.read-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 14px; }
+.read-grid > * { min-width: 0; }
+.read-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; line-height: 1.7; font-size: 14px; }
+.read-card strong { display: block; font-size: 15px; margin-bottom: 4px; }
+.tag-cand { background: var(--good-soft); color: var(--good); }
+.tag-no { background: var(--surface-2); color: var(--fg-faint); }
+.period-sep td { border-top: 2px solid var(--border); }
+details summary { cursor: pointer; color: var(--accent); font-size: 14px; margin: 8px 0; }
+.note { font-size: 13px; color: var(--fg-muted); line-height: 1.7; }
+</style>
+<div class="page">
+  <header class="hero">
+    <div class="eyebrow">SHIOME — 第2ラウンド 答え合わせ(2025年1月〜2026年8月)</div>
+    <h1>H5 と F1 を、まだ見ていない期間で確かめた</h1>
+    <p class="hero-sub">2022〜2024年で選んだ H5 と、後付けの F1 の2つだけを、2025-01-01〜2026-08-31 の判断日で1回だけ計算した。
+    比較対象は当時 Binance 先物にあった暗号資産 661銘柄(株式・ETF・金属などに連動する先物は除外)。1日あたり平均 305銘柄を比べた。基準を記録したコミット: e39acf1。</p>
+    <div class="verdict-card"><div class="verdict-big">合格 0/2</div>
+      <div class="verdict-text"><strong>どちらも不合格。</strong>順位の上では予想どおりの向きが少し残ったが、H5 はコストを引くと、F1 は差の大きさが偶然と区別できず、事前に決めた合格の条件を満たさなかった。</div></div>
+  </header>
+
+  <section>
+    <h2>H5: 上場30〜90日の銘柄は、古い銘柄より弱い(24時間後)</h2>
+    <p class="lede">古い銘柄を買い・新しい銘柄を売る組み合わせで判定。合格の条件は3つすべて(事前に決めた §7 の条件をそのまま当てはめた)。</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>条件</th><th>答え合わせ(2025〜26)</th><th>参考: 2022〜23</th><th>参考: 2024</th><th>判定</th></tr></thead>
+      <tbody>
+        <tr><td>勝率が50%超</td><td class="num">53.8%</td><td class="num">55.9%</td><td class="num">57.0%</td><td><span class='badge badge-pass'>満たす</span></td></tr>
+        <tr><td>順位の相関がプラス</td><td class="num">+0.024<span class="ci">+0.014〜+0.033</span></td><td class="num">+0.022</td><td class="num">+0.024</td><td><span class='badge badge-pass'>満たす</span></td></tr>
+        <tr><td>コスト込みの差(1日あたり)がプラス</td><td class="num">-0.206%<span class="ci">コスト前 -0.181%</span></td><td class="num">+0.035%</td><td class="num">+0.008%</td><td><span class='badge badge-fail'>満たさない</span></td></tr>
+      </tbody></table></div>
+    <p class="note">勝つ日は多く(53.8%)、順位もわずかに揃ったが、コストを引く前から平均ではマイナス。新しい銘柄がたまに大きく跳ねる日の負けが、小さな勝ちの積み重ねを上回った(2022〜23年の7日・28日後でも見えていた形)。</p>
+  </section>
+
+  <section>
+    <h2>F1: 要注意の銘柄は、残りの銘柄より弱い(24時間後)</h2>
+    <p class="lede">要注意 = 上場90日以内・過去7日の建玉増加率が上位20%・過去24時間の上昇率が上位20% のどれか。買う銘柄から外すふるいとして使うので、コストは引かない。合格の条件は2つとも。</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>条件</th><th>答え合わせ(2025〜26)</th><th>参考: 2022〜24(判定に使わない)</th><th>判定</th></tr></thead>
+      <tbody>
+        <tr><td>残りが勝った日が52%超</td><td class="num">54.1%</td><td class="num">57.7%</td><td><span class='badge badge-pass'>満たす</span></td></tr>
+        <tr><td>平均の差(要注意−残り)の95%区間の上限が0未満</td><td class="num">-0.024%<span class="ci">-0.144%〜+0.107%</span></td><td class="num">-0.117%<span class="ci">-0.179%〜-0.059%</span></td><td><span class='badge badge-fail'>満たさない</span></td></tr>
+      </tbody></table></div>
+    <p class="note">残りの銘柄が勝つ日は多かった(54.1%)が、平均の差は2022〜24年の −0.12%/日 から −0.02%/日 に縮み、95%区間は0をまたいだ。
+    1日あたり平均 128銘柄(うち上場90日以内 39)が要注意になった。
+    参考の7日後: 残りが勝った日 56.5%、平均の差 +0.094%(区間 -0.636%〜+0.922%)。</p>
+  </section>
+
+  <section>
+    <h2>この結果の読み方</h2>
+    <ul class="key-list">
+      <li>第2ラウンドでは、候補判定の対象42通り(補助分析を含めて52通り)を試し、答え合わせにかけたのは H5 と F1 の2つ。どちらも通らなかったので、<strong>このラウンドから「使える」と言える仮説は無い</strong>。</li>
+      <li>「上場して日が浅い銘柄」「建玉や値段が急に増えた銘柄」が他より弱い日が多い、という傾向そのものは2025年以降にも少し残っていた。ただし弱い日の差は小さく、たまに起きる大きな跳ね上がりで帳消しになるため、平均では役に立つほどの差にならなかった。</li>
+      <li>2025年以降のデータは、この2つの答え合わせで使った。同じ期間で別の仮説を確かめると「答えを見てから作った」ことになるため、今後の検証には2026年9月以降の新しいデータが必要になる。</li>
+    </ul>
+  </section>
+  <footer>作成: scripts/build_holdout_v2_report.py ／ 計算: scripts/run_holdout_v2.py run(1回だけ) ／ 条件と記録: docs/hypotheses_v2.md の「答え合わせ」の節</footer>
+</div>
