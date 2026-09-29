@@ -57,15 +57,17 @@ def _spot_volume(symbol: str, open_time: pd.Series) -> pd.Series:
     return pd.Series(open_time.map(vol).values, index=open_time.index)
 
 
-def load_symbol_frame(symbol: str) -> pd.DataFrame | None:
+def load_symbol_frame(symbol: str, include_holdout: bool = False) -> pd.DataFrame | None:
+    """include_holdout=False(既定)では2025年以降を読まない。答え合わせのときだけTrueにする。"""
     path = PROCESSED_DIR / "indicators" / f"{symbol}.parquet"
     if not path.exists():
         return None
     df = pd.read_parquet(path)
-    cutoff_ms = int(_rule_end().timestamp() * 1000)
-    df = df[df["open_time"] < cutoff_ms].reset_index(drop=True)  # 2025年以降は読まない
-    if len(df) < MIN_VALID_HOURS:
-        return None
+    if not include_holdout:
+        cutoff_ms = int(_rule_end().timestamp() * 1000)
+        df = df[df["open_time"] < cutoff_ms].reset_index(drop=True)  # 2025年以降は読まない
+        if len(df) < MIN_VALID_HOURS:
+            return None
 
     fut_vol_24h = df["volume"].astype(float).rolling(24).sum()
     df["fut_taker_ratio_24h"] = df["futures_cvd_chg_24h"] / fut_vol_24h.replace(0, np.nan)
@@ -82,6 +84,16 @@ def load_symbol_frame(symbol: str) -> pd.DataFrame | None:
         df[f"{col}__pct"] = rolling_percentile_rank(df[col])
 
     df["fwd_ret_24h"] = df["close"].shift(-FORWARD_HOURS) / df["close"] - 1
+
+    # 取引が止まっている時間(出来高ゼロ・価格が動かない)を除くための目印。
+    # 上場廃止の前後などに長く続くことがあり、「値動き0%」は本当の結果ではない。
+    # - その時点か直前24時間に出来高ゼロがある: 指標が信頼できないので除外
+    # - その後24時間がまるごと出来高ゼロ: 値動き0%は作られた値なので除外
+    # - 急落してから止まった場合は残す(上場廃止直前の暴落は本物の結果)
+    dead = (df["volume"].astype(float) <= 0).astype(int)
+    dead_before = dead.rolling(FORWARD_HOURS + 1, min_periods=1).max().astype(bool)
+    dead_after = dead[::-1].rolling(FORWARD_HOURS, min_periods=FORWARD_HOURS).sum()[::-1].shift(-1) == FORWARD_HOURS
+    df["tradable"] = ~dead_before & ~dead_after
     return df
 
 
@@ -101,7 +113,7 @@ def build_symbol_samples(symbol: str, group: str, rng: np.random.Generator) -> p
     if df is None:
         return pd.DataFrame()
 
-    valid = df["fwd_ret_24h"].notna()
+    valid = df["fwd_ret_24h"].notna() & df["tradable"]
     if valid.sum() < MIN_VALID_HOURS:
         return pd.DataFrame()
     hi = df.loc[valid, "fwd_ret_24h"].quantile(1 - EVENT_PCT / 100)
