@@ -117,6 +117,48 @@ def flow_table(res: dict, periods: list[str]) -> str:
 <tbody>{''.join(rows)}</tbody></table></div>"""
 
 
+def storm_table(res: dict, periods: list[str]) -> str:
+    rows = []
+    for key in VARIANTS:
+        for j, per in enumerate([x for x in periods if x in ("2022-23", "2024")]):
+            r = g(res, "storm", per, key, default={})
+            for side, name in (("storm", "荒れ予報あり"), ("calm", "なし")):
+                v = g(r, side, default={})
+                first = j == 0 and side == "storm"
+                sep = " class='period-sep'" if first else ""
+                rows.append(
+                    f"<tr{sep}><td>{label(key) if first else ''}</td><td>{PER_LABEL[per] if side == 'storm' else ''}</td><td>{name}</td>"
+                    f"<td class='num'>{g(v, 'n', default=0)}</td><td class='num'>{fmt_win(g(v, 'win'), ci=False)}</td>"
+                    f"<td class='num'>{p(g(v, 'avg_win'))} / {p(g(v, 'avg_loss'))}</td><td class='num'>{p(g(v, 'pnl'))}</td>"
+                    f"<td class='num'>{p(g(v, 'mae_mean'), 1)} / {p(g(v, 'mae_median'), 1)} / {p(g(v, 'mae_max'), 0)}</td>"
+                    f"<td class='num'>{g(v, 'squeeze_n', default=0)}<span class='ci'>{g(v, 'squeeze_rate', default=0) * 100:.1f}%</span></td>"
+                    f"<td class='num'>{p(g(v, 'diff'))}</td></tr>")
+    return f"""<div class="table-wrap"><table>
+<thead><tr><th>入り方</th><th>年</th><th>売る時点</th><th>件数</th><th>勝率</th><th>平均の勝ち / 負け</th><th>平均損益</th>
+<th>最大逆行<span class='vs'>平均 / 中央値 / 最大</span></th><th>+30%<br>踏み上げ</th><th>全銘柄平均との差</th></tr></thead>
+<tbody>{''.join(rows)}</tbody></table></div>"""
+
+
+def short_liq_table(res: dict, periods: list[str]) -> str:
+    rows = []
+    for per in periods:
+        for j, side in enumerate(("near", "far")):
+            v = g(res, "short_liq", per, side, default={})
+            vs = g(res, "short_liq", per, side + "_stop", default={})
+            sep = " class='period-sep'" if j == 0 else ""
+            rows.append(
+                f"<tr{sep}><td>{PER_LABEL[per] if j == 0 else ''}</td><td>{'多い' if side == 'near' else '少ない'}</td>"
+                f"<td class='num'>{g(v, 'n', default=0)}</td>"
+                f"<td class='num'>{g(v, 'squeeze_n', default=0)}<span class='ci'>{g(v, 'squeeze_rate', default=0) * 100:.1f}%</span></td>"
+                f"<td class='num'>{p(g(v, 'mae_mean'), 1)} / {p(g(v, 'mae_median'), 1)}</td>"
+                f"<td class='num'>{g(vs, 'stopped_rate', default=0) * 100:.1f}%</td>"
+                f"<td class='num'>{fmt_win(g(v, 'win'), ci=False)}</td><td class='num'>{p(g(v, 'pnl'))}</td></tr>")
+    return f"""<div class="table-wrap"><table>
+<thead><tr><th>年</th><th>すぐ上のショート清算帯(推定)</th><th>件数</th><th>+30%踏み上げ</th><th>最大逆行<span class='vs'>平均 / 中央値</span></th>
+<th>+15%損切りに<br>かかった割合</th><th>勝率</th><th>平均損益</th></tr></thead>
+<tbody>{''.join(rows)}</tbody></table></div>"""
+
+
 def main() -> None:
     final = CS_DIR / "overheat_final_full.json"
     mode = "final" if final.exists() else "dev"
@@ -176,8 +218,20 @@ def main() -> None:
   </section>
 
   <section>
+    <h2>補助: 荒れ予報あり/なし</h2>
+    <p class="lede">売る時点の直前24時間の値幅が、その銘柄の直近90日の中で上位10%なら「荒れ予報あり」(第1ラウンドで大きな値動きが約2倍起きやすかった条件)。90日分のデータが無い銘柄は分けられないので数えていない。</p>
+    {storm_table(res, periods)}
+  </section>
+
+  <section>
+    <h2>補助: すぐ上にショートの清算帯があると踏み上げられやすいか(推定)</h2>
+    <p class="lede"><strong>ここも推定。</strong>売る前の7日間に建玉が増えた1時間ごとに、同じ量のショート(売り)が入ったとみなし、レバレッジ10倍と20倍が半分ずつと仮定して強制決済される価格を見積もった。売値より上〜+10%以内にある量 ÷ 今の建玉 が2022〜23年の中央値({'—' if np.isnan(res.get('short_liq_threshold', np.nan)) else f"{res.get('short_liq_threshold'):.3f}"})より多いものを「多い」とした。①・7日で比較(損切りにかかった割合は+15%損切りあり版)。10倍・20倍の清算価格は入った価格の+9.5%・+4.5%なので、この数値は「最近、今の価格の近くで建玉が増えたか」とほぼ同じものを測っている可能性がある。</p>
+    {short_liq_table(res, periods)}
+  </section>
+
+  <section>
     <h2>試した回数</h2>
-    <p>候補の判定に使うのは8通り(入り方2 × 持つ期間2 × 損切り2)。ラウンドAの24通りと合わせて32通り。定義と記録は <code>docs/hypotheses_v2.md</code> のラウンドBの節。</p>
+    <p>候補の判定に使うのは8通り(入り方2 × 持つ期間2 × 損切り2)。ラウンドAの24通りと後付けの H2r を合わせて33通り。補助分析(下のロング清算帯・荒れ予報・すぐ上のショート清算帯)の10通りを含めると、見たものは43通り。定義と記録は <code>docs/hypotheses_v2.md</code> のラウンドBの節。</p>
   </section>
   <footer>作成: scripts/build_overheat_report.py ／ 計算: scripts/run_overheat.py({mode}) ／ 2025年以降のデータは読み込んでいない。</footer>
 </div>

@@ -96,6 +96,32 @@ def main() -> None:
         b = b[b["near_liq"].notna()]
         res["liq"][per] = {"near": summarize(b[b["near_liq"] > thr]), "far": summarize(b[b["near_liq"] <= thr])}
 
+    # B10-1: 荒れ予報あり/なし(8通りそれぞれ)
+    res["storm"] = {}
+    for per in PERIOD_LIST[args.mode]:
+        tr = _period(trades, per)
+        r = {}
+        for kind in ("1", "2"):
+            for hz in HOLDS:
+                for stop in (False, True):
+                    sub = tr[(tr["entry_kind"] == kind) & (tr["hold"] == hz) & (tr["stop"] == stop)]
+                    key = f"{kind}|{hz}|{'stop' if stop else 'nostop'}"
+                    r[key] = {"storm": summarize(sub[sub["storm"] == 1.0]), "calm": summarize(sub[sub["storm"] == 0.0]),
+                              "unknown_n": int(sub["storm"].isna().sum())}
+        res["storm"][per] = r
+
+    # B10-2: すぐ上のショート清算帯(推定)。境目は2022〜23年の中央値。①・7日で比べる
+    one7 = trades[(trades["entry_kind"] == "1") & (trades["hold"] == "7d")]
+    thr_s = _period(one7[~one7["stop"]], "2022-23")["near_short_liq"].median()
+    res["short_liq_threshold"] = float(thr_s) if pd.notna(thr_s) else np.nan
+    res["short_liq"] = {}
+    for per in PERIOD_LIST[args.mode]:
+        b = _period(one7, per)
+        b = b[b["near_short_liq"].notna()]
+        near, far = b[b["near_short_liq"] > thr_s], b[b["near_short_liq"] <= thr_s]
+        res["short_liq"][per] = {"near": summarize(near[~near["stop"]]), "far": summarize(far[~far["stop"]]),
+                                 "near_stop": summarize(near[near["stop"]]), "far_stop": summarize(far[far["stop"]])}
+
     out_path.write_text(json.dumps(res, ensure_ascii=False, indent=1, default=float), encoding="utf-8")
     last = PERIOD_LIST[args.mode][-1]
     r = res["periods"][last]

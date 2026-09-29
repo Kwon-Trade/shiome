@@ -18,6 +18,7 @@ from shiome.crosssection.data import (
 from shiome.crosssection.evaluate import one_way_cost
 from shiome.crosssection.groups import assign_groups
 from shiome.crosssection.universe import DEAD_LOOKBACK_HOURS, daily_universe
+from shiome.phases.percentile import rolling_percentile_rank
 
 CHECK_HOURS = (0, 8, 16)
 TOP_PCT = 0.05
@@ -34,6 +35,8 @@ LIQ_LEVERAGES = (10, 20)
 LIQ_MMR = 0.005
 LIQ_BAND = 0.85
 LIQ_LOOKBACK_HOURS = 168
+SHORT_LIQ_BAND = 1.10   # B10-2: 売値の+10%以内
+STORM_PCT = 90          # B10-1: 直前24時間の値幅が、その銘柄の直近90日で上位10%
 
 
 @dataclass
@@ -49,7 +52,8 @@ class Sym:
     oi_at: np.ndarray              # 各「時刻」(=足の開始時刻)より前の最新の建玉。古すぎればNaN
     cvd: np.ndarray                # 現物CVD(1時間ごと)
     fr: pd.DataFrame
-    daily: pd.DataFrame            # daily_universe の結果(t, eligible, adv30_usd)
+    daily: pd.DataFrame
+    range_pct: np.ndarray          # 各足が閉じた時点の「直前24時間の値幅」の百分位(その銘柄の直近90日)            # daily_universe の結果(t, eligible, adv30_usd)
 
     def pos(self, t: pd.Timestamp) -> int:
         """時刻 t に始まる足の位置(範囲外なら -1)。"""
@@ -82,6 +86,7 @@ def load_sym(symbol: str, end: pd.Timestamp, with_oi: bool) -> Sym | None:
     dead = zero.rolling(DEAD_LOOKBACK_HOURS, min_periods=1).max().astype(bool)
     oi = load_open_interest(symbol, end) if with_oi else pd.Series(dtype=float)
     oi = oi[oi > 0]
+    rng = (h["high"].rolling(24, min_periods=24).max() - h["low"].rolling(24, min_periods=24).min()) / h["close"]
     return Sym(
         name=symbol, hours=h.index,
         open=h["open"].to_numpy(), high=h["high"].to_numpy(), low=h["low"].to_numpy(),
@@ -91,6 +96,7 @@ def load_sym(symbol: str, end: pd.Timestamp, with_oi: bool) -> Sym | None:
         cvd=load_spot_cvd(symbol, h.index, end).to_numpy(),
         fr=load_funding_with_interval(symbol, end),
         daily=daily[["t", "symbol", "eligible", "adv30_usd"]],
+        range_pct=rolling_percentile_rank(rng).to_numpy(),
     )
 
 
@@ -176,6 +182,32 @@ def near_liquidation(s: Sym, x: pd.Timestamp) -> float:
     return float(near / oi[-1])
 
 
+def near_short_liquidation(s: Sym, x: pd.Timestamp) -> float:
+    """B10-2: 売値より上〜+10%以内にある「推定」ショート清算量 ÷ 今の建玉。"""
+    px = s.pos(x)
+    if px < LIQ_LOOKBACK_HOURS + 1 or np.isnan(s.oi_at[px]):
+        return np.nan
+    price = s.close[px - 1]
+    idx = np.arange(px - LIQ_LOOKBACK_HOURS, px + 1)
+    oi = s.oi_at[idx]
+    d_oi = np.diff(oi)
+    p_open = s.close[idx[1:] - 1]
+    near = 0.0
+    for lev in LIQ_LEVERAGES:
+        liq = p_open * (1 + 1 / lev - LIQ_MMR)
+        m = (d_oi > 0) & (liq > price) & (liq <= SHORT_LIQ_BAND * price)
+        near += np.nansum(d_oi[m]) / len(LIQ_LEVERAGES)
+    return float(near / oi[-1])
+
+
+def storm_flag(s: Sym, x: pd.Timestamp) -> float:
+    """B10-1: 売る時点で荒れ予報か(1.0/0.0)。90日分そろわなければNaN。"""
+    p = s.pos(x) - 1
+    if p < 0 or np.isnan(s.range_pct[p]):
+        return np.nan
+    return float(s.range_pct[p] >= STORM_PCT)
+
+
 # ---------- 1回の空売り ----------
 def short_trade(s: Sym, x: pd.Timestamp, hold: int, stop: bool, end: pd.Timestamp,
                 market: pd.DataFrame, elig_syms: list[str], adv: float) -> dict | None:
@@ -238,21 +270,25 @@ def run(syms: dict[str, Sym], end: pd.Timestamp) -> tuple[pd.DataFrame, pd.DataF
         s = syms[e.symbol]
         judgeable, t2 = stall_entry(s, e.t0)
         near = near_liquidation(s, e.t0)
+        near_short = near_short_liquidation(s, e.t0)
         ev_rows.append({"t0": e.t0, "symbol": e.symbol, "fr8": e.fr8, "judgeable": judgeable, "entry2": t2,
-                        "near_liq": near, "group": group_of.get((e.t0.floor("D"), e.symbol), "")})
+                        "near_liq": near, "near_short_liq": near_short,
+                        "group": group_of.get((e.t0.floor("D"), e.symbol), "")})
         for entry_kind, x in (("1", e.t0), ("2", t2)):
             if x is None:
                 continue
             day = x.floor("D")
             elig = elig_by_day.get(day, [])
             adv = adv_of.get((day, e.symbol), np.nan)
+            storm = storm_flag(s, x)
             for hz, hold in HOLDS.items():
                 for stop in (False, True):
                     tr = short_trade(s, x, hold, stop, end, market, elig, adv)
                     if tr is None:
                         continue
                     trades.append({"t0": e.t0, "symbol": e.symbol, "entry_kind": entry_kind, "hold": hz,
-                                   "stop": stop, "judgeable": judgeable, "near_liq": near, **tr})
+                                   "stop": stop, "judgeable": judgeable, "near_liq": near,
+                                   "near_short_liq": near_short, "storm": storm, **tr})
     return pd.DataFrame(ev_rows), pd.DataFrame(trades)
 
 
