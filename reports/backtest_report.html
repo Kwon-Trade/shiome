@@ -1,0 +1,561 @@
+<title>潮目 局面検証レポート</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #F5F6F8; --surface: #FFFFFF; --surface-2: #EEF0F4; --border: #DDE1E8;
+  --fg: #1B1F27; --fg-muted: #63697A; --fg-faint: #9099AA;
+  --accent: #2C4870; --accent-soft: #EAF0FA;
+  --good: #1E7A4C; --good-soft: #E6F5EC;
+  --bad: #B23A2E; --bad-soft: #FBEAE8;
+  --warn: #9A6B12; --warn-soft: #FBF1DE;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161B; --surface: #1B1E26; --surface-2: #21242D; --border: #333846;
+    --fg: #E7E9EE; --fg-muted: #9BA1B0; --fg-faint: #6B7180;
+    --accent: #7FA6DE; --accent-soft: #22304A;
+    --good: #5FBE8B; --good-soft: #16281F;
+    --bad: #E28074; --bad-soft: #2E1B19;
+    --warn: #D9B25E; --warn-soft: #2E2716;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14161B; --surface: #1B1E26; --surface-2: #21242D; --border: #333846;
+  --fg: #E7E9EE; --fg-muted: #9BA1B0; --fg-faint: #6B7180;
+  --accent: #7FA6DE; --accent-soft: #22304A;
+  --good: #5FBE8B; --good-soft: #16281F;
+  --bad: #E28074; --bad-soft: #2E1B19;
+  --warn: #D9B25E; --warn-soft: #2E2716;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  margin: 0; padding: 0 16px; padding-block: 32px;
+}
+.page { max-width: 920px; margin: 0 auto; }
+h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(28px, 5vw, 38px); font-weight: 600; letter-spacing: -0.01em; }
+h2 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+h3 { font-size: 18px; font-weight: 600; }
+h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+p { line-height: 1.7; color: var(--fg); max-width: 68ch; }
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-muted); margin-bottom: 10px;
+}
+header.hero { padding-block: 8px 28px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+.hero-sub { color: var(--fg-muted); margin-top: 10px; font-size: 15px; }
+.verdict-card {
+  background: var(--bad-soft); border: 1px solid var(--bad);
+  border-radius: 12px; padding: 22px 24px; margin-top: 20px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 20px;
+}
+.verdict-big { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 700; color: var(--bad); }
+.verdict-text { flex: 1; min-width: 240px; color: var(--fg); line-height: 1.7; }
+.verdict-text strong { color: var(--fg); }
+.stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0 32px; }
+.stat-tile {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 18px; flex: 1; min-width: 140px;
+}
+.stat-tile .label { font-size: 12px; color: var(--fg-muted); margin-bottom: 4px; }
+.stat-tile .value { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+section { margin-bottom: 40px; }
+section > p.lede { color: var(--fg-muted); margin-top: -4px; margin-bottom: 18px; }
+.group-block {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px; margin-bottom: 20px;
+}
+.group-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.n-sym { color: var(--fg-muted); font-size: 14px; font-weight: 400; font-family: 'IBM Plex Sans', sans-serif; }
+.group-verdict { font-size: 14px; color: var(--fg-muted); font-family: 'IBM Plex Mono', monospace; }
+.group-verdict strong { color: var(--fg); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 720px; }
+thead th {
+  text-align: left; font-weight: 600; color: var(--fg-muted); font-size: 11.5px;
+  text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+}
+tbody td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+td.num { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.center { text-align: center; }
+.vs { display: block; font-size: 11px; color: var(--fg-faint); }
+.phase-name { font-weight: 600; }
+.phase-dir { font-size: 12px; color: var(--fg-muted); margin-top: 2px; }
+.badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; }
+.badge-fail { background: var(--bad-soft); color: var(--bad); }
+.badge-pending { background: var(--warn-soft); color: var(--warn); }
+.badge-pass { background: var(--good-soft); color: var(--good); }
+.badge-no-data { background: var(--surface-2); color: var(--fg-faint); }
+.mini-badge { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 13px; }
+.mini-pass { color: var(--good); }
+.mini-fail { color: var(--bad); }
+.mini-no-data { color: var(--fg-faint); }
+.spotlight { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+.spotlight-chart { width: 100%; height: auto; margin: 12px 0 4px; }
+.gridline { stroke: var(--border); stroke-width: 1; }
+.axis-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; fill: var(--fg-faint); }
+.axis-label-g { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; fill: var(--fg-muted); }
+.bar-baseline { fill: var(--fg-faint); }
+.bar-phase { fill: var(--accent); }
+.bar-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; fill: var(--fg); font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 18px; font-size: 13px; color: var(--fg-muted); margin-top: 6px; }
+.legend-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.sw-baseline { background: var(--fg-faint); }
+.sw-phase { background: var(--accent); }
+.supp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.supp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+.supp-note { font-size: 13px; color: var(--fg-muted); margin: 4px 0 12px; line-height: 1.6; }
+.supp-table { font-size: 13px; min-width: 0; }
+.supp-table th, .supp-table td { padding: 6px 8px; }
+.method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.method-card { background: var(--surface-2); border-radius: 10px; padding: 14px 16px; }
+.method-card .k { font-size: 12px; color: var(--fg-muted); margin-bottom: 4px; }
+.method-card .v { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; }
+.check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.check-list li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.6; }
+.check-icon { color: var(--good); font-weight: 700; flex-shrink: 0; }
+footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--fg-faint); font-size: 12.5px; line-height: 1.8; }
+</style>
+
+<div class="page">
+  <header class="hero">
+    <div class="eyebrow">SHIOME — 局面検証レポート</div>
+    <h1>6つの局面ルールは、まだ使えるほどの根拠がない</h1>
+    <p class="hero-sub">2022年〜2024年のデータで作った6つの市場局面ルールを、2025年以降の未知データで答え合わせした結果。</p>
+    <div class="verdict-card">
+      <div class="verdict-big">不合格</div>
+      <div class="verdict-text">
+        大型・中型アルト・小型/ミームのどのグループでも、6局面のうち<strong>2つ以上が合格</strong>という基準に届きませんでした。
+        主指標の24時間後だけでなく、追加で確認した168時間後（7日後）でも同じく<strong>0局面</strong>でした。
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-tile"><div class="label">対象銘柄</div><div class="value">100銘柄</div></div>
+      <div class="stat-tile"><div class="label">検証期間</div><div class="value">2025年〜</div></div>
+      <div class="stat-tile"><div class="label">シグナル件数</div><div class="value">11,511件</div></div>
+      <div class="stat-tile"><div class="label">合格した局面</div><div class="value">0 / 18</div></div>
+    </div>
+  </header>
+
+  <section>
+    <h2>グループ別・局面別 成績表</h2>
+    <p class="lede">
+      「的中率」は局面発生後に予想方向へ動いた割合、「基準」はその銘柄群で無作為な時刻に取引した場合の的中率。
+      「値幅」は方向込みの平均リターンから信頼区間の下限を使って判定し、「コスト」は往復手数料+出来高に応じたスリッページ。
+      判定○は「的中率が統計的にはっきり基準を上回り、かつ値幅がコストを上回る」の両方を満たした場合。
+    </p>
+    
+    <section class="group-block">
+      <div class="group-head">
+        <h3>大型グループ <span class="n-sym">(10銘柄)</span></h3>
+        <div class="group-verdict">合格局面数: <strong>0 / 6</strong>（2以上で合格）</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>局面</th><th>件数</th><th>24h的中率</th><th>24h値幅</th><th>24h判定</th>
+              <th>168h的中率</th><th>168h値幅</th><th>168h判定</th><th>総合判定</th>
+            </tr>
+          </thead>
+          <tbody>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">① 健全な上昇</div>
+            <div class="phase-dir">上昇を予想</div>
+          </td>
+          <td class="num">723</td>
+          <td class="num">51.5%<span class="vs">基準49.7%</span></td>
+          <td class="num">+0.04%<span class="vs">コスト0.15%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">40.7%<span class="vs">基準47.6%</span></td>
+          <td class="num">-1.41%<span class="vs">コスト0.15%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">② 燃料過多の上昇</div>
+            <div class="phase-dir">下落を予想</div>
+          </td>
+          <td class="num">127</td>
+          <td class="num">59.1%<span class="vs">基準50.2%</span></td>
+          <td class="num">+0.34%<span class="vs">コスト0.14%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">62.2%<span class="vs">基準52.4%</span></td>
+          <td class="num">+1.48%<span class="vs">コスト0.14%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">③ ショート踏み上げ準備</div>
+            <div class="phase-dir">上昇を予想</div>
+          </td>
+          <td class="num">507</td>
+          <td class="num">53.2%<span class="vs">基準49.7%</span></td>
+          <td class="num">+0.17%<span class="vs">コスト0.15%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">52.0%<span class="vs">基準47.6%</span></td>
+          <td class="num">+0.29%<span class="vs">コスト0.15%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">④ 天井の売り抜け</div>
+            <div class="phase-dir">下落を予想</div>
+          </td>
+          <td class="num">39</td>
+          <td class="num">53.8%<span class="vs">基準50.2%</span></td>
+          <td class="num">+0.04%<span class="vs">コスト0.15%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">48.7%<span class="vs">基準52.4%</span></td>
+          <td class="num">-0.71%<span class="vs">コスト0.15%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">⑤ 投げ売り後の底打ち</div>
+            <div class="phase-dir">上昇を予想</div>
+          </td>
+          <td class="num">17</td>
+          <td class="num">47.1%<span class="vs">基準49.7%</span></td>
+          <td class="num">+0.51%<span class="vs">コスト0.14%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">70.6%<span class="vs">基準47.6%</span></td>
+          <td class="num">+0.71%<span class="vs">コスト0.14%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-pending">判定保留</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">⑥ 圧縮</div>
+            <div class="phase-dir">方向は予想せず、値幅拡大の有無で評価</div>
+          </td>
+          <td class="num">974</td>
+          <td class="num">29.8%<span class="vs">基準50.0%</span></td>
+          <td class="num">+2.33%<span class="vs">コスト0.15%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">37.5%<span class="vs">基準50.0%</span></td>
+          <td class="num">+7.05%<span class="vs">コスト0.15%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+    <section class="group-block">
+      <div class="group-head">
+        <h3>中型アルトグループ <span class="n-sym">(40銘柄)</span></h3>
+        <div class="group-verdict">合格局面数: <strong>0 / 6</strong>（2以上で合格）</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>局面</th><th>件数</th><th>24h的中率</th><th>24h値幅</th><th>24h判定</th>
+              <th>168h的中率</th><th>168h値幅</th><th>168h判定</th><th>総合判定</th>
+            </tr>
+          </thead>
+          <tbody>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">① 健全な上昇</div>
+            <div class="phase-dir">上昇を予想</div>
+          </td>
+          <td class="num">1,638</td>
+          <td class="num">44.4%<span class="vs">基準47.2%</span></td>
+          <td class="num">+0.13%<span class="vs">コスト0.27%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">38.7%<span class="vs">基準44.2%</span></td>
+          <td class="num">-0.99%<span class="vs">コスト0.28%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">② 燃料過多の上昇</div>
+            <div class="phase-dir">下落を予想</div>
+          </td>
+          <td class="num">282</td>
+          <td class="num">49.3%<span class="vs">基準50.9%</span></td>
+          <td class="num">-1.59%<span class="vs">コスト0.24%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">54.4%<span class="vs">基準54.1%</span></td>
+          <td class="num">-4.17%<span class="vs">コスト0.24%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">③ ショート踏み上げ準備</div>
+            <div class="phase-dir">上昇を予想</div>
+          </td>
+          <td class="num">1,611</td>
+          <td class="num">47.1%<span class="vs">基準47.2%</span></td>
+          <td class="num">+0.03%<span class="vs">コスト0.22%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">44.2%<span class="vs">基準44.2%</span></td>
+          <td class="num">+0.93%<span class="vs">コスト0.22%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">④ 天井の売り抜け</div>
+            <div class="phase-dir">下落を予想</div>
+          </td>
+          <td class="num">124</td>
+          <td class="num">57.3%<span class="vs">基準50.9%</span></td>
+          <td class="num">-0.22%<span class="vs">コスト0.17%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">50.0%<span class="vs">基準54.1%</span></td>
+          <td class="num">-1.96%<span class="vs">コスト0.17%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">⑤ 投げ売り後の底打ち</div>
+            <div class="phase-dir">上昇を予想</div>
+          </td>
+          <td class="num">58</td>
+          <td class="num">44.8%<span class="vs">基準47.2%</span></td>
+          <td class="num">-3.09%<span class="vs">コスト0.22%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">31.0%<span class="vs">基準44.2%</span></td>
+          <td class="num">-5.26%<span class="vs">コスト0.22%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">⑥ 圧縮</div>
+            <div class="phase-dir">方向は予想せず、値幅拡大の有無で評価</div>
+          </td>
+          <td class="num">3,220</td>
+          <td class="num">25.9%<span class="vs">基準50.0%</span></td>
+          <td class="num">+3.54%<span class="vs">コスト0.32%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">29.6%<span class="vs">基準50.0%</span></td>
+          <td class="num">+11.07%<span class="vs">コスト0.32%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+    <section class="group-block">
+      <div class="group-head">
+        <h3>小型・ミームグループ <span class="n-sym">(50銘柄)</span></h3>
+        <div class="group-verdict">合格局面数: <strong>0 / 6</strong>（2以上で合格）</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>局面</th><th>件数</th><th>24h的中率</th><th>24h値幅</th><th>24h判定</th>
+              <th>168h的中率</th><th>168h値幅</th><th>168h判定</th><th>総合判定</th>
+            </tr>
+          </thead>
+          <tbody>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">① 健全な上昇</div>
+            <div class="phase-dir">上昇を予想</div>
+          </td>
+          <td class="num">644</td>
+          <td class="num">44.1%<span class="vs">基準43.4%</span></td>
+          <td class="num">+0.18%<span class="vs">コスト0.44%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">40.7%<span class="vs">基準40.4%</span></td>
+          <td class="num">+0.41%<span class="vs">コスト0.44%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">② 燃料過多の上昇</div>
+            <div class="phase-dir">下落を予想</div>
+          </td>
+          <td class="num">87</td>
+          <td class="num">59.8%<span class="vs">基準47.8%</span></td>
+          <td class="num">-0.54%<span class="vs">コスト0.31%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">57.5%<span class="vs">基準51.2%</span></td>
+          <td class="num">-11.72%<span class="vs">コスト0.31%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">③ ショート踏み上げ準備</div>
+            <div class="phase-dir">上昇を予想</div>
+          </td>
+          <td class="num">371</td>
+          <td class="num">47.4%<span class="vs">基準43.4%</span></td>
+          <td class="num">-0.49%<span class="vs">コスト0.31%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">43.8%<span class="vs">基準40.4%</span></td>
+          <td class="num">-0.92%<span class="vs">コスト0.30%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">④ 天井の売り抜け</div>
+            <div class="phase-dir">下落を予想</div>
+          </td>
+          <td class="num">19</td>
+          <td class="num">52.6%<span class="vs">基準47.8%</span></td>
+          <td class="num">+0.97%<span class="vs">コスト0.22%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">57.9%<span class="vs">基準51.2%</span></td>
+          <td class="num">-32.61%<span class="vs">コスト0.22%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-pending">判定保留</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">⑤ 投げ売り後の底打ち</div>
+            <div class="phase-dir">上昇を予想</div>
+          </td>
+          <td class="num">38</td>
+          <td class="num">34.2%<span class="vs">基準43.4%</span></td>
+          <td class="num">+1.73%<span class="vs">コスト0.23%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">44.7%<span class="vs">基準40.4%</span></td>
+          <td class="num">+5.77%<span class="vs">コスト0.23%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr>
+        <tr>
+          <td class="phase-cell">
+            <div class="phase-name">⑥ 圧縮</div>
+            <div class="phase-dir">方向は予想せず、値幅拡大の有無で評価</div>
+          </td>
+          <td class="num">1,032</td>
+          <td class="num">23.1%<span class="vs">基準50.0%</span></td>
+          <td class="num">+3.35%<span class="vs">コスト0.53%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="num">26.5%<span class="vs">基準50.0%</span></td>
+          <td class="num">+10.75%<span class="vs">コスト0.54%</span></td>
+          <td class="center"><span class="mini-badge mini-fail">×</span></td>
+          <td class="center"><span class="badge badge-fail">不合格</span></td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+
+  <section class="spotlight">
+    <div class="eyebrow">注目ポイント</div>
+    <h2>⑥圧縮は「値動きが縮む」方向に外れた</h2>
+    <p>
+      ⑥圧縮ルールは「値幅が縮んだ後は、その後の値動きが基準より大きくなる」という仮説でしたが、
+      実際は逆でした。圧縮が起きた後の平均的な値動きは、全期間の平均（基準）より<strong>むしろ小さく</strong>なっていました。
+      圧縮後に値幅が基準を上回った割合（的中率）も、24時間後で23〜38%、168時間後でも同水準にとどまり、
+      五分五分の50%にすら届いていません。値幅そのものはコストを上回っていますが、これは暗号資産の値動きが
+      そもそも往復0.1〜0.5%程度のコストよりずっと大きいためで、圧縮ルール固有の効果とは言えません。
+    </p>
+    <svg viewBox="0 0 640 220" class="spotlight-chart" role="img" aria-label="圧縮後の値幅比較チャート"><line x1="46" y1="186.0" x2="624" y2="186.0" class="gridline"/><text x="38" y="190.0" class="axis-label" text-anchor="end">0.0%</text><line x1="46" y1="143.5" x2="624" y2="143.5" class="gridline"/><text x="38" y="147.5" class="axis-label" text-anchor="end">1.3%</text><line x1="46" y1="101.0" x2="624" y2="101.0" class="gridline"/><text x="38" y="105.0" class="axis-label" text-anchor="end">2.6%</text><line x1="46" y1="58.5" x2="624" y2="58.5" class="gridline"/><text x="38" y="62.5" class="axis-label" text-anchor="end">3.9%</text><line x1="46" y1="16.0" x2="624" y2="16.0" class="gridline"/><text x="38" y="20.0" class="axis-label" text-anchor="end">5.2%</text><rect x="101.3" y="101.6" width="34" height="84.4" rx="3" class="bar-baseline"/><rect x="149.3" y="110.4" width="34" height="75.6" rx="3" class="bar-phase"/><text x="118.3" y="95.6" class="bar-label" text-anchor="middle">2.60%</text><text x="166.3" y="104.4" class="bar-label" text-anchor="middle">2.33%</text><text x="142.3" y="206.0" class="axis-label-g" text-anchor="middle">大型</text><rect x="294.0" y="38.2" width="34" height="147.8" rx="3" class="bar-baseline"/><rect x="342.0" y="70.9" width="34" height="115.1" rx="3" class="bar-phase"/><text x="311.0" y="32.2" class="bar-label" text-anchor="middle">4.55%</text><text x="359.0" y="64.9" class="bar-label" text-anchor="middle">3.54%</text><text x="335.0" y="206.0" class="axis-label-g" text-anchor="middle">中型アルト</text><rect x="486.7" y="40.0" width="34" height="146.0" rx="3" class="bar-baseline"/><rect x="534.7" y="77.3" width="34" height="108.7" rx="3" class="bar-phase"/><text x="503.7" y="34.0" class="bar-label" text-anchor="middle">4.50%</text><text x="551.7" y="71.3" class="bar-label" text-anchor="middle">3.35%</text><text x="527.7" y="206.0" class="axis-label-g" text-anchor="middle">小型・ミーム</text></svg>
+    <div class="legend">
+      <span><span class="legend-swatch sw-baseline"></span>基準(全期間平均・24h)</span>
+      <span><span class="legend-swatch sw-phase"></span>⑥圧縮後の平均値幅(24h)</span>
+    </div>
+    <div class="table-wrap" style="margin-top:18px;">
+      <table>
+        <thead><tr><th>グループ</th><th>基準24h</th><th>圧縮後24h</th><th>的中率24h</th><th>基準168h</th><th>圧縮後168h</th><th>的中率168h</th></tr></thead>
+        <tbody>
+<tr>
+  <td>大型</td>
+  <td class="num">2.60%</td>
+  <td class="num">2.33%</td>
+  <td class="num">29.8%</td>
+  <td class="num">6.66%</td>
+  <td class="num">7.05%</td>
+  <td class="num">37.5%</td>
+</tr>
+<tr>
+  <td>中型アルト</td>
+  <td class="num">4.55%</td>
+  <td class="num">3.54%</td>
+  <td class="num">25.9%</td>
+  <td class="num">12.82%</td>
+  <td class="num">11.07%</td>
+  <td class="num">29.6%</td>
+</tr>
+<tr>
+  <td>小型・ミーム</td>
+  <td class="num">4.50%</td>
+  <td class="num">3.35%</td>
+  <td class="num">23.1%</td>
+  <td class="num">12.51%</td>
+  <td class="num">10.75%</td>
+  <td class="num">26.5%</td>
+</tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>補助的な確認</h2>
+    <p class="lede">主結果(答え合わせ期間・時系列で分割)以外に、2つの角度からも確認しましたが、結論は変わりませんでした。</p>
+    <div class="supp-grid">
+    <div class="supp-card">
+      <h4>同時多発シグナルをまとめた場合</h4>
+      <p class="supp-note">同じ時刻に複数銘柄で同じ局面が同時発生した場合、1件としてまとめ直した集計。結果は変わらず。</p>
+      <table class="supp-table">
+        <thead><tr><th>グループ</th><th>対象銘柄数</th><th>合格局面数</th></tr></thead>
+        <tbody><tr><td>大型</td><td class='num'>10銘柄</td><td class='num'>0 / 6</td></tr><tr><td>中型アルト</td><td class='num'>40銘柄</td><td class='num'>0 / 6</td></tr><tr><td>小型・ミーム</td><td class='num'>50銘柄</td><td class='num'>0 / 6</td></tr></tbody>
+      </table>
+    </div>
+    <div class="supp-card">
+      <h4>銘柄ランダム半分割(補助検証)</h4>
+      <p class="supp-note">全銘柄をランダムに半分に分け、片方(下記の銘柄数)だけで全期間を再集計。時期で分けた検証と独立な確認だが、結果は同じ。</p>
+      <table class="supp-table">
+        <thead><tr><th>グループ</th><th>対象銘柄数</th><th>合格局面数</th></tr></thead>
+        <tbody><tr><td>大型</td><td class='num'>5銘柄</td><td class='num'>0 / 6</td></tr><tr><td>中型アルト</td><td class='num'>18銘柄</td><td class='num'>0 / 6</td></tr><tr><td>小型・ミーム</td><td class='num'>27銘柄</td><td class='num'>0 / 6</td></tr></tbody>
+      </table>
+    </div></div>
+  </section>
+
+  <section>
+    <h2>検証方法</h2>
+    <div class="method-grid">
+      <div class="method-card"><div class="k">ルール作り期間</div><div class="v">2022-01 〜 2024-12</div></div>
+      <div class="method-card"><div class="k">答え合わせ期間</div><div class="v">2025-01 〜 現在</div></div>
+      <div class="method-card"><div class="k">主指標(合格判定)</div><div class="v">24時間後</div></div>
+      <div class="method-card"><div class="k">補助確認</div><div class="v">168時間後(7日)</div></div>
+      <div class="method-card"><div class="k">しきい値の窓</div><div class="v">直近90日ローリング</div></div>
+      <div class="method-card"><div class="k">信頼区間</div><div class="v">ブロック・ブートストラップ 95%</div></div>
+      <div class="method-card"><div class="k">往復コスト</div><div class="v">手数料0.10% + 出来高連動スリッページ</div></div>
+      <div class="method-card"><div class="k">重複排除</div><div class="v">局面開始の最初の1時間・24h以上の間隔</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>自己チェック</h2>
+    <ul class="check-list">
+      <li><span class="check-icon">✓</span><span>先読み確認: BTC・ETH・現物なし銘柄(HYPE)でデータを途中で打ち切って再計算し、過去の判定が一切変わらないことを確認済み(真の不一致0件)。</span></li>
+      <li><span class="check-icon">✓</span><span>グループ分けの先読み対策: 大型/中型/小型の区分けは、答え合わせ期間(2025年以降)を含まない2022〜2024年の出来高だけで再計算したものを使用。</span></li>
+      <li><span class="check-icon">✓</span><span>上場廃止銘柄(31銘柄)を検証対象に含め、判定期間中に上場廃止した場合は最後の価格で強制決済したものとして損益に反映(生存者バイアス対策)。</span></li>
+      <li><span class="check-icon">✓</span><span>判定と売買のタイミングを分離: 局面の判定はその足の終値まで、売買は次の足の始値から開始。</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    潮目バックテスト検証ツール — データ取得: data.binance.vision (S3) / Binance Futures 公開データ。
+    大型10銘柄・中型アルト40銘柄・小型/ミーム50銘柄、計100銘柄を対象。30件未満のサンプルは判定保留として扱い、合格判定には数えていません。
+    この結果は現時点のルール定義・しきい値・期間に基づくものであり、ルールや前提を変えれば結果も変わり得ます。
+  </footer>
+</div>
