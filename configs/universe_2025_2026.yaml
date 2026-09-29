@@ -1,0 +1,2825 @@
+note: 2025年1月〜2026年8月にBinance USDⓈ-M先物に月次1時間足ファイルがある銘柄から、暗号資産ではない先物を除いたもの。S3のファイル名一覧だけから作成(中身は読んでいない)。docs/hypotheses_v2.md
+  A3。
+excluded:
+- AAOIUSDT
+- AAPLUSDT
+- ADBEUSDT
+- ALABUSDT
+- AMATUSDT
+- AMDUSDT
+- AMZNUSDT
+- ANTHROPICUSDT
+- APPUSDT
+- ARMUSDT
+- ASMLUSDT
+- ASTSUSDT
+- AVGOUSDT
+- AXTIUSDT
+- BABAUSDT
+- BEUSDT
+- BILLUSDT
+- BITOUSDT
+- BMNRUSDT
+- BRKBUSDT
+- BTCDOMUSDT
+- BXUSDT
+- BZUSDT
+- CBRSUSDT
+- CIENUSDT
+- CLUSDT
+- COHRUSDT
+- COINUSDT
+- COPPERUSDT
+- COSTUSDT
+- CRCLUSDT
+- CRDOUSDT
+- CRMUSDT
+- CRWDUSDT
+- CRWVUSDT
+- CSCOUSDT
+- CSOPSAMSUNG2LUSDT
+- CSOPSKHYNIX2LUSDT
+- CXMTUSDT
+- DEFIUSDT
+- DELLUSDT
+- DISUSDT
+- DJTUSDT
+- DKNGUSDT
+- DRAMUSDT
+- EBAYUSDT
+- EWJUSDT
+- EWTUSDT
+- EWYUSDT
+- EWZUSDT
+- FLNCUSDT
+- FWDIUSDT
+- GDXUSDT
+- GEVUSDT
+- GIGADEVUSDT
+- GLWUSDT
+- GMEUSDT
+- GOOGLUSDT
+- GSUSDT
+- HANAUSDT
+- HANMIUSDT
+- HDUSDT
+- HIMSUSDT
+- HK0700USDT
+- HK1810USDT
+- HOODUSDT
+- HPEUSDT
+- HYUNDAIUSDT
+- IBMUSDT
+- INTCUSDT
+- INTWUSDT
+- IONQUSDT
+- IRENUSDT
+- IWMUSDT
+- JPMUSDT
+- KLACUSDT
+- KODEX200USDT
+- KORUUSDT
+- KOUSDT
+- KUAISHOUUSDT
+- LGELECTRONICSUSDT
+- LITEUSDT
+- LLYUSDT
+- LRCXUSDT
+- MARAUSDT
+- MEITUANUSDT
+- METAUSDT
+- MINIMAXUSDT
+- MRKUSDT
+- MRNAUSDT
+- MRVLUSDT
+- MSFTUSDT
+- MSTRUSDT
+- MUUSDT
+- MUUUSDT
+- NATGASUSDT
+- NAVERUSDT
+- NBISUSDT
+- NETUSDT
+- NFLXUSDT
+- NOKUSDT
+- NOWUSDT
+- NVDAUSDT
+- NVOUSDT
+- OLUSDT
+- ONDSUSDT
+- ONUSDT
+- OPENAIUSDT
+- ORCLUSDT
+- OUSDT
+- PANWUSDT
+- PAXGUSDT
+- PAYPUSDT
+- PDDUSDT
+- PLTRUSDT
+- POPMARTUSDT
+- PYPLUSDT
+- QCOMUSDT
+- QNTXUSDT
+- QQQUSDT
+- RDDTUSDT
+- RIVNUSDT
+- RKLBUSDT
+- SAMSUNGEMUSDT
+- SAMSUNGUSDT
+- SHOPUSDT
+- SKDDUSDT
+- SKHYNIXUSDT
+- SKHYUSDT
+- SKUUUSDT
+- SLXUSDT
+- SMCIUSDT
+- SMHUSDT
+- SNDKUSDT
+- SNOWUSDT
+- SNXXUSDT
+- SOFIUSDT
+- SONYUSDT
+- SOXLUSDT
+- SOXSUSDT
+- SPCXUSDT
+- SPYUSDT
+- SQQQUSDT
+- STRCUSDT
+- STXXUSDT
+- TBTUSDT
+- TEMUSDT
+- TENCENTUSDT
+- TERUSDT
+- TMFUSDT
+- TQQQUSDT
+- TSLAUSDT
+- TSMUSDT
+- TTWOUSDT
+- TXNUSDT
+- TZAUSDT
+- UBERUSDT
+- UNITREEUSDT
+- URNMUSDT
+- USARUSDT
+- USUSDT
+- UVXYUSDT
+- VRTUSDT
+- VSTUSDT
+- VUSDT
+- WDCUSDT
+- WMTUSDT
+- XAGUSDT
+- XAUTUSDT
+- XAUUSDT
+- XBIUSDT
+- XLEUSDT
+- XPDUSDT
+- XPTUSDT
+- ZHIPUUSDT
+- ZHONGJIUSDT
+- ZMUSDT
+symbols:
+  0GUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  1000000BOBUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: false
+  1000000MOGUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  1000BONKUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  1000CATUSDT:
+    first_month: 2024-10
+    last_month: 2026-08
+    has_spot: false
+  1000CHEEMSUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  1000FLOKIUSDT:
+    first_month: 2023-05
+    last_month: 2026-08
+    has_spot: true
+  1000LUNCUSDT:
+    first_month: 2022-09
+    last_month: 2026-08
+    has_spot: true
+  1000PEPEUSDT:
+    first_month: 2023-05
+    last_month: 2026-08
+    has_spot: true
+  1000RATSUSDT:
+    first_month: 2023-12
+    last_month: 2026-08
+    has_spot: false
+  1000SATSUSDT:
+    first_month: 2023-12
+    last_month: 2026-08
+    has_spot: false
+  1000SHIBUSDT:
+    first_month: 2021-05
+    last_month: 2026-08
+    has_spot: true
+  1000WHYUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  1000XECUSDT:
+    first_month: 2021-09
+    last_month: 2026-08
+    has_spot: true
+  1000XUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  1INCHUSDT:
+    first_month: 2020-12
+    last_month: 2026-08
+    has_spot: true
+  1MBABYDOGEUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: false
+  2ZUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  42USDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  4USDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  A2ZUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: true
+  AAVEUSDT:
+    first_month: 2020-10
+    last_month: 2026-08
+    has_spot: true
+  ACEUSDT:
+    first_month: 2023-12
+    last_month: 2026-08
+    has_spot: true
+  ACHUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  ACTUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: true
+  ACUUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: false
+  ACXUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  ADAUSDT:
+    first_month: 2020-01
+    last_month: 2026-08
+    has_spot: true
+  AERGOUSDT:
+    first_month: 2024-09
+    last_month: 2026-06
+    has_spot: true
+  AEROUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  AEVOUSDT:
+    first_month: 2024-03
+    last_month: 2026-08
+    has_spot: true
+  AGIXUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  AGLDUSDT:
+    first_month: 2023-07
+    last_month: 2026-08
+    has_spot: true
+  AGTUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: false
+  AI16ZUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  AIAUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  AIGENSYNUSDT:
+    first_month: 2026-04
+    last_month: 2026-08
+    has_spot: true
+  AINUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  AIOTUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: false
+  AIOUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: false
+  AIUSDT:
+    first_month: 2024-01
+    last_month: 2026-08
+    has_spot: true
+  AIXBTUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  AKEUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  AKTUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  ALCHUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  ALGOUSDT:
+    first_month: 2020-06
+    last_month: 2026-08
+    has_spot: true
+  ALICEUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  ALLOUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: true
+  ALLUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: false
+  ALPACAUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  ALPHAUSDT:
+    first_month: 2020-11
+    last_month: 2026-08
+    has_spot: true
+  ALPINEUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  ALTUSDT:
+    first_month: 2024-01
+    last_month: 2026-08
+    has_spot: true
+  AMBUSDT:
+    first_month: 2023-03
+    last_month: 2026-08
+    has_spot: true
+  ANIMEUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: true
+  ANKRUSDT:
+    first_month: 2021-01
+    last_month: 2026-08
+    has_spot: true
+  APEUSDT:
+    first_month: 2022-03
+    last_month: 2026-08
+    has_spot: true
+  API3USDT:
+    first_month: 2022-02
+    last_month: 2026-08
+    has_spot: true
+  APRUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  APTUSDT:
+    first_month: 2022-10
+    last_month: 2026-08
+    has_spot: true
+  ARBUSDT:
+    first_month: 2023-03
+    last_month: 2026-08
+    has_spot: true
+  ARCUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  ARIAUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  ARKMUSDT:
+    first_month: 2023-07
+    last_month: 2026-08
+    has_spot: true
+  ARKUSDT:
+    first_month: 2023-09
+    last_month: 2026-08
+    has_spot: true
+  ARPAUSDT:
+    first_month: 2021-10
+    last_month: 2026-08
+    has_spot: true
+  ARUSDT:
+    first_month: 2021-09
+    last_month: 2026-08
+    has_spot: true
+  ARXUSDT:
+    first_month: 2026-06
+    last_month: 2026-08
+    has_spot: false
+  ASRUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  ASTERUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  ASTRUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  ATAUSDT:
+    first_month: 2021-08
+    last_month: 2026-08
+    has_spot: true
+  ATHUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: false
+  ATOMUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  ATUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  AUCTIONUSDT:
+    first_month: 2023-12
+    last_month: 2026-08
+    has_spot: true
+  AUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  AVAAIUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  AVAUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  AVAXUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  AVNTUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  AWEUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  AXLUSDT:
+    first_month: 2024-03
+    last_month: 2026-08
+    has_spot: true
+  AXSUSDT:
+    first_month: 2020-11
+    last_month: 2026-08
+    has_spot: true
+  AZTECUSDT:
+    first_month: 2026-02
+    last_month: 2026-08
+    has_spot: false
+  B2USDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: false
+  B3USDT:
+    first_month: 2025-02
+    last_month: 2026-08
+    has_spot: false
+  BABYUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  BADGERUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  BAKEUSDT:
+    first_month: 2021-05
+    last_month: 2026-08
+    has_spot: true
+  BALUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  BANANAS31USDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  BANANAUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  BANDUSDT:
+    first_month: 2020-07
+    last_month: 2026-08
+    has_spot: true
+  BANKUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  BANUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  BARDUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  BASEDUSDT:
+    first_month: 2026-03
+    last_month: 2026-08
+    has_spot: false
+  BASUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: false
+  BATUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  BBUSDT:
+    first_month: 2024-05
+    last_month: 2026-08
+    has_spot: true
+  BBXUSDT:
+    first_month: 2026-06
+    last_month: 2026-08
+    has_spot: false
+  BCHUSDT:
+    first_month: 2020-01
+    last_month: 2026-08
+    has_spot: true
+  BDXNUSDT:
+    first_month: 2025-06
+    last_month: 2026-03
+    has_spot: false
+  BEAMXUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  BEATUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: false
+  BELUSDT:
+    first_month: 2020-11
+    last_month: 2026-08
+    has_spot: true
+  BERAUSDT:
+    first_month: 2025-02
+    last_month: 2026-08
+    has_spot: true
+  BICOUSDT:
+    first_month: 2023-09
+    last_month: 2026-08
+    has_spot: true
+  BIDUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: false
+  BIGTIMEUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  BIOUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: true
+  BIRBUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: false
+  BLESSUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  BLUAIUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  BLURUSDT:
+    first_month: 2023-04
+    last_month: 2026-08
+    has_spot: true
+  BLZUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  BMTUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  BNBUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  BNCUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: false
+  BNTUSDT:
+    first_month: 2023-08
+    last_month: 2026-08
+    has_spot: true
+  BNXUSDT:
+    first_month: 2022-04
+    last_month: 2026-08
+    has_spot: true
+  BOBUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: false
+  BOMEUSDT:
+    first_month: 2024-03
+    last_month: 2026-08
+    has_spot: true
+  BONDUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  BOTUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: false
+  BRETTUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: false
+  BREVUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: true
+  BROCCOLI714USDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  BROCCOLIF3BUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: false
+  BRUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: false
+  BSBUSDT:
+    first_month: 2026-03
+    last_month: 2026-08
+    has_spot: false
+  BSPUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: false
+  BSVUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: false
+  BSWUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  BTCSTUSDT:
+    first_month: 2021-03
+    last_month: 2026-06
+    has_spot: true
+  BTCUSDT:
+    first_month: 2020-01
+    last_month: 2026-08
+    has_spot: true
+  BTRUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: false
+  BTWUSDT:
+    first_month: 2026-06
+    last_month: 2026-08
+    has_spot: false
+  BULLAUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  BUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: false
+  C98USDT:
+    first_month: 2021-08
+    last_month: 2026-08
+    has_spot: true
+  CAKEUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  CAPUSDT:
+    first_month: 2026-06
+    last_month: 2026-08
+    has_spot: false
+  CARVUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: false
+  CATIUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  CATUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: false
+  CCUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  CELOUSDT:
+    first_month: 2021-09
+    last_month: 2026-08
+    has_spot: true
+  CELRUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  CETUSUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: true
+  CFGUSDT:
+    first_month: 2026-03
+    last_month: 2026-08
+    has_spot: true
+  CFXUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  CGPTUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  CHESSUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  CHILLGUYUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  CHIPUSDT:
+    first_month: 2026-04
+    last_month: 2026-08
+    has_spot: true
+  CHRUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  CHZUSDT:
+    first_month: 2021-01
+    last_month: 2026-08
+    has_spot: true
+  CKBUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  CLANKERUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: false
+  CLOUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  COAIUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  COLLECTUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: false
+  COMBOUSDT:
+    first_month: 2023-06
+    last_month: 2026-08
+    has_spot: true
+  COMMONUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  COMPUSDT:
+    first_month: 2020-06
+    last_month: 2026-08
+    has_spot: true
+  COOKIEUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: true
+  COSUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  COTIUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  COWUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: true
+  CROSSUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  CRVUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  CTKUSDT:
+    first_month: 2020-11
+    last_month: 2026-08
+    has_spot: true
+  CTRUSDT:
+    first_month: 2026-05
+    last_month: 2026-08
+    has_spot: false
+  CTSIUSDT:
+    first_month: 2021-10
+    last_month: 2026-08
+    has_spot: true
+  CUDISUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: false
+  CUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: true
+  CVCUSDT:
+    first_month: 2020-11
+    last_month: 2026-08
+    has_spot: true
+  CVXUSDT:
+    first_month: 2022-09
+    last_month: 2026-08
+    has_spot: true
+  CYBERUSDT:
+    first_month: 2023-08
+    last_month: 2026-08
+    has_spot: true
+  CYSUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: false
+  DAMUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: false
+  DARUSDT:
+    first_month: 2022-04
+    last_month: 2026-08
+    has_spot: true
+  DASHUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  DATAIPUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: false
+  DEEPUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: false
+  DEGENUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  DEGOUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  DENTUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  DEXEUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  DFUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  DGBUSDT:
+    first_month: 2021-04
+    last_month: 2026-08
+    has_spot: true
+  DIAUSDT:
+    first_month: 2024-10
+    last_month: 2026-08
+    has_spot: true
+  DMCUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: false
+  DODOXUSDT:
+    first_month: 2023-08
+    last_month: 2026-08
+    has_spot: false
+  DOGEUSDT:
+    first_month: 2020-07
+    last_month: 2026-08
+    has_spot: true
+  DOGSUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  DOLOUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  DOODUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: false
+  DOSUSDT:
+    first_month: 2026-08
+    last_month: 2026-08
+    has_spot: false
+  DOTUSDT:
+    first_month: 2020-08
+    last_month: 2026-08
+    has_spot: true
+  DRIFTUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  DUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: true
+  DUSKUSDT:
+    first_month: 2022-01
+    last_month: 2026-08
+    has_spot: true
+  DYDXUSDT:
+    first_month: 2021-09
+    last_month: 2026-08
+    has_spot: true
+  DYMUSDT:
+    first_month: 2024-02
+    last_month: 2026-08
+    has_spot: true
+  EDENUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  EDGEUSDT:
+    first_month: 2026-03
+    last_month: 2026-08
+    has_spot: false
+  EDUUSDT:
+    first_month: 2023-04
+    last_month: 2026-08
+    has_spot: true
+  EGLDUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  EIGENUSDT:
+    first_month: 2024-10
+    last_month: 2026-08
+    has_spot: true
+  ELSAUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: false
+  ENAUSDT:
+    first_month: 2024-04
+    last_month: 2026-08
+    has_spot: true
+  ENJUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  ENSOUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  ENSUSDT:
+    first_month: 2021-11
+    last_month: 2026-08
+    has_spot: true
+  EOSUSDT:
+    first_month: 2020-01
+    last_month: 2025-05
+    has_spot: true
+  EPICUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  EPTUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: false
+  ERAUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: true
+  ESPORTSUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  ESPUSDT:
+    first_month: 2026-02
+    last_month: 2026-08
+    has_spot: true
+  ETCUSDT:
+    first_month: 2020-01
+    last_month: 2026-08
+    has_spot: true
+  ETHFIUSDT:
+    first_month: 2024-03
+    last_month: 2026-08
+    has_spot: true
+  ETHUSDT:
+    first_month: 2020-01
+    last_month: 2026-08
+    has_spot: true
+  ETHWUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: false
+  EULUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  EVAAUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  FARTCOINUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: false
+  FETUSDT:
+    first_month: 2023-01
+    last_month: 2026-08
+    has_spot: true
+  FFUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  FHEUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: false
+  FIDAUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  FIGHTUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: false
+  FILUSDT:
+    first_month: 2020-10
+    last_month: 2026-08
+    has_spot: true
+  FIOUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  FISUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  FLEXUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: false
+  FLMUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  FLOCKUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  FLOWUSDT:
+    first_month: 2022-02
+    last_month: 2026-08
+    has_spot: true
+  FLUIDUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  FLUXUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  FOGOUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: true
+  FOLKSUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: false
+  FORMUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  FORTHUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  FRAXUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: true
+  FTMUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  FTTUSDT:
+    first_month: 2022-04
+    last_month: 2026-08
+    has_spot: true
+  FUNUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  FUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: true
+  FXSUSDT:
+    first_month: 2023-01
+    last_month: 2026-08
+    has_spot: true
+  GALAUSDT:
+    first_month: 2021-09
+    last_month: 2026-08
+    has_spot: true
+  GASUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  GENIUSUSDT:
+    first_month: 2026-04
+    last_month: 2026-08
+    has_spot: true
+  GHSTUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  GIGGLEUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  GLMRUSDT:
+    first_month: 2023-09
+    last_month: 2026-08
+    has_spot: true
+  GLMUSDT:
+    first_month: 2024-02
+    last_month: 2026-08
+    has_spot: true
+  GMTUSDT:
+    first_month: 2022-03
+    last_month: 2026-08
+    has_spot: true
+  GMXUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  GOATUSDT:
+    first_month: 2024-10
+    last_month: 2026-08
+    has_spot: false
+  GPSUSDT:
+    first_month: 2025-02
+    last_month: 2026-08
+    has_spot: true
+  GRAMUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: true
+  GRASSUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  GRIFFAINUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  GRTUSDT:
+    first_month: 2020-12
+    last_month: 2026-08
+    has_spot: true
+  GRVTUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: false
+  GTCUSDT:
+    first_month: 2021-06
+    last_month: 2026-08
+    has_spot: true
+  GUAUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: false
+  GUNUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  GUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  GWEIUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: false
+  HAEDALUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  HBARUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  HEIUSDT:
+    first_month: 2025-02
+    last_month: 2026-08
+    has_spot: true
+  HEMIUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: true
+  HFTUSDT:
+    first_month: 2023-04
+    last_month: 2026-08
+    has_spot: true
+  HIFIUSDT:
+    first_month: 2023-09
+    last_month: 2026-08
+    has_spot: true
+  HIGHUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  HIPPOUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  HIVEUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  HMSTRUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  HOLOUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  HOMEUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: true
+  HOOKUSDT:
+    first_month: 2023-01
+    last_month: 2026-08
+    has_spot: true
+  HOTUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  HUMAUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  HUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: false
+  HYPERUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  HYPEUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: false
+  ICNTUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  ICPUSDT:
+    first_month: 2021-05
+    last_month: 2026-08
+    has_spot: true
+  ICXUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  IDEXUSDT:
+    first_month: 2023-05
+    last_month: 2026-08
+    has_spot: true
+  IDOLUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  IDUSDT:
+    first_month: 2023-03
+    last_month: 2026-08
+    has_spot: true
+  ILVUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  IMXUSDT:
+    first_month: 2022-02
+    last_month: 2026-08
+    has_spot: true
+  INITUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  INJUSDT:
+    first_month: 2022-08
+    last_month: 2026-08
+    has_spot: true
+  INUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: false
+  INXUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: false
+  IOSTUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  IOTAUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  IOTXUSDT:
+    first_month: 2021-08
+    last_month: 2026-08
+    has_spot: true
+  IOUSDT:
+    first_month: 2024-06
+    last_month: 2026-08
+    has_spot: true
+  IPUSDT:
+    first_month: 2025-02
+    last_month: 2026-08
+    has_spot: false
+  IRUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: false
+  IRYSUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: false
+  JASMYUSDT:
+    first_month: 2022-04
+    last_month: 2026-08
+    has_spot: true
+  JCTUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: false
+  JELLYJELLYUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: false
+  JOEUSDT:
+    first_month: 2023-03
+    last_month: 2026-08
+    has_spot: true
+  JSTUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  JTOUSDT:
+    first_month: 2023-12
+    last_month: 2026-08
+    has_spot: true
+  JUPUSDT:
+    first_month: 2024-01
+    last_month: 2026-08
+    has_spot: true
+  KAIAUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  KAITOUSDT:
+    first_month: 2025-02
+    last_month: 2026-08
+    has_spot: true
+  KASUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: false
+  KATUSDT:
+    first_month: 2026-03
+    last_month: 2026-08
+    has_spot: true
+  KAVAUSDT:
+    first_month: 2020-07
+    last_month: 2026-08
+    has_spot: true
+  KDAUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  KERNELUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  KEYUSDT:
+    first_month: 2023-05
+    last_month: 2026-08
+    has_spot: true
+  KGENUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  KITEUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  KLAYUSDT:
+    first_month: 2021-10
+    last_month: 2026-08
+    has_spot: true
+  KMNOUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  KNCUSDT:
+    first_month: 2020-06
+    last_month: 2026-08
+    has_spot: true
+  KOMAUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: false
+  KSMUSDT:
+    first_month: 2020-10
+    last_month: 2026-08
+    has_spot: true
+  KSTRUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: false
+  LABUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  LAUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: true
+  LAYERUSDT:
+    first_month: 2025-02
+    last_month: 2026-08
+    has_spot: true
+  LDOUSDT:
+    first_month: 2022-09
+    last_month: 2026-08
+    has_spot: true
+  LEVERUSDT:
+    first_month: 2023-03
+    last_month: 2026-08
+    has_spot: true
+  LIGHTUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  LINAUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  LINEAUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  LINKUSDT:
+    first_month: 2020-01
+    last_month: 2026-08
+    has_spot: true
+  LISTAUSDT:
+    first_month: 2024-06
+    last_month: 2026-08
+    has_spot: true
+  LITUSDT:
+    first_month: 2021-02
+    last_month: 2026-08
+    has_spot: true
+  LOKAUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  LOOMUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  LPTUSDT:
+    first_month: 2021-11
+    last_month: 2026-08
+    has_spot: true
+  LQTYUSDT:
+    first_month: 2023-03
+    last_month: 2026-08
+    has_spot: true
+  LRCUSDT:
+    first_month: 2020-10
+    last_month: 2026-08
+    has_spot: true
+  LSKUSDT:
+    first_month: 2024-01
+    last_month: 2026-08
+    has_spot: true
+  LTCUSDT:
+    first_month: 2020-01
+    last_month: 2026-08
+    has_spot: true
+  LUMIAUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  LUNA2USDT:
+    first_month: 2022-09
+    last_month: 2026-08
+    has_spot: false
+  LYNUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  LYTEUSDT:
+    first_month: 2026-08
+    last_month: 2026-08
+    has_spot: false
+  MAGICUSDT:
+    first_month: 2023-01
+    last_month: 2026-08
+    has_spot: true
+  MAGMAUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: false
+  MANAUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  MANTAUSDT:
+    first_month: 2024-01
+    last_month: 2026-08
+    has_spot: true
+  MANTRAUSDT:
+    first_month: 2026-03
+    last_month: 2026-08
+    has_spot: true
+  MASKUSDT:
+    first_month: 2021-08
+    last_month: 2026-08
+    has_spot: true
+  MAVIAUSDT:
+    first_month: 2024-02
+    last_month: 2026-08
+    has_spot: false
+  MAVUSDT:
+    first_month: 2023-06
+    last_month: 2026-08
+    has_spot: true
+  MBOXUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  MDTUSDT:
+    first_month: 2023-06
+    last_month: 2026-08
+    has_spot: true
+  MEGAUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: true
+  MELANIAUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  MEMEFIUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: false
+  MEMEUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  MERLUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: false
+  METISUSDT:
+    first_month: 2024-03
+    last_month: 2026-08
+    has_spot: true
+  METUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  MEUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  MEWUSDT:
+    first_month: 2024-06
+    last_month: 2026-08
+    has_spot: false
+  MILKUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: false
+  MINAUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  MIRAUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  MITOUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: true
+  MKRUSDT:
+    first_month: 2020-08
+    last_month: 2026-08
+    has_spot: true
+  MLNUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  MMTUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: true
+  MOCAUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: false
+  MONUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  MOODENGUSDT:
+    first_month: 2024-10
+    last_month: 2026-08
+    has_spot: false
+  MORPHOUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: true
+  MOVEUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  MOVRUSDT:
+    first_month: 2023-12
+    last_month: 2026-08
+    has_spot: true
+  MTLUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  MUBARAKUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  MUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  MVLLUSDT:
+    first_month: 2026-06
+    last_month: 2026-08
+    has_spot: false
+  MYROUSDT:
+    first_month: 2024-03
+    last_month: 2026-08
+    has_spot: false
+  MYXUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: false
+  NAORISUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  NEARUSDT:
+    first_month: 2020-10
+    last_month: 2026-08
+    has_spot: true
+  NEIROETHUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: false
+  NEIROUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  NEOUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  NEWTUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: true
+  NFPUSDT:
+    first_month: 2023-12
+    last_month: 2026-08
+    has_spot: true
+  NIGHTUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: true
+  NILUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  NKNUSDT:
+    first_month: 2021-04
+    last_month: 2026-08
+    has_spot: true
+  NMRUSDT:
+    first_month: 2023-06
+    last_month: 2026-08
+    has_spot: true
+  NOMUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  NOTUSDT:
+    first_month: 2024-05
+    last_month: 2026-08
+    has_spot: true
+  NTRNUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  NULSUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  NXPCUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  OBOLUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: false
+  OCEANUSDT:
+    first_month: 2020-11
+    last_month: 2026-08
+    has_spot: true
+  OGNUSDT:
+    first_month: 2021-04
+    last_month: 2026-08
+    has_spot: true
+  OGUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  OMGUSDT:
+    first_month: 2020-07
+    last_month: 2026-08
+    has_spot: true
+  OMNIUSDT:
+    first_month: 2024-04
+    last_month: 2026-08
+    has_spot: true
+  OMUSDT:
+    first_month: 2024-02
+    last_month: 2026-08
+    has_spot: true
+  ONDOUSDT:
+    first_month: 2024-01
+    last_month: 2026-08
+    has_spot: true
+  ONEUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  ONGUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  ONTUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  OPENUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  OPGUSDT:
+    first_month: 2026-04
+    last_month: 2026-08
+    has_spot: true
+  OPNUSDT:
+    first_month: 2026-02
+    last_month: 2026-08
+    has_spot: true
+  OPUSDT:
+    first_month: 2022-06
+    last_month: 2026-08
+    has_spot: true
+  ORBSUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: false
+  ORCAUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  ORDERUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  ORDIUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  OXTUSDT:
+    first_month: 2023-08
+    last_month: 2026-08
+    has_spot: true
+  PARTIUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  PENDLEUSDT:
+    first_month: 2023-07
+    last_month: 2026-08
+    has_spot: true
+  PENGUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: false
+  PENGUUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  PEOPLEUSDT:
+    first_month: 2021-12
+    last_month: 2026-08
+    has_spot: true
+  PERPUSDT:
+    first_month: 2023-03
+    last_month: 2026-08
+    has_spot: true
+  PHAROSUSDT:
+    first_month: 2026-05
+    last_month: 2026-08
+    has_spot: false
+  PHAUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  PHBUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  PIEVERSEUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: false
+  PIPPINUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  PIXELUSDT:
+    first_month: 2024-02
+    last_month: 2026-08
+    has_spot: true
+  PLAYUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  PLUMEUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  PNUTUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: true
+  POLUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  POLYXUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  PONKEUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  POPCATUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: false
+  PORT3USDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: false
+  PORTALUSDT:
+    first_month: 2024-02
+    last_month: 2026-08
+    has_spot: true
+  POWERUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: false
+  POWRUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  PRLUSDT:
+    first_month: 2026-04
+    last_month: 2026-08
+    has_spot: false
+  PROMPTUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: false
+  PROMUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: true
+  PROVEUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: true
+  PTBUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  PUFFERUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: false
+  PUMPBTCUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: false
+  PUMPUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  PUNDIXUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  PYTHUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  QNTUSDT:
+    first_month: 2022-10
+    last_month: 2026-08
+    has_spot: true
+  QTUMUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  QUICKUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  QUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  RADUSDT:
+    first_month: 2023-05
+    last_month: 2026-08
+    has_spot: true
+  RAMUSDT:
+    first_month: 2026-08
+    last_month: 2026-08
+    has_spot: false
+  RAREUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  RAVEUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: false
+  RAYSOLUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: false
+  RAYUSDT:
+    first_month: 2021-08
+    last_month: 2026-08
+    has_spot: true
+  RDNTUSDT:
+    first_month: 2023-04
+    last_month: 2026-08
+    has_spot: true
+  RECALLUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  REDUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  REEFUSDT:
+    first_month: 2021-02
+    last_month: 2026-08
+    has_spot: true
+  REIUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  RENDERUSDT:
+    first_month: 2024-07
+    last_month: 2026-08
+    has_spot: true
+  RENUSDT:
+    first_month: 2020-10
+    last_month: 2026-08
+    has_spot: true
+  RESOLVUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: true
+  REUSDT:
+    first_month: 2026-06
+    last_month: 2026-08
+    has_spot: true
+  REZUSDT:
+    first_month: 2024-04
+    last_month: 2026-08
+    has_spot: true
+  RIFUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  RIVERUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  RLCUSDT:
+    first_month: 2020-07
+    last_month: 2026-08
+    has_spot: true
+  RLSUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: false
+  ROBOUSDT:
+    first_month: 2026-02
+    last_month: 2026-08
+    has_spot: true
+  RONINUSDT:
+    first_month: 2024-02
+    last_month: 2026-08
+    has_spot: true
+  ROSEUSDT:
+    first_month: 2021-12
+    last_month: 2026-08
+    has_spot: true
+  RPLUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: true
+  RSRUSDT:
+    first_month: 2020-10
+    last_month: 2026-08
+    has_spot: true
+  RUNEUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  RVNUSDT:
+    first_month: 2021-02
+    last_month: 2026-08
+    has_spot: true
+  RVVUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  SAFEUSDT:
+    first_month: 2024-10
+    last_month: 2026-08
+    has_spot: false
+  SAGAUSDT:
+    first_month: 2024-04
+    last_month: 2026-08
+    has_spot: true
+  SAHARAUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: true
+  SANDUSDT:
+    first_month: 2021-01
+    last_month: 2026-08
+    has_spot: true
+  SANTOSUSDT:
+    first_month: 2024-10
+    last_month: 2026-08
+    has_spot: true
+  SAPIENUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: true
+  SCRTUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: true
+  SCRUSDT:
+    first_month: 2024-10
+    last_month: 2026-08
+    has_spot: true
+  SCUSDT:
+    first_month: 2021-04
+    last_month: 2026-08
+    has_spot: true
+  SEIUSDT:
+    first_month: 2023-08
+    last_month: 2026-08
+    has_spot: true
+  SENTUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: true
+  SFPUSDT:
+    first_month: 2021-02
+    last_month: 2026-08
+    has_spot: true
+  SHAZUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: false
+  SHELLUSDT:
+    first_month: 2025-02
+    last_month: 2026-08
+    has_spot: true
+  SIGNUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  SIRENUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: false
+  SKATEUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: false
+  SKLUSDT:
+    first_month: 2020-12
+    last_month: 2026-08
+    has_spot: true
+  SKRUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: false
+  SKYAIUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: false
+  SKYUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  SLERFUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  SLPUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  SNTUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  SNXUSDT:
+    first_month: 2020-08
+    last_month: 2026-08
+    has_spot: true
+  SOLUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  SOLVUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: true
+  SOMIUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: true
+  SONICUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  SOONUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: false
+  SOPHUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  SPACEUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: false
+  SPELLUSDT:
+    first_month: 2022-09
+    last_month: 2026-08
+    has_spot: true
+  SPKUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: true
+  SPORTFUNUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: false
+  SPXUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: false
+  SQDUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: false
+  SSVUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  STABLEUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: false
+  STARUSDT:
+    first_month: 2026-05
+    last_month: 2026-08
+    has_spot: false
+  STBLUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  STEEMUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  STGUSDT:
+    first_month: 2022-08
+    last_month: 2026-08
+    has_spot: true
+  STMXUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  STORJUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  STOUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  STPTUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  STRAXUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  STRKUSDT:
+    first_month: 2024-02
+    last_month: 2026-08
+    has_spot: true
+  STXUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  SUIUSDT:
+    first_month: 2023-05
+    last_month: 2026-08
+    has_spot: true
+  SUNUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  SUPERUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  SUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: true
+  SUSHIUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  SWARMSUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  SWELLUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: false
+  SXPUSDT:
+    first_month: 2020-07
+    last_month: 2026-05
+    has_spot: true
+  SXTUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  SYNUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  SYRUPUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: true
+  SYSUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  TACUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  TAGUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  TAIKOUSDT:
+    first_month: 2025-06
+    last_month: 2026-08
+    has_spot: false
+  TAKEUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  TANSSIUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  TAOUSDT:
+    first_month: 2024-04
+    last_month: 2026-08
+    has_spot: true
+  TAUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  THETAUSDT:
+    first_month: 2020-05
+    last_month: 2026-08
+    has_spot: true
+  THEUSDT:
+    first_month: 2024-11
+    last_month: 2026-08
+    has_spot: true
+  TIAUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  TLMUSDT:
+    first_month: 2021-07
+    last_month: 2026-08
+    has_spot: true
+  TNSRUSDT:
+    first_month: 2024-04
+    last_month: 2026-08
+    has_spot: true
+  TOKENUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: false
+  TONUSDT:
+    first_month: 2024-03
+    last_month: 2026-08
+    has_spot: true
+  TOSHIUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  TOWNSUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: true
+  TRADOORUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  TRBUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  TREEUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: true
+  TRIAUSDT:
+    first_month: 2026-02
+    last_month: 2026-08
+    has_spot: false
+  TROYUSDT:
+    first_month: 2024-10
+    last_month: 2026-08
+    has_spot: true
+  TRUMPUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: true
+  TRUSTUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: false
+  TRUTHUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: false
+  TRUUSDT:
+    first_month: 2023-03
+    last_month: 2026-08
+    has_spot: true
+  TRXUSDT:
+    first_month: 2020-01
+    last_month: 2026-08
+    has_spot: true
+  TSTUSDT:
+    first_month: 2025-02
+    last_month: 2026-08
+    has_spot: true
+  TURBOUSDT:
+    first_month: 2024-05
+    last_month: 2026-08
+    has_spot: true
+  TURTLEUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  TUSDT:
+    first_month: 2023-02
+    last_month: 2026-08
+    has_spot: true
+  TUTUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  TWTUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  UAIUSDT:
+    first_month: 2025-11
+    last_month: 2026-08
+    has_spot: false
+  UBUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  UMAUSDT:
+    first_month: 2023-05
+    last_month: 2026-08
+    has_spot: true
+  UNFIUSDT:
+    first_month: 2021-02
+    last_month: 2026-08
+    has_spot: true
+  UNIUSDT:
+    first_month: 2020-09
+    last_month: 2026-08
+    has_spot: true
+  USDCUSDT:
+    first_month: 2023-03
+    last_month: 2026-08
+    has_spot: true
+  USELESSUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: false
+  USTCUSDT:
+    first_month: 2023-11
+    last_month: 2026-08
+    has_spot: true
+  USUALUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  UXLINKUSDT:
+    first_month: 2024-09
+    last_month: 2026-08
+    has_spot: false
+  VANAUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  VANRYUSDT:
+    first_month: 2024-03
+    last_month: 2026-08
+    has_spot: true
+  VELODROMEUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  VELVETUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  VETUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  VFYUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  VICUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  VIDTUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  VINEUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  VIRTUALUSDT:
+    first_month: 2024-12
+    last_month: 2026-08
+    has_spot: true
+  VOXELUSDT:
+    first_month: 2024-08
+    last_month: 2026-08
+    has_spot: true
+  VTHOUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: true
+  VVVUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  WALUSDT:
+    first_month: 2025-03
+    last_month: 2026-08
+    has_spot: true
+  WAVESUSDT:
+    first_month: 2020-08
+    last_month: 2026-08
+    has_spot: true
+  WAXPUSDT:
+    first_month: 2023-10
+    last_month: 2026-08
+    has_spot: true
+  WCTUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: true
+  WENUSDT:
+    first_month: 2026-07
+    last_month: 2026-08
+    has_spot: false
+  WETUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: false
+  WIFUSDT:
+    first_month: 2024-01
+    last_month: 2026-08
+    has_spot: true
+  WLDUSDT:
+    first_month: 2023-07
+    last_month: 2026-08
+    has_spot: true
+  WLFIUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: true
+  WOOUSDT:
+    first_month: 2022-04
+    last_month: 2026-08
+    has_spot: true
+  WUSDT:
+    first_month: 2024-04
+    last_month: 2026-08
+    has_spot: true
+  XAIUSDT:
+    first_month: 2024-01
+    last_month: 2026-08
+    has_spot: true
+  XANUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  XCNUSDT:
+    first_month: 2025-04
+    last_month: 2026-08
+    has_spot: false
+  XEMUSDT:
+    first_month: 2021-03
+    last_month: 2026-08
+    has_spot: true
+  XLMUSDT:
+    first_month: 2020-01
+    last_month: 2026-08
+    has_spot: true
+  XMRUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  XNYUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: false
+  XPINUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: false
+  XPLUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: true
+  XRPUSDT:
+    first_month: 2020-01
+    last_month: 2026-08
+    has_spot: true
+  XTZUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  XVGUSDT:
+    first_month: 2023-07
+    last_month: 2026-08
+    has_spot: true
+  XVSUSDT:
+    first_month: 2023-04
+    last_month: 2026-08
+    has_spot: true
+  YALAUSDT:
+    first_month: 2025-08
+    last_month: 2026-08
+    has_spot: false
+  YBUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  YFIUSDT:
+    first_month: 2020-08
+    last_month: 2026-08
+    has_spot: true
+  YGGUSDT:
+    first_month: 2023-08
+    last_month: 2026-08
+    has_spot: true
+  ZAMAUSDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: true
+  ZBTUSDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  ZECUSDT:
+    first_month: 2020-02
+    last_month: 2026-08
+    has_spot: true
+  ZENUSDT:
+    first_month: 2020-11
+    last_month: 2026-08
+    has_spot: true
+  ZEREBROUSDT:
+    first_month: 2025-01
+    last_month: 2026-08
+    has_spot: false
+  ZESTUSDT:
+    first_month: 2026-06
+    last_month: 2026-08
+    has_spot: false
+  ZETAUSDT:
+    first_month: 2024-02
+    last_month: 2026-08
+    has_spot: false
+  ZILUSDT:
+    first_month: 2020-06
+    last_month: 2026-08
+    has_spot: true
+  ZKCUSDT:
+    first_month: 2025-09
+    last_month: 2026-08
+    has_spot: true
+  ZKJUSDT:
+    first_month: 2025-05
+    last_month: 2026-08
+    has_spot: false
+  ZKPUSDT:
+    first_month: 2025-12
+    last_month: 2026-08
+    has_spot: true
+  ZKUSDT:
+    first_month: 2024-06
+    last_month: 2026-08
+    has_spot: true
+  ZORAUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  ZRCUSDT:
+    first_month: 2025-07
+    last_month: 2026-08
+    has_spot: false
+  ZROUSDT:
+    first_month: 2024-06
+    last_month: 2026-08
+    has_spot: true
+  ZRXUSDT:
+    first_month: 2020-06
+    last_month: 2026-08
+    has_spot: true
+  币安人生USDT:
+    first_month: 2025-10
+    last_month: 2026-08
+    has_spot: true
+  我踏马来了USDT:
+    first_month: 2026-01
+    last_month: 2026-08
+    has_spot: false
+  牛来USDT:
+    first_month: 2026-08
+    last_month: 2026-08
+    has_spot: false
+  龙虾USDT:
+    first_month: 2026-03
+    last_month: 2026-08
+    has_spot: false
