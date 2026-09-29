@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """ラウンドB(H17「過熱ショート」)のHTMLレポートを作る。
 
-入力: data/processed/crosssection/overheat_final_full.json(なければ overheat_dev_full.json)
-出力: reports/overheat_short.html
+入力: data/processed/crosssection/overheat[_long]_final_full.json(なければ dev)
+出力: reports/overheat_short.html(H17) / reports/overheat_long.html(H17L)
 
 実行例:
-    python scripts/build_overheat_report.py
+    python scripts/build_overheat_report.py          # H17 過熱ショート
+    python scripts/build_overheat_report.py long     # H17L 過熱ロング
 """
 import json
 import sys
@@ -22,10 +23,15 @@ from build_report import CSS  # noqa: E402
 from shiome.config import PROCESSED_DIR  # noqa: E402
 
 CS_DIR = PROCESSED_DIR / "crosssection"
-OUT = ROOT / "reports" / "overheat_short.html"
-KIND = {"1": "① すぐ空売り", "2": "② 失速を確認してから"}
+SIDE = "long" if len(sys.argv) > 1 and sys.argv[1] == "long" else "short"
+OUT = ROOT / "reports" / ("overheat_long.html" if SIDE == "long" else "overheat_short.html")
+PREFIX = "overheat_long" if SIDE == "long" else "overheat"
+KIND = ({"1": "① すぐ買う", "2": "② 下げ止まりを確認してから"} if SIDE == "long"
+        else {"1": "① すぐ空売り", "2": "② 失速を確認してから"})
 HOLD = {"24h": "24時間持つ", "7d": "7日持つ"}
-STOP = {"nostop": "損切りなし", "stop": "+15%で損切り"}
+STOP = {"nostop": "損切りなし", "stop": "−15%で損切り" if SIDE == "long" else "+15%で損切り"}
+SQUEEZE = "−30%以上<br>の下げ" if SIDE == "long" else "+30%<br>踏み上げ"
+BASE = "全銘柄平均を<br>買った場合との差" if SIDE == "long" else "全銘柄平均の<br>空売りとの差"
 VARIANTS = [f"{k}|{h}|{s}" for k in KIND for h in HOLD for s in STOP]
 PER_LABEL = {"2022": "2022", "2023": "2023", "2022-23": "2022〜23", "2024": "2024(確認)"}
 
@@ -79,7 +85,7 @@ def main_table(res: dict, periods: list[str], has_2024: bool) -> str:
                 f"<td class='center'>{cand}</td></tr>")
     return f"""<div class="table-wrap"><table>
 <thead><tr><th>入り方</th><th>年</th><th>件数</th><th>勝率</th><th>平均の勝ち / 負け</th><th>平均損益<span class='vs'>コスト込み</span></th>
-<th>FR込み</th><th>全銘柄平均の<br>空売りとの差</th><th>最大逆行<span class='vs'>平均 / 中央値 / 最大</span></th><th>+30%<br>踏み上げ</th><th>候補</th></tr></thead>
+<th>FR込み</th><th>{BASE}</th><th>最大逆行<span class='vs'>平均 / 中央値 / 最大</span></th><th>{SQUEEZE}</th><th>候補</th></tr></thead>
 <tbody>{''.join(rows)}</tbody></table></div>"""
 
 
@@ -160,9 +166,12 @@ def short_liq_table(res: dict, periods: list[str]) -> str:
 
 
 def main() -> None:
-    final = CS_DIR / "overheat_final_full.json"
+    final = CS_DIR / f"{PREFIX}_final_full.json"
     mode = "final" if final.exists() else "dev"
-    res = json.loads((final if mode == "final" else CS_DIR / "overheat_dev_full.json").read_text(encoding="utf-8"))
+    res = json.loads((final if mode == "final" else CS_DIR / f"{PREFIX}_dev_full.json").read_text(encoding="utf-8"))
+    if SIDE == "long":
+        write_long(res, mode)
+        return
     has_2024 = mode == "final"
     periods = ["2022", "2023", "2022-23"] + (["2024"] if has_2024 else [])
     cands = [k for k in VARIANTS if is_candidate(res, k)] if has_2024 else []
@@ -234,6 +243,65 @@ def main() -> None:
     <p>候補の判定に使うのは8通り(入り方2 × 持つ期間2 × 損切り2)。ラウンドAの24通りと後付けの H2r を合わせて33通り。補助分析(下のロング清算帯・荒れ予報・すぐ上のショート清算帯)の10通りを含めると、見たものは43通り。定義と記録は <code>docs/hypotheses_v2.md</code> のラウンドBの節。</p>
   </section>
   <footer>作成: scripts/build_overheat_report.py ／ 計算: scripts/run_overheat.py({mode}) ／ 2025年以降のデータは読み込んでいない。</footer>
+</div>
+"""
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(html, encoding="utf-8")
+    print("保存:", OUT)
+
+
+def write_long(res: dict, mode: str) -> None:
+    has_2024 = mode == "final"
+    periods = ["2022", "2023", "2022-23"] + (["2024"] if has_2024 else [])
+    cands = [k for k in VARIANTS if is_candidate(res, k)] if has_2024 else []
+    if cands:
+        vcls, big = "good", f"{len(cands)}件"
+        vtxt = ("2022〜23年と2024年の両方で、件数30件以上・勝率50%超・コスト込みの平均損益がプラス・全銘柄平均を買った場合より良い、を満たしたのは "
+                + "、".join(f"<strong>{label(k)}</strong>" for k in cands)
+                + "。ただし41通りを試した中での結果で、2025年以降は第1ラウンドの局面③の結果をすでに見ているため、答え合わせも完全な初見ではない。")
+    else:
+        vcls, big = "neutral", "0件"
+        vtxt = ("8通りのどれも、2022〜23年と2024年の両方で「勝率50%超・コスト込みでプラス・全銘柄平均を買った場合より良い」を満たさなかった。"
+                if has_2024 else "(2024年を含めた計算はまだ。2022〜23年だけの途中経過)")
+    html = f"""<title>潮目 過熱ロング</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+<style>{CSS}{EXTRA_CSS}</style>
+<div class="page">
+  <header class="hero">
+    <div class="eyebrow">SHIOME — ラウンドB: H17L 過熱ロング</div>
+    <h1>FRが大きくマイナスの銘柄を買ったら</h1>
+    <p class="hero-sub">H17(過熱ショート)の裏返し。毎日0・8・16時(UTC)に、FR(資金調達率)が全銘柄の下位5%に新しく入った銘柄を買った場合を、「すぐ買う」と「下げ止まりを確認してから買う」で比べた。2022〜23年で形を作り、2024年は1回だけ確認。2025年以降のデータは読み込んでいない。対象 {res.get('n_symbols', '—')}銘柄。</p>
+    <div class="verdict-card {vcls}"><div class="verdict-big">{big}</div>
+      <div class="verdict-text"><strong>答え合わせ候補</strong><br>{vtxt}</div></div>
+  </header>
+
+  <section>
+    <h2>事前に分かっていたこと</h2>
+    <ul class="key-list">
+      <li>第1ラウンドの局面③「ショート踏み上げ準備」(価格が横ばい〜下落 + 建玉が増加 + FRがマイナス + 現物CVDが上昇 → 上がると予想)は不合格だった。
+      24時間後の方向的中率は、2022〜2024年で51.7〜52.9%、2025年以降で47.1〜53.2%。どれもコストを上回らなかった。</li>
+      <li>この判定は2025年以降のデータで行ったため、H17L を2025年以降で答え合わせしても、似た局面の成績をすでに一部見ていることになる。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>8通りの結果(全銘柄)</h2>
+    <p class="lede">候補の条件: 2022〜23年と2024年の両方で、件数30件以上・勝率50%超・平均損益(コスト込み、FRは含めない)がプラス・全銘柄平均を買った場合との差がプラス。最大逆行は、買った値段から最も下がった幅。FR込みは、FRがマイナスのときに買い側が受け取る分を足した参考値。</p>
+    {main_table(res, periods, has_2024)}
+  </section>
+
+  <section>
+    <h2>②「下げ止まりを確認してから」の様子</h2>
+    <p class="lede">②は、安値更新が6時間止まり・建玉が6時間前より増えておらず・直近6時間の現物の成り行き買いが売りを上回ったときに買う(きっかけから72時間まで)。</p>
+    {flow_table(res, periods)}
+  </section>
+
+  <section>
+    <h2>試した回数</h2>
+    <p>H17L の8通りを加えて、候補判定の対象は41通り(ラウンドA 24 + H17 8 + H2r 1 + H17L 8)。補助分析10通りを含めると51通り。定義と記録は <code>docs/hypotheses_v2.md</code> の H17L の節。</p>
+  </section>
+  <footer>作成: scripts/build_overheat_report.py long ／ 計算: scripts/run_overheat.py --side long({mode}) ／ 2025年以降のデータは読み込んでいない。</footer>
 </div>
 """
     OUT.parent.mkdir(parents=True, exist_ok=True)

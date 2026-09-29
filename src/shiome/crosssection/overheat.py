@@ -120,14 +120,15 @@ def fr_matrix(syms: dict[str, Sym], checks: pd.DatetimeIndex) -> tuple[pd.DataFr
     return pd.DataFrame(fr_cols, index=checks), pd.DataFrame(ok_cols, index=checks)
 
 
-def find_events(fr: pd.DataFrame, ok: pd.DataFrame) -> pd.DataFrame:
+def find_events(fr: pd.DataFrame, ok: pd.DataFrame, side: str = "short") -> pd.DataFrame:
+    """side="short": FRの上位5%(H17) / side="long": FRの下位5%(H17L)。"""
     top = pd.DataFrame(False, index=fr.index, columns=fr.columns)
     for c in fr.index:
         row = fr.loc[c][ok.loc[c] & fr.loc[c].notna()]
         if len(row) == 0:
             continue
         k = max(1, int(round(TOP_PCT * len(row))))
-        order = row.reset_index().sort_values([c, "index"], ascending=[False, True])["index"].tolist()
+        order = row.reset_index().sort_values([c, "index"], ascending=[side == "long", True])["index"].tolist()
         top.loc[c, order[:k]] = True
     before = top.astype(int).shift(1, fill_value=0).rolling(QUIET_CHECKS, min_periods=1).max().astype(bool)
     cand = top & ~before
@@ -142,7 +143,7 @@ def find_events(fr: pd.DataFrame, ok: pd.DataFrame) -> pd.DataFrame:
 
 
 # ---------- ②: 失速の確認 ----------
-def stall_entry(s: Sym, t0: pd.Timestamp) -> tuple[bool, pd.Timestamp | None]:
+def stall_entry(s: Sym, t0: pd.Timestamp, side: str = "short") -> tuple[bool, pd.Timestamp | None]:
     """(判定できるか, 空売りする時刻)。72時間以内に3条件がそろわなければ時刻は None(見送り)。"""
     p0 = s.pos(t0)  # t0 に始まる足(無ければ -1)
     if p0 < STALL_HOURS or np.isnan(s.oi_at[p0]) or np.isnan(s.cvd[p0 - STALL_HOURS:p0]).any():
@@ -153,12 +154,16 @@ def stall_entry(s: Sym, t0: pd.Timestamp) -> tuple[bool, pd.Timestamp | None]:
             break
         if not s.live_ok[y - 1]:
             continue
-        seg = s.high[p0:y]
-        stalled = np.nanmax(seg[-STALL_HOURS:]) <= np.nanmax(seg[:-STALL_HOURS])
+        if side == "short":  # 高値更新が止まる
+            seg = s.high[p0:y]
+            stalled = np.nanmax(seg[-STALL_HOURS:]) <= np.nanmax(seg[:-STALL_HOURS])
+        else:                # H17L: 安値更新が止まる
+            seg = s.low[p0:y]
+            stalled = np.nanmin(seg[-STALL_HOURS:]) >= np.nanmin(seg[:-STALL_HOURS])
         oi_stop = s.oi_at[y] <= s.oi_at[y - STALL_HOURS]  # NaNならFalse
         cvd6 = s.cvd[y - STALL_HOURS:y]
-        cvd_neg = (not np.isnan(cvd6).any()) and cvd6.sum() < 0
-        if stalled and oi_stop and cvd_neg:
+        cvd_ok = (not np.isnan(cvd6).any()) and (cvd6.sum() < 0 if side == "short" else cvd6.sum() > 0)
+        if stalled and oi_stop and cvd_ok:
             return True, s.hours[y]
     return True, None
 
@@ -210,7 +215,10 @@ def storm_flag(s: Sym, x: pd.Timestamp) -> float:
 
 # ---------- 1回の空売り ----------
 def short_trade(s: Sym, x: pd.Timestamp, hold: int, stop: bool, end: pd.Timestamp,
-                market: pd.DataFrame, elig_syms: list[str], adv: float) -> dict | None:
+                market: pd.DataFrame, elig_syms: list[str], adv: float, side: str = "short") -> dict | None:
+    """1回の取引。side="short"は空売り(H17)、"long"は買い(H17L)。
+    mae = 持っている間の最大逆行(空売りなら最も上がった幅、買いなら最も下がった幅)、mfe = 最も有利に動いた幅。"""
+    sign = -1.0 if side == "short" else 1.0
     pe = s.pos(x) - 1  # 売値 = x-1時間の足の終値
     if pe < 0 or x + hold * HOUR > end or np.isnan(s.close[pe]):
         return None
@@ -221,16 +229,21 @@ def short_trade(s: Sym, x: pd.Timestamp, hold: int, stop: bool, end: pd.Timestam
     exit_time = x + hold * HOUR
     stopped = False
     if stop:
-        hit = np.flatnonzero(win_h >= price * (1 + STOP_PCT))
+        hit = (np.flatnonzero(win_h >= price * (1 + STOP_PCT)) if side == "short"
+               else np.flatnonzero(win_l <= price * (1 - STOP_PCT)))
         if len(hit):
             i = hit[0]
             o = s.open[pe + 1 + i]
-            exit_px = max(price * (1 + STOP_PCT), o if not np.isnan(o) else 0.0)
+            if side == "short":
+                exit_px = max(price * (1 + STOP_PCT), o if not np.isnan(o) else 0.0)
+            else:
+                exit_px = min(price * (1 - STOP_PCT), o if not np.isnan(o) else np.inf)
             exit_time = s.hours[pe + 1 + i] + HOUR
             stopped = True
     n_held = int((exit_time - x) / HOUR)
-    mae = np.nanmax(win_h[:n_held]) / price - 1 if np.isfinite(win_h[:n_held]).any() else 0.0
-    mfe = 1 - np.nanmin(win_l[:n_held]) / price if np.isfinite(win_l[:n_held]).any() else 0.0
+    up = np.nanmax(win_h[:n_held]) / price - 1 if np.isfinite(win_h[:n_held]).any() else 0.0
+    down = 1 - np.nanmin(win_l[:n_held]) / price if np.isfinite(win_l[:n_held]).any() else 0.0
+    mae, mfe = (up, down) if side == "short" else (down, up)
     ret = exit_px / price - 1
     cost = 2 * one_way_cost(np.array([adv]))[0]  # 往復手数料0.10% + 片道スリッページ×2
 
@@ -239,7 +252,7 @@ def short_trade(s: Sym, x: pd.Timestamp, hold: int, stop: bool, end: pd.Timestam
     for t_set, rate in fr["rate"].items():
         p = s.pos(t_set.floor("h") - HOUR)
         px = s.filled[p] if p >= 0 else price
-        fr_recv += rate * px / price
+        fr_recv += -sign * rate * px / price  # FRがプラスなら売り側が受け取り、買い側が払う
 
     # 物差し: 同じ時刻・同じ期間に比較対象の全銘柄の平均を空売り
     t_a, t_b = x - HOUR, exit_time - HOUR
@@ -248,16 +261,16 @@ def short_trade(s: Sym, x: pd.Timestamp, hold: int, stop: bool, end: pd.Timestam
         mkt = float(m.mean())
     else:
         mkt = np.nan
-    pnl = -ret - cost
+    pnl = sign * ret - cost
     return {"entry": x, "exit": exit_time, "ret": ret, "cost": cost, "pnl": pnl, "fr_recv": fr_recv,
             "pnl_fr": pnl + fr_recv, "mae": mae, "mfe": mfe, "stopped": stopped,
-            "mkt_ret": mkt, "diff": -(ret - mkt)}
+            "mkt_ret": mkt, "diff": sign * (ret - mkt)}
 
 
-def run(syms: dict[str, Sym], end: pd.Timestamp) -> tuple[pd.DataFrame, pd.DataFrame]:
+def run(syms: dict[str, Sym], end: pd.Timestamp, side: str = "short") -> tuple[pd.DataFrame, pd.DataFrame]:
     checks = check_times(syms, end)
     fr, ok = fr_matrix(syms, checks)
-    events = find_events(fr, ok)
+    events = find_events(fr, ok, side)
     # 上場廃止した銘柄は最後の価格のまま(ffill)
     market = pd.DataFrame({n: pd.Series(s.filled, index=s.hours) for n, s in syms.items()}).ffill()
     daily = assign_groups(pd.concat([s.daily for s in syms.values()], ignore_index=True))
@@ -268,9 +281,10 @@ def run(syms: dict[str, Sym], end: pd.Timestamp) -> tuple[pd.DataFrame, pd.DataF
     ev_rows, trades = [], []
     for e in events.itertuples(index=False):
         s = syms[e.symbol]
-        judgeable, t2 = stall_entry(s, e.t0)
-        near = near_liquidation(s, e.t0)
-        near_short = near_short_liquidation(s, e.t0)
+        judgeable, t2 = stall_entry(s, e.t0, side)
+        # 補助分析(清算価格帯の推定・荒れ予報)は H17 だけ(docs/hypotheses_v2.md L2)
+        near = near_liquidation(s, e.t0) if side == "short" else np.nan
+        near_short = near_short_liquidation(s, e.t0) if side == "short" else np.nan
         ev_rows.append({"t0": e.t0, "symbol": e.symbol, "fr8": e.fr8, "judgeable": judgeable, "entry2": t2,
                         "near_liq": near, "near_short_liq": near_short,
                         "group": group_of.get((e.t0.floor("D"), e.symbol), "")})
@@ -280,10 +294,10 @@ def run(syms: dict[str, Sym], end: pd.Timestamp) -> tuple[pd.DataFrame, pd.DataF
             day = x.floor("D")
             elig = elig_by_day.get(day, [])
             adv = adv_of.get((day, e.symbol), np.nan)
-            storm = storm_flag(s, x)
+            storm = storm_flag(s, x) if side == "short" else np.nan
             for hz, hold in HOLDS.items():
                 for stop in (False, True):
-                    tr = short_trade(s, x, hold, stop, end, market, elig, adv)
+                    tr = short_trade(s, x, hold, stop, end, market, elig, adv, side)
                     if tr is None:
                         continue
                     trades.append({"t0": e.t0, "symbol": e.symbol, "entry_kind": entry_kind, "hold": hz,

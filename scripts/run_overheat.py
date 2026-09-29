@@ -45,8 +45,10 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("mode", choices=["dev", "final"])
     ap.add_argument("--set", default="full")
+    ap.add_argument("--side", choices=["short", "long"], default="short", help="short=H17 過熱ショート / long=H17L 過熱ロング")
     args = ap.parse_args()
-    out_path = OUT_DIR / f"overheat_{args.mode}_{args.set}.json"
+    prefix = "overheat" if args.side == "short" else "overheat_long"
+    out_path = OUT_DIR / f"{prefix}_{args.mode}_{args.set}.json"
     commit = None
     if args.mode == "final":
         if _git("status", "--porcelain", *GUARDED):
@@ -61,9 +63,9 @@ def main() -> None:
         s = load_sym(name, end, with_oi=True)
         if s is not None:
             syms[name] = s
-    events, trades = run(syms, end)
-    events.to_parquet(OUT_DIR / f"overheat_events_{args.mode}_{args.set}.parquet", index=False)
-    trades.to_parquet(OUT_DIR / f"overheat_trades_{args.mode}_{args.set}.parquet", index=False)
+    events, trades = run(syms, end, args.side)
+    events.to_parquet(OUT_DIR / f"{prefix}_events_{args.mode}_{args.set}.parquet", index=False)
+    trades.to_parquet(OUT_DIR / f"{prefix}_trades_{args.mode}_{args.set}.parquet", index=False)
 
     res = {"commit": commit, "n_symbols": len(syms), "periods": {}}
     for per in PERIOD_LIST[args.mode]:
@@ -84,6 +86,10 @@ def main() -> None:
         s1 = tr[(tr["entry_kind"] == "1") & (tr["hold"] == "7d") & (~tr["stop"])].merge(skipped, on=["t0", "symbol"])
         r["reference"]["skipped_by_2|1|7d|nostop"] = summarize(s1)
         res["periods"][per] = r
+
+    if args.side == "long":  # H17L は補助分析をしない
+        _save(res, out_path, args, syms)
+        return
 
     # 補助: 清算価格帯(推定)が近いか。境目は2022〜23年の中央値
     base = trades[(trades["entry_kind"] == "1") & (trades["hold"] == "7d") & (~trades["stop"])]
@@ -122,10 +128,14 @@ def main() -> None:
         res["short_liq"][per] = {"near": summarize(near[~near["stop"]]), "far": summarize(far[~far["stop"]]),
                                  "near_stop": summarize(near[near["stop"]]), "far_stop": summarize(far[far["stop"]])}
 
+    _save(res, out_path, args, syms)
+
+
+def _save(res: dict, out_path: Path, args, syms: dict) -> None:
     out_path.write_text(json.dumps(res, ensure_ascii=False, indent=1, default=float), encoding="utf-8")
     last = PERIOD_LIST[args.mode][-1]
     r = res["periods"][last]
-    print(f"{args.set} {args.mode}: 銘柄 {len(syms)} / イベント {r['n_events']}(②判定可 {r['n_judgeable']}, ②で売った {r['n_entry2']})")
+    print(f"{args.side} {args.set} {args.mode}: 銘柄 {len(syms)} / イベント {r['n_events']}(②判定可 {r['n_judgeable']}, ②で売った {r['n_entry2']})")
     for key, v in r["variants"].items():
         print(f"  {key:18} 件数 {v.get('n', 0):5}  勝率 {v.get('win', float('nan')) * 100:5.1f}%  平均損益 {v.get('pnl', float('nan')) * 100:+6.2f}%"
               f"  市場平均との差 {v.get('diff', float('nan')) * 100:+6.2f}%  +30%踏み上げ {v.get('squeeze_n', 0)}")
