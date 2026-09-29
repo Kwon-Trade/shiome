@@ -75,6 +75,19 @@ def futures_to_spot_symbol(futures_symbol: str) -> str:
     return futures_symbol
 
 
+def rebase_multiplier(futures_symbol: str) -> int:
+    """先物のリベース倍率を返す(例: 1000PEPEUSDT -> 1000)。リベースでなければ1。
+
+    現物・先物の価格差を計算する際、現物価格にこの倍率を掛けてから比較する。
+    (docs/methodology.md #9)
+    """
+    m = _MULTIPLIER_RE.match(futures_symbol)
+    if not m:
+        return 1
+    token = m.group(1)
+    return 1000000 if token == "1M" else int(token)
+
+
 def discover_all_time_symbols(market: str) -> list[str]:
     """S3バケットの一覧から、過去に一度でもklinesが存在した銘柄フォルダを全部拾う。"""
     prefix = {
