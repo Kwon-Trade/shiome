@@ -327,7 +327,7 @@ def findings_long(res: dict) -> str:
         f"7日・損切りなしの平均損益は ② {pp(v('2022-23', '2|7d|nostop', 'pnl'))}・① {pp(v('2022-23', k7, 'pnl'))}(2022〜23)、"
         f"② {pp(v('2024', '2|7d|nostop', 'pnl'))}・① {pp(v('2024', k7, 'pnl'))}(2024)。")
     items.append(
-        "<strong>FRの受け取り</strong>: FRがマイナスなので買い側が受け取る。7日で1回あたり平均 "
+        "<strong>FRの受け取り</strong>: FRがマイナスなら買い側が受け取るが、下位5%でもFRがプラスの時期(相場全体が強いとき)は買い側が払う。7日で1回あたりの受け取りは平均 "
         f"{pp(v('2022-23', k7, 'fr_recv'))}(2022〜23)・{pp(v('2024', k7, 'fr_recv'))}(2024)。FR込みの平均損益は "
         f"{pp(v('2022-23', k7, 'pnl_fr'))}・{pp(v('2024', k7, 'pnl_fr'))}(候補の判定には使わない参考値)。")
     return "<ul class='key-list'>" + "".join(f"<li>{x}</li>" for x in items) + "</ul>"
