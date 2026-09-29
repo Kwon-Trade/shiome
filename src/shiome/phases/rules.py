@@ -36,9 +36,11 @@ def _judged_mask(cols: list[pd.Series]) -> pd.Series:
     return mask
 
 
-def compute_phases(df: pd.DataFrame, has_spot: bool) -> pd.DataFrame:
+def compute_phases(df: pd.DataFrame, has_spot: bool, thresholds: dict | None = None) -> pd.DataFrame:
+    """thresholds を渡すと configs/settings.yaml の phase_thresholds を上書きできる
+    (しきい値を変えた場合の感度分析に使う。configs/settings.yaml自体は変更しない)。"""
     settings = load_settings()
-    th = settings["phase_thresholds"]
+    th = thresholds or settings["phase_thresholds"]
     high_p = th["high_percentile"]
     low_p = th["low_percentile"]
     extreme_low_p = 100 - th["extreme_percentile"]

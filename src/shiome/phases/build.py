@@ -14,13 +14,13 @@ INDICATORS_DIR = PROCESSED_DIR / "indicators"
 PHASES_DIR = PROCESSED_DIR / "phases"
 
 
-def build_symbol_phases(symbol: str) -> pd.DataFrame | None:
+def build_symbol_phases(symbol: str, thresholds: dict | None = None) -> pd.DataFrame | None:
     path = INDICATORS_DIR / f"{symbol}.parquet"
     if not path.exists():
         return None
     df = pd.read_parquet(path)
     has_spot = df["spot_cvd"].notna().any()
-    df = compute_phases(df, has_spot=has_spot)
+    df = compute_phases(df, has_spot=has_spot, thresholds=thresholds)
     return df
 
 
