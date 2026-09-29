@@ -208,6 +208,81 @@ def selection_table(results: dict) -> str:
 <tbody>{''.join(rows)}</tbody></table></div>"""
 
 
+def pct(v: float, d: int = 3) -> str:
+    return "—" if v is None or np.isnan(v) else f"{v * 100:+.{d}f}%"
+
+
+def win_s(v: float) -> str:
+    return "—" if v is None or np.isnan(v) else f"{v * 100:.1f}%"
+
+
+def findings(results: dict) -> str:
+    full, s61 = results.get("full", {}), results.get("set61", {})
+    a = lambda r, h, hz, p, k: g(r, h, "all", hz, p, k)  # noqa: E731
+    items = []
+    if "H5" in full:
+        yrs = "・".join(f"{y}年 {win_s(a(full, 'H5', '24h', y, 'win'))}" for y in ("2022", "2023", "2024"))
+        items.append(
+            "<strong>H5(上場30〜90日の銘柄は弱い)の24時間後が唯一の候補。</strong>"
+            f"「古い銘柄を買い・新しい銘柄を売る」側が勝った日は {yrs} と、どの年もほぼ同じ。"
+            f"ただしコスト込みの儲けは1日あたり {pct(a(full, 'H5', '24h', '2022-23', 'pf_net'))}(2022〜23)・"
+            f"{pct(a(full, 'H5', '24h', '2024', 'pf_net'))}(2024)とわずかで、グループ別に分けるとマイナスの組もある。"
+            f"7日後・28日後は勝率がもっと高い({win_s(a(full, 'H5', '28d', '2022-23', 'win'))}など)のに、2022〜23年はコスト前からマイナス。"
+            "新しい銘柄はたまに何倍にも跳ねるため、「負ける日は少ないが、負けるときが大きい」形になっている。")
+    if "H3" in full:
+        items.append(
+            "<strong>H3(直近24時間に上がった銘柄は次の24時間で弱い)は、順位の上では効いている。</strong>"
+            f"相関は {a(full, 'H3', '24h', '2022-23', 'ic'):+.3f}(2022〜23)・{a(full, 'H3', '24h', '2024', 'ic'):+.3f}(2024)で、どちらも95%の幅が0をまたがない。"
+            f"しかし毎日ほぼ全部を入れ替えるため、コスト(1日あたり約{a(full, 'H3', '24h', '2022-23', 'pf_cost') * 100:.2f}%)が儲け"
+            f"({pct(a(full, 'H3', '24h', '2022-23', 'pf_gross'))})を大きく上回り、コスト込みでは大きなマイナス。")
+    if "H2-7" in full:
+        rev_ok = []
+        for h in ("H2-7", "H2-14", "H2-28"):
+            for hz in HZ:
+                nets = [-a(full, h, hz, p, "pf_gross") - a(full, h, hz, p, "pf_cost") for p in ("2022-23", "2024")]
+                if all(n > 0 for n in nets):
+                    rev_ok.append(f"{h}({HZ_LABEL[hz]})")
+        rev_txt = ("向きを逆にしても、コスト込みで両期間プラスになる組み合わせは無い。" if not rev_ok
+                   else f"向きを逆にするとコスト込みで両期間プラスになるのは {', '.join(rev_ok)} だが、これは今回あらかじめ決めた仮説ではない(試すなら新しい仮説として数え直す)。")
+        items.append(
+            "<strong>H2(過去に上がった銘柄は強い)は、予想と逆だった。</strong>"
+            f"全銘柄では過去7日に上がった銘柄ほどその後は弱く、24時間後の相関は {a(full, 'H2-7', '24h', '2022-23', 'ic'):+.3f}(2022〜23)・"
+            f"{a(full, 'H2-7', '24h', '2024', 'ic'):+.3f}(2024)。{rev_txt}")
+    if "H1" in full:
+        items.append(
+            "<strong>H1(FRが高い銘柄は弱い)は、年によって向きが変わった。</strong>"
+            f"24時間後の相関は {a(full, 'H1', '24h', '2022-23', 'ic'):+.3f}(2022〜23)→{a(full, 'H1', '24h', '2024', 'ic'):+.3f}(2024)。"
+            f"なお、FRが高い銘柄を売る側はFRを受け取れるため、その受け取りだけで1日あたり {pct(a(full, 'H1', '24h', '2022-23', 'pf_carry'))} ほどある(参考値)。")
+    if "H6" in full:
+        items.append(
+            "<strong>H6(先物の出来高が現物より多すぎる銘柄は弱い)は、2024年だけプラス。</strong>"
+            f"2022〜23年は勝率 {win_s(a(full, 'H6', '24h', '2022-23', 'win'))}・コスト込み {pct(a(full, 'H6', '24h', '2022-23', 'pf_net'))} で効いていない。")
+    if "H4" in full:
+        items.append(
+            "<strong>H4(建玉が増えた銘柄は弱い)</strong>: 24時間後の勝率 "
+            f"{win_s(a(full, 'H4', '24h', '2022-23', 'win'))}(2022〜23)・{win_s(a(full, 'H4', '24h', '2024', 'win'))}(2024)、"
+            f"相関 {a(full, 'H4', '24h', '2022-23', 'ic'):+.3f}・{a(full, 'H4', '24h', '2024', 'ic'):+.3f}、"
+            f"コスト込み {pct(a(full, 'H4', '24h', '2022-23', 'pf_net'))}・{pct(a(full, 'H4', '24h', '2024', 'pf_net'))}。")
+    if full and s61:
+        diffs = []
+        for h in HYPS:
+            if h not in full or h not in s61:
+                continue
+            for hz in HZ:
+                d = abs(a(full, h, hz, "2022-23", "win") - a(s61, h, hz, "2022-23", "win"))
+                diffs.append((d, h, hz))
+        diffs.sort(reverse=True)
+        top = "、".join(f"{h}({HZ_LABEL[hz]}) {win_s(a(full, h, hz, '2022-23', 'win'))}→{win_s(a(s61, h, hz, '2022-23', 'win'))}"
+                       for _, h, hz in diffs[:3])
+        items.append(
+            "<strong>銘柄の選び方で結果はかなり変わる。</strong>"
+            f"2022〜23年の勝率が全銘柄→61銘柄で大きく変わったのは {top}。"
+            f"たとえば H2-28(24時間後)のコスト込みは、全銘柄では {pct(a(full, 'H2-28', '24h', '2022-23', 'pf_net'))}・{pct(a(full, 'H2-28', '24h', '2024', 'pf_net'))} なのに、"
+            f"61銘柄では {pct(a(s61, 'H2-28', '24h', '2022-23', 'pf_net'))}・{pct(a(s61, 'H2-28', '24h', '2024', 'pf_net'))} とプラスに見える。"
+            "「後で大きくなった銘柄」だけで調べると、上がった銘柄を買う作戦が実際より良く見えるという、心配していたゆがみがそのまま出ている。")
+    return "<ul class='key-list'>" + "".join(f"<li>{x}</li>" for x in items) + "</ul>"
+
+
 def universe_stats(mode: str) -> dict:
     out = {}
     for set_name in ("full", "set61"):
@@ -267,6 +342,11 @@ def main() -> None:
     <div class="verdict-card {verdict_cls}"><div class="verdict-big">{verdict_big}</div>
       <div class="verdict-text"><strong>答え合わせ候補</strong><br>{verdict_txt}</div></div>
   </header>
+
+  <section>
+    <h2>分かったこと</h2>
+    {findings(results) if has_2024 else "<p class='note'>(2024年を含めた計算の後に表示)</p>"}
+  </section>
 
   <section>
     <h2>数字の読み方</h2>
