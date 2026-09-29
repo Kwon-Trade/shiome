@@ -45,6 +45,9 @@ def compute_phases(df: pd.DataFrame, has_spot: bool, thresholds: dict | None = N
     low_p = th["low_percentile"]
     extreme_low_p = 100 - th["extreme_percentile"]
     neutral_lo, neutral_hi = th["neutral_band"]
+    # ①「建玉ゆるやか増」の上限。high_percentileとは意味が逆(高いほど条件が緩む)なので
+    # 別パラメータにしている。thresholds引数に無ければhigh_percentileと同値にフォールバック。
+    gentle_upper_p = th.get("gentle_upper_percentile", high_p)
     zone_p = settings["validation"]["price_zone_high"]["percentile_threshold"]
 
     df = add_derived_columns(df)
@@ -95,7 +98,7 @@ def compute_phases(df: pd.DataFrame, has_spot: bool, thresholds: dict | None = N
     spot_cvd_flat_or_down = df["spot_cvd_chg_24h"] <= 0
 
     # ============ ① 健全な上昇 ============
-    oi_gentle_up = oi_up & (df["oi_chg_pct_24h_pct"] < high_p)
+    oi_gentle_up = oi_up & (df["oi_chg_pct_24h_pct"] < gentle_upper_p)
     phase1_judged = _judged_mask(
         [df["price_chg_24h"], df["spot_cvd_chg_24h"], df["funding_rate_pct"], df["oi_chg_pct_24h_pct"]]
     )
