@@ -38,7 +38,10 @@ def _covered(kind: str, symbol: str, end: dt.date) -> bool:
     if not path.exists():
         return False
     col = "open_time" if "klines" in kind else "create_time"
-    x = pd.read_parquet(path, columns=[col])[col]
+    try:
+        x = pd.read_parquet(path, columns=[col])[col]
+    except Exception:  # noqa: BLE001  途中で止まって書きかけになったファイルは作り直す
+        return False
     last = pd.to_datetime(x, unit="ms") if col == "open_time" else pd.to_datetime(x)
     return last.max() >= pd.Timestamp(end) + pd.Timedelta(hours=23) - pd.Timedelta(hours=2)
 
