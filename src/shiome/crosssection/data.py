@@ -36,7 +36,7 @@ def load_futures_hourly(symbol: str, end: pd.Timestamp) -> pd.DataFrame | None:
     path = PROCESSED_DIR / "futures_um" / "klines" / "1h" / f"{symbol}.parquet"
     if not path.exists():
         return None
-    df = pd.read_parquet(path, columns=["open_time", "high", "low", "close", "volume", "quote_asset_volume"])
+    df = pd.read_parquet(path, columns=["open_time", "open", "high", "low", "close", "volume", "quote_asset_volume"])
     df = df[df["open_time"] < end_ms].drop_duplicates("open_time").sort_values("open_time")
     if df.empty:
         return None
@@ -57,6 +57,31 @@ def load_spot_quote_volume(symbol: str, index: pd.DatetimeIndex, end: pd.Timesta
     s = pd.read_parquet(path, columns=["open_time", "quote_asset_volume"])
     s = s[s["open_time"] < end_ms].drop_duplicates("open_time")
     return pd.Series(s["quote_asset_volume"].astype(float).values, index=_ms_to_ts(s["open_time"])).reindex(index)
+
+
+def load_spot_cvd(symbol: str, index: pd.DatetimeIndex, end: pd.Timestamp) -> pd.Series:
+    """現物の1時間ごとの「成り行き買い − 成り行き売り」(USDT建て)。現物データが無ければ全部NaN。"""
+    end_ms = _check_end(end)
+    path = PROCESSED_DIR / "spot" / "klines" / "1h" / f"{symbol}.parquet"
+    if not path.exists():
+        return pd.Series(np.nan, index=index)
+    s = pd.read_parquet(path, columns=["open_time", "quote_asset_volume", "taker_buy_quote_asset_volume"])
+    s = s[s["open_time"] < end_ms].drop_duplicates("open_time")
+    cvd = 2 * s["taker_buy_quote_asset_volume"].astype(float) - s["quote_asset_volume"].astype(float)
+    return pd.Series(cvd.values, index=_ms_to_ts(s["open_time"])).reindex(index)
+
+
+def load_funding_with_interval(symbol: str, end: pd.Timestamp) -> pd.DataFrame:
+    """FRの確定値と確定の間隔(時間)。index=確定時刻。"""
+    end_ms = _check_end(end)
+    path = PROCESSED_DIR / "futures_um" / "funding_rate" / f"{symbol}.parquet"
+    if not path.exists():
+        return pd.DataFrame(columns=["rate", "interval_hours"], dtype=float)
+    fr = pd.read_parquet(path, columns=["calc_time", "funding_interval_hours", "last_funding_rate"])
+    fr = fr[fr["calc_time"] < end_ms].drop_duplicates("calc_time").sort_values("calc_time")
+    return pd.DataFrame({"rate": fr["last_funding_rate"].astype(float).values,
+                         "interval_hours": fr["funding_interval_hours"].astype(float).values},
+                        index=_ms_to_ts(fr["calc_time"]))
 
 
 def load_funding(symbol: str, end: pd.Timestamp) -> pd.Series:
