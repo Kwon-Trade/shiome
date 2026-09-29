@@ -27,7 +27,7 @@ import pandas as pd  # noqa: E402
 from shiome.config import PROCESSED_DIR, all_symbols, load_symbols  # noqa: E402
 from shiome.crosssection.benchmark import fama_macbeth  # noqa: E402
 from shiome.crosssection.data import DEV_END, HARD_END, full_universe  # noqa: E402
-from shiome.crosssection.evaluate import MIN_N_GROUP, SIGNALS, evaluate  # noqa: E402
+from shiome.crosssection.evaluate import MIN_N_ALL, MIN_N_GROUP, SIGNALS, daily_legs, evaluate  # noqa: E402
 from shiome.crosssection.groups import assign_groups  # noqa: E402
 from shiome.crosssection.panel import HORIZONS, symbol_panel  # noqa: E402
 
@@ -90,11 +90,13 @@ def main() -> None:
         res = results.setdefault(set_name, {})
         for hyp in hyps:
             r = {"all": {}, "groups": {}, "bench": {}}
+            legs_all = daily_legs(panel, hyp, MIN_N_ALL)
+            subs = {g: panel[panel["group"] == g] for g in ("large_cap", "mid_cap_alt", "small_meme")}
+            legs_g = {g: daily_legs(sub, hyp, MIN_N_GROUP) for g, sub in subs.items()}
             for hz in HORIZONS:
-                r["all"][hz] = evaluate(panel, hyp, hz, periods)
-                for g in ("large_cap", "mid_cap_alt", "small_meme"):
-                    sub = panel[panel["group"] == g]
-                    r["groups"].setdefault(g, {})[hz] = evaluate(sub, hyp, hz, periods, min_n=MIN_N_GROUP)
+                r["all"][hz] = evaluate(panel, hyp, hz, periods, legs=legs_all)
+                for g, sub in subs.items():
+                    r["groups"].setdefault(g, {})[hz] = evaluate(sub, hyp, hz, periods, min_n=MIN_N_GROUP, legs=legs_g[g])
                 if hyp in BENCH_HYPS:
                     r["bench"][hz] = fama_macbeth(panel, hyp, hz, periods)
             res[hyp] = r

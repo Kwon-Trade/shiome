@@ -77,7 +77,7 @@ def daily_legs(panel: pd.DataFrame, hyp: str, min_n: int) -> dict[pd.Timestamp, 
 
 
 def daily_stats(panel: pd.DataFrame, legs: dict, horizon: str) -> pd.DataFrame:
-    fwd = panel.set_index(["t", "symbol"])[f"fwd_{horizon}"]
+    fwd = panel.pivot(index="t", columns="symbol", values=f"fwd_{horizon}")
     rows = []
     for t, (good, bad, score) in legs.items():
         f = fwd.loc[t]
@@ -174,8 +174,10 @@ def _slice(df: pd.DataFrame, col: str | None, period: str) -> pd.DataFrame:
     return df[(idx >= a) & (idx < b)]
 
 
-def evaluate(panel: pd.DataFrame, hyp: str, horizon: str, periods: list[str], min_n: int = MIN_N_ALL) -> dict:
-    legs = daily_legs(panel, hyp, min_n)
+def evaluate(panel: pd.DataFrame, hyp: str, horizon: str, periods: list[str], min_n: int = MIN_N_ALL,
+             legs: dict | None = None) -> dict:
+    if legs is None:
+        legs = daily_legs(panel, hyp, min_n)
     stats = daily_stats(panel, legs, horizon)
     port = portfolio(panel, legs, horizon) if legs else pd.DataFrame(columns=["gross", "cost", "net", "carry", "net_carry", "turnover"])
     res = {}
