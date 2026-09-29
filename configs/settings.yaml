@@ -39,4 +39,31 @@ cost_model:
 validation:
   min_sample_size: 30          # これ未満は「判定保留」
   horizons_hours: [4, 24, 72]
+  primary_horizon_hours: 24    # 合格判定はこれだけで行う(多重検定対策。詳細はdocs/methodology.md #6)
   random_symbol_split_seed: 42
+
+  # しきい値(パーセンタイル)計算用のローリング窓。docs/methodology.md #1
+  percentile_lookback_days: 180
+
+  # イベント重複カウント防止。docs/methodology.md #3
+  min_recount_gap_hours: 24
+
+  # 局面ごとの期待方向。docs/methodology.md #4
+  phase_expected_direction:
+    "1_healthy_uptrend": up
+    "2_overleveraged_uptrend": down
+    "3_short_squeeze_setup": up
+    "4_distribution_top": down
+    "5_capitulation_bottom": up
+    "6_compression": neutral   # 方向は評価しない。値幅拡大の有無で評価
+
+  # ブロック・ブートストラップ設定。docs/methodology.md #5
+  bootstrap:
+    block_days: 7
+    n_resamples: 1000
+    confidence_level: 0.95
+
+  # 「高値圏」の定義。docs/methodology.md #10
+  price_zone_high:
+    lookback_days: 30
+    percentile_threshold: 20   # 高値からの下落率が下位20パーセンタイル以内
