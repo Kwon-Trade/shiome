@@ -16,11 +16,20 @@ from shiome.config import CONFIGS_DIR, PROCESSED_DIR
 
 HARD_END = pd.Timestamp("2025-01-01")  # これ以降のデータは読まない
 DEV_END = pd.Timestamp("2024-01-01")   # 仕組み作りの間はここまで
+HOLDOUT_END = pd.Timestamp("2026-09-01")  # 答え合わせ(docs/hypotheses_v2.md A3)のときだけ、ここまで読める
 HOUR = pd.Timedelta(hours=1)
+
+_allowed_end = HARD_END
+
+
+def allow_holdout() -> None:
+    """答え合わせの1回だけ呼ぶ。以後このプロセスでは2026-09-01まで読めるようになる。"""
+    global _allowed_end
+    _allowed_end = HOLDOUT_END
 
 
 def _check_end(end: pd.Timestamp) -> int:
-    if end > HARD_END:
+    if end > _allowed_end:
         raise ValueError(f"{end} は答え合わせ期間(2025年以降)にかかるため読み込めません")
     return int(end.timestamp() * 1000)
 
