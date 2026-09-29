@@ -35,15 +35,15 @@ def same(a: pd.Series, b: pd.Series) -> bool:
     return bool((both_nan | (a == b)).all())
 
 
-def truncation_check(set_name: str) -> None:
+def truncation_check(set_name: str, with_oi: bool) -> None:
     cut = pd.Timestamp("2023-07-01")
     bad = []
     syms = symbol_set(set_name)
     for s in syms:
-        full = symbol_panel(s, DEV_END)
+        full = symbol_panel(s, DEV_END, with_oi=with_oi)
         if full.empty:
             continue
-        part = symbol_panel(s, cut)
+        part = symbol_panel(s, cut, with_oi=with_oi)
         full = full[full["t"] < cut].reset_index(drop=True)
         if part.empty:
             if full["eligible"].any():
@@ -59,7 +59,7 @@ def truncation_check(set_name: str) -> None:
             m = part[c].notna()
             if not same(full.loc[m, c], part.loc[m, c]):
                 bad.append((s, c))
-    print(f"[1] 先読みの点検({set_name}, {len(syms)}銘柄): ", "問題なし" if not bad else f"不一致 {bad[:20]}")
+    print(f"[1] 先読みの点検({set_name}, {len(syms)}銘柄, 建玉{'あり' if with_oi else 'なし'}): ", "問題なし" if not bad else f"不一致 {bad[:20]}")
 
 
 def plumbing_check(panel: pd.DataFrame) -> None:
@@ -92,7 +92,8 @@ def jump_check(panel: pd.DataFrame) -> None:
 
 def main() -> None:
     set_name = sys.argv[1] if len(sys.argv) > 1 else "set61"
-    truncation_check(set_name)
+    with_oi = "--oi" in sys.argv  # 建玉データがそろってから付ける
+    truncation_check(set_name, with_oi)
     panel = build_panel(set_name, "dev", with_oi=False)
     plumbing_check(panel)
     jump_check(panel)
