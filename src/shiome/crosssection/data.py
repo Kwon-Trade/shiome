@@ -6,6 +6,8 @@
 """
 from __future__ import annotations
 
+from functools import lru_cache
+
 import numpy as np
 import pandas as pd
 import yaml
@@ -24,7 +26,8 @@ def _check_end(end: pd.Timestamp) -> int:
 
 
 def _ms_to_ts(ms) -> pd.DatetimeIndex:
-    return pd.to_datetime(ms, unit="ms")
+    # 時刻の単位をナノ秒にそろえる(pandas 3はデータによってms/usになり、比較がずれるのを防ぐ)
+    return pd.DatetimeIndex(pd.to_datetime(ms, unit="ms")).as_unit("ns")
 
 
 def load_futures_hourly(symbol: str, end: pd.Timestamp) -> pd.DataFrame | None:
@@ -76,15 +79,32 @@ def load_open_interest(symbol: str, end: pd.Timestamp) -> pd.Series:
     m = pd.read_parquet(path, columns=["create_time", "sum_open_interest"])
     m["dt"] = pd.to_datetime(m["create_time"])
     m = m[m["dt"] < end].drop_duplicates("dt").sort_values("dt")
-    return pd.Series(m["sum_open_interest"].astype(float).values, index=m["dt"].values)
+    return pd.Series(m["sum_open_interest"].astype(float).values, index=pd.DatetimeIndex(m["dt"]).as_unit("ns"))
+
+
+@lru_cache(maxsize=1)
+def full_universe() -> dict:
+    """2022〜2024年にあった全銘柄(configs/universe_2022_2024.yaml)。"""
+    with open(CONFIGS_DIR / "universe_2022_2024.yaml", "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)["symbols"]
+
+
+@lru_cache(maxsize=1)
+def _listing_overrides() -> dict:
+    with open(CONFIGS_DIR / "listing_dates.yaml", "r", encoding="utf-8") as f:
+        out = dict(yaml.safe_load(f)["before_data_start"])
+    for sym, info in full_universe().items():
+        if "listed" in info:
+            out.setdefault(sym, info["listed"])
+    return out
 
 
 def listing_time(symbol: str, first_bar: pd.Timestamp) -> pd.Timestamp:
-    """先物の上場時刻。configs/listing_dates.yaml に無ければ手元データの最初の足。"""
-    with open(CONFIGS_DIR / "listing_dates.yaml", "r", encoding="utf-8") as f:
-        before = yaml.safe_load(f)["before_data_start"]
+    """先物の上場時刻。2022年より前に上場した銘柄はS3のファイル名一覧から調べた日付(月)、
+    それ以外は手元データの最初の足。"""
+    before = _listing_overrides()
     if symbol in before:
         return pd.Timestamp(before[symbol])  # "2020-01" は月初として扱う(どれも90日以上前なので影響しない)
     if first_bar <= pd.Timestamp("2022-01-01"):
-        raise ValueError(f"{symbol}: 手元データの開始日より前に上場した銘柄の上場日が listing_dates.yaml にありません")
+        raise ValueError(f"{symbol}: 手元データの開始日より前に上場した銘柄の上場日が分かりません")
     return first_bar

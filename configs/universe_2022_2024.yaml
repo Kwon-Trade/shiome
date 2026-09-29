@@ -1,0 +1,2378 @@
+note: 2022〜2024年にBinance USDⓈ-M先物に月次1時間足ファイルがあった銘柄(指数先物・非暗号資産を除く)。S3のファイル名一覧だけから作成(中身は読んでいない)。
+excluded_index_contracts:
+- BLUEBIRDUSDT
+- BTCDOMUSDT
+- DEFIUSDT
+- FOOTBALLUSDT
+symbols:
+  1000000MOGUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: MOGUSDT
+  1000BONKUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: BONKUSDT
+    spot_first_month: 2023-12
+    spot_last_month: 2024-12
+  1000BTTCUSDT:
+    first_month: 2022-01
+    last_month: 2022-04
+    spot_symbol: BTTCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  1000CATUSDT:
+    first_month: 2024-10
+    last_month: 2024-12
+    spot_symbol: CATUSDT
+  1000CHEEMSUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: CHEEMSUSDT
+  1000FLOKIUSDT:
+    first_month: 2023-05
+    last_month: 2024-12
+    spot_symbol: FLOKIUSDT
+    spot_first_month: 2023-05
+    spot_last_month: 2024-12
+  1000LUNCUSDT:
+    first_month: 2022-09
+    last_month: 2024-12
+    spot_symbol: LUNCUSDT
+    spot_first_month: 2022-09
+    spot_last_month: 2024-12
+  1000PEPEUSDT:
+    first_month: 2023-05
+    last_month: 2024-12
+    spot_symbol: PEPEUSDT
+    spot_first_month: 2023-05
+    spot_last_month: 2024-12
+  1000RATSUSDT:
+    first_month: 2023-12
+    last_month: 2024-12
+    spot_symbol: RATSUSDT
+  1000SATSUSDT:
+    first_month: 2023-12
+    last_month: 2024-12
+    spot_symbol: SATSUSDT
+  1000SHIBUSDT:
+    first_month: 2021-05
+    last_month: 2024-12
+    listed: 2021-05
+    spot_symbol: SHIBUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  1000WHYUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: WHYUSDT
+  1000XECUSDT:
+    first_month: 2021-09
+    last_month: 2024-12
+    listed: 2021-09
+    spot_symbol: XECUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  1000XUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: XUSDT
+  1INCHUSDT:
+    first_month: 2020-12
+    last_month: 2024-12
+    listed: 2020-12
+    spot_symbol: 1INCHUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  1MBABYDOGEUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: BABYDOGEUSDT
+  AAVEUSDT:
+    first_month: 2020-10
+    last_month: 2024-12
+    listed: 2020-10
+    spot_symbol: AAVEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ACEUSDT:
+    first_month: 2023-12
+    last_month: 2024-12
+    spot_symbol: ACEUSDT
+    spot_first_month: 2023-12
+    spot_last_month: 2024-12
+  ACHUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: ACHUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ACTUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: ACTUSDT
+    spot_first_month: 2024-11
+    spot_last_month: 2024-12
+  ACXUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: ACXUSDT
+    spot_first_month: 2024-12
+    spot_last_month: 2024-12
+  ADAUSDT:
+    first_month: 2020-01
+    last_month: 2024-12
+    listed: 2020-01
+    spot_symbol: ADAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  AERGOUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: AERGOUSDT
+    spot_first_month: 2023-05
+    spot_last_month: 2024-12
+  AEROUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: AEROUSDT
+  AEVOUSDT:
+    first_month: 2024-03
+    last_month: 2024-12
+    spot_symbol: AEVOUSDT
+    spot_first_month: 2024-03
+    spot_last_month: 2024-12
+  AGIXUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: AGIXUSDT
+    spot_first_month: 2023-02
+    spot_last_month: 2024-07
+  AGLDUSDT:
+    first_month: 2023-07
+    last_month: 2024-12
+    spot_symbol: AGLDUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  AIUSDT:
+    first_month: 2024-01
+    last_month: 2024-12
+    spot_symbol: AIUSDT
+    spot_first_month: 2024-01
+    spot_last_month: 2024-12
+  AIXBTUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: AIXBTUSDT
+  AKROUSDT:
+    first_month: 2021-01
+    last_month: 2022-05
+    listed: 2021-01
+    spot_symbol: AKROUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  AKTUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: AKTUSDT
+  ALGOUSDT:
+    first_month: 2020-06
+    last_month: 2024-12
+    listed: 2020-06
+    spot_symbol: ALGOUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ALICEUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: ALICEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ALPACAUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: ALPACAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ALPHAUSDT:
+    first_month: 2020-11
+    last_month: 2024-12
+    listed: 2020-11
+    spot_symbol: ALPHAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ALTUSDT:
+    first_month: 2024-01
+    last_month: 2024-12
+    spot_symbol: ALTUSDT
+    spot_first_month: 2024-01
+    spot_last_month: 2024-12
+  AMBUSDT:
+    first_month: 2023-03
+    last_month: 2024-12
+    spot_symbol: AMBUSDT
+    spot_first_month: 2023-03
+    spot_last_month: 2024-12
+  ANCUSDT:
+    first_month: 2022-03
+    last_month: 2022-05
+    spot_symbol: ANCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2022-12
+  ANKRUSDT:
+    first_month: 2021-01
+    last_month: 2024-12
+    listed: 2021-01
+    spot_symbol: ANKRUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ANTUSDT:
+    first_month: 2021-12
+    last_month: 2024-05
+    listed: '2021-12-27'
+    spot_symbol: ANTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-02
+  APEUSDT:
+    first_month: 2022-03
+    last_month: 2024-12
+    spot_symbol: APEUSDT
+    spot_first_month: 2022-03
+    spot_last_month: 2024-12
+  API3USDT:
+    first_month: 2022-02
+    last_month: 2024-12
+    spot_symbol: API3USDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  APTUSDT:
+    first_month: 2022-10
+    last_month: 2024-12
+    spot_symbol: APTUSDT
+    spot_first_month: 2022-10
+    spot_last_month: 2024-12
+  ARBUSDT:
+    first_month: 2023-03
+    last_month: 2024-12
+    spot_symbol: ARBUSDT
+    spot_first_month: 2023-03
+    spot_last_month: 2024-12
+  ARKMUSDT:
+    first_month: 2023-07
+    last_month: 2024-12
+    spot_symbol: ARKMUSDT
+    spot_first_month: 2023-07
+    spot_last_month: 2024-12
+  ARKUSDT:
+    first_month: 2023-09
+    last_month: 2024-12
+    spot_symbol: ARKUSDT
+    spot_first_month: 2023-09
+    spot_last_month: 2024-12
+  ARPAUSDT:
+    first_month: 2021-10
+    last_month: 2024-12
+    listed: '2021-10-19'
+    spot_symbol: ARPAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ARUSDT:
+    first_month: 2021-09
+    last_month: 2024-12
+    listed: 2021-09
+    spot_symbol: ARUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ASTRUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: ASTRUSDT
+    spot_first_month: 2022-02
+    spot_last_month: 2024-12
+  ATAUSDT:
+    first_month: 2021-08
+    last_month: 2024-12
+    listed: 2021-08
+    spot_symbol: ATAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ATOMUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: ATOMUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  AUCTIONUSDT:
+    first_month: 2023-12
+    last_month: 2024-12
+    spot_symbol: AUCTIONUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  AUDIOUSDT:
+    first_month: 2021-08
+    last_month: 2024-05
+    listed: 2021-08
+    spot_symbol: AUDIOUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  AVAUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: AVAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  AVAXUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: AVAXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  AXLUSDT:
+    first_month: 2024-03
+    last_month: 2024-12
+    spot_symbol: AXLUSDT
+    spot_first_month: 2024-03
+    spot_last_month: 2024-12
+  AXSUSDT:
+    first_month: 2020-11
+    last_month: 2024-12
+    listed: 2020-11
+    spot_symbol: AXSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BADGERUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: BADGERUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BAKEUSDT:
+    first_month: 2021-05
+    last_month: 2024-12
+    listed: 2021-05
+    spot_symbol: BAKEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BALUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: BALUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BANANAUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: BANANAUSDT
+    spot_first_month: 2024-07
+    spot_last_month: 2024-12
+  BANDUSDT:
+    first_month: 2020-07
+    last_month: 2024-12
+    listed: 2020-07
+    spot_symbol: BANDUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BANUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: BANUSDT
+  BATUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: BATUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BBUSDT:
+    first_month: 2024-05
+    last_month: 2024-12
+    spot_symbol: BBUSDT
+    spot_first_month: 2024-05
+    spot_last_month: 2024-12
+  BCHUSDT:
+    first_month: 2020-01
+    last_month: 2024-12
+    listed: 2020-01
+    spot_symbol: BCHUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BEAMXUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: BEAMXUSDT
+    spot_first_month: 2023-11
+    spot_last_month: 2024-12
+  BELUSDT:
+    first_month: 2020-11
+    last_month: 2024-12
+    listed: 2020-11
+    spot_symbol: BELUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BICOUSDT:
+    first_month: 2023-09
+    last_month: 2024-12
+    spot_symbol: BICOUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BIGTIMEUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: BIGTIMEUSDT
+  BLURUSDT:
+    first_month: 2023-04
+    last_month: 2024-12
+    spot_symbol: BLURUSDT
+    spot_first_month: 2023-11
+    spot_last_month: 2024-12
+  BLZUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: BLZUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BNBUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: BNBUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BNTUSDT:
+    first_month: 2023-08
+    last_month: 2024-12
+    spot_symbol: BNTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BNXUSDT:
+    first_month: 2022-04
+    last_month: 2024-12
+    spot_symbol: BNXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BOMEUSDT:
+    first_month: 2024-03
+    last_month: 2024-12
+    spot_symbol: BOMEUSDT
+    spot_first_month: 2024-03
+    spot_last_month: 2024-12
+  BONDUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: BONDUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-07
+  BRETTUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: BRETTUSDT
+  BSVUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: BSVUSDT
+  BSWUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: BSWUSDT
+    spot_first_month: 2022-03
+    spot_last_month: 2024-12
+  BTCSTUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: BTCSTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2022-11
+  BTCUSDT:
+    first_month: 2020-01
+    last_month: 2024-12
+    listed: 2020-01
+    spot_symbol: BTCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  BTSUSDT:
+    first_month: 2021-02
+    last_month: 2024-05
+    listed: 2021-02
+    spot_symbol: BTSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2023-12
+  BTTUSDT:
+    first_month: 2021-04
+    last_month: 2022-01
+    listed: 2021-04
+    spot_symbol: BTTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2022-01
+  C98USDT:
+    first_month: 2021-08
+    last_month: 2024-12
+    listed: 2021-08
+    spot_symbol: C98USDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CAKEUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: CAKEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CATIUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: CATIUSDT
+    spot_first_month: 2024-09
+    spot_last_month: 2024-12
+  CELOUSDT:
+    first_month: 2021-09
+    last_month: 2024-12
+    listed: 2021-09
+    spot_symbol: CELOUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CELRUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: CELRUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CETUSUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: CETUSUSDT
+    spot_first_month: 2024-11
+    spot_last_month: 2024-12
+  CFXUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: CFXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CGPTUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: CGPTUSDT
+  CHESSUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: CHESSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CHILLGUYUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: CHILLGUYUSDT
+  CHRUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: CHRUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CHZUSDT:
+    first_month: 2021-01
+    last_month: 2024-12
+    listed: 2021-01
+    spot_symbol: CHZUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CKBUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: CKBUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  COCOSUSDT:
+    first_month: 2023-02
+    last_month: 2024-05
+    spot_symbol: COCOSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2023-05
+  COMBOUSDT:
+    first_month: 2023-06
+    last_month: 2024-12
+    spot_symbol: COMBOUSDT
+    spot_first_month: 2023-06
+    spot_last_month: 2024-12
+  COMPUSDT:
+    first_month: 2020-06
+    last_month: 2024-12
+    listed: 2020-06
+    spot_symbol: COMPUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  COSUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: COSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  COTIUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: COTIUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  COWUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: COWUSDT
+    spot_first_month: 2024-11
+    spot_last_month: 2024-12
+  CRVUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: CRVUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CTKUSDT:
+    first_month: 2020-11
+    last_month: 2024-12
+    listed: 2020-11
+    spot_symbol: CTKUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CTSIUSDT:
+    first_month: 2021-10
+    last_month: 2024-12
+    listed: '2021-10-26'
+    spot_symbol: CTSIUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CVCUSDT:
+    first_month: 2020-11
+    last_month: 2024-12
+    listed: 2020-11
+    spot_symbol: CVCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CVXUSDT:
+    first_month: 2022-09
+    last_month: 2024-12
+    spot_symbol: CVXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  CYBERUSDT:
+    first_month: 2023-08
+    last_month: 2024-12
+    spot_symbol: CYBERUSDT
+    spot_first_month: 2023-08
+    spot_last_month: 2024-12
+  DARUSDT:
+    first_month: 2022-04
+    last_month: 2024-12
+    spot_symbol: DARUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DASHUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: DASHUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DEGENUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: DEGENUSDT
+  DEGOUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: DEGOUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DENTUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: DENTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DEXEUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: DEXEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DFUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: DFUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DGBUSDT:
+    first_month: 2021-04
+    last_month: 2024-12
+    listed: 2021-04
+    spot_symbol: DGBUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DIAUSDT:
+    first_month: 2024-10
+    last_month: 2024-12
+    spot_symbol: DIAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DODOUSDT:
+    first_month: 2021-02
+    last_month: 2022-05
+    listed: 2021-02
+    spot_symbol: DODOUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DODOXUSDT:
+    first_month: 2023-08
+    last_month: 2024-12
+    spot_symbol: DODOXUSDT
+  DOGEUSDT:
+    first_month: 2020-07
+    last_month: 2024-12
+    listed: 2020-07
+    spot_symbol: DOGEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DOGSUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: DOGSUSDT
+    spot_first_month: 2024-08
+    spot_last_month: 2024-12
+  DOTUSDT:
+    first_month: 2020-08
+    last_month: 2024-12
+    listed: 2020-08
+    spot_symbol: DOTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DRIFTUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: DRIFTUSDT
+  DUSKUSDT:
+    first_month: 2022-01
+    last_month: 2024-12
+    spot_symbol: DUSKUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DYDXUSDT:
+    first_month: 2021-09
+    last_month: 2024-12
+    listed: 2021-09
+    spot_symbol: DYDXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  DYMUSDT:
+    first_month: 2024-02
+    last_month: 2024-12
+    spot_symbol: DYMUSDT
+    spot_first_month: 2024-02
+    spot_last_month: 2024-12
+  EDUUSDT:
+    first_month: 2023-04
+    last_month: 2024-12
+    spot_symbol: EDUUSDT
+    spot_first_month: 2023-04
+    spot_last_month: 2024-12
+  EGLDUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: EGLDUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  EIGENUSDT:
+    first_month: 2024-10
+    last_month: 2024-12
+    spot_symbol: EIGENUSDT
+    spot_first_month: 2024-10
+    spot_last_month: 2024-12
+  ENAUSDT:
+    first_month: 2024-04
+    last_month: 2024-12
+    spot_symbol: ENAUSDT
+    spot_first_month: 2024-04
+    spot_last_month: 2024-12
+  ENJUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: ENJUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ENSUSDT:
+    first_month: 2021-11
+    last_month: 2024-12
+    listed: '2021-11-30'
+    spot_symbol: ENSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  EOSUSDT:
+    first_month: 2020-01
+    last_month: 2024-12
+    listed: 2020-01
+    spot_symbol: EOSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ETCUSDT:
+    first_month: 2020-01
+    last_month: 2024-12
+    listed: 2020-01
+    spot_symbol: ETCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ETHFIUSDT:
+    first_month: 2024-03
+    last_month: 2024-12
+    spot_symbol: ETHFIUSDT
+    spot_first_month: 2024-03
+    spot_last_month: 2024-12
+  ETHUSDT:
+    first_month: 2020-01
+    last_month: 2024-12
+    listed: 2020-01
+    spot_symbol: ETHUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ETHWUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: ETHWUSDT
+  FARTCOINUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: FARTCOINUSDT
+  FETUSDT:
+    first_month: 2023-01
+    last_month: 2024-12
+    spot_symbol: FETUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  FIDAUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: FIDAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  FILUSDT:
+    first_month: 2020-10
+    last_month: 2024-12
+    listed: 2020-10
+    spot_symbol: FILUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  FIOUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: FIOUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  FLMUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: FLMUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  FLOWUSDT:
+    first_month: 2022-02
+    last_month: 2024-12
+    spot_symbol: FLOWUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  FLUXUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: FLUXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  FRONTUSDT:
+    first_month: 2023-09
+    last_month: 2024-09
+    spot_symbol: FRONTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-08
+  FTMUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: FTMUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  FTTUSDT:
+    first_month: 2022-04
+    last_month: 2024-12
+    spot_symbol: FTTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  FXSUSDT:
+    first_month: 2023-01
+    last_month: 2024-12
+    spot_symbol: FXSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  GALAUSDT:
+    first_month: 2021-09
+    last_month: 2024-12
+    listed: 2021-09
+    spot_symbol: GALAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  GALUSDT:
+    first_month: 2022-05
+    last_month: 2024-07
+    spot_symbol: GALUSDT
+    spot_first_month: 2022-05
+    spot_last_month: 2024-07
+  GASUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: GASUSDT
+    spot_first_month: 2023-03
+    spot_last_month: 2024-12
+  GHSTUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: GHSTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  GLMRUSDT:
+    first_month: 2023-09
+    last_month: 2024-12
+    spot_symbol: GLMRUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  GLMUSDT:
+    first_month: 2024-02
+    last_month: 2024-12
+    spot_symbol: GLMUSDT
+    spot_first_month: 2023-03
+    spot_last_month: 2024-12
+  GMTUSDT:
+    first_month: 2022-03
+    last_month: 2024-12
+    spot_symbol: GMTUSDT
+    spot_first_month: 2022-03
+    spot_last_month: 2024-12
+  GMXUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: GMXUSDT
+    spot_first_month: 2022-10
+    spot_last_month: 2024-12
+  GOATUSDT:
+    first_month: 2024-10
+    last_month: 2024-12
+    spot_symbol: GOATUSDT
+  GRASSUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: GRASSUSDT
+  GRTUSDT:
+    first_month: 2020-12
+    last_month: 2024-12
+    listed: 2020-12
+    spot_symbol: GRTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  GTCUSDT:
+    first_month: 2021-06
+    last_month: 2024-12
+    listed: 2021-06
+    spot_symbol: GTCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  GUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: GUSDT
+    spot_first_month: 2024-07
+    spot_last_month: 2024-12
+  HBARUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: HBARUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  HFTUSDT:
+    first_month: 2023-04
+    last_month: 2024-12
+    spot_symbol: HFTUSDT
+    spot_first_month: 2022-11
+    spot_last_month: 2024-12
+  HIFIUSDT:
+    first_month: 2023-09
+    last_month: 2024-12
+    spot_symbol: HIFIUSDT
+    spot_first_month: 2023-01
+    spot_last_month: 2024-12
+  HIGHUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: HIGHUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  HIPPOUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: HIPPOUSDT
+  HIVEUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: HIVEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  HMSTRUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: HMSTRUSDT
+    spot_first_month: 2024-09
+    spot_last_month: 2024-12
+  HNTUSDT:
+    first_month: 2020-09
+    last_month: 2024-05
+    listed: 2020-09
+    spot_symbol: HNTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2022-10
+  HOOKUSDT:
+    first_month: 2023-01
+    last_month: 2024-12
+    spot_symbol: HOOKUSDT
+    spot_first_month: 2022-12
+    spot_last_month: 2024-12
+  HOTUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: HOTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ICPUSDT:
+    first_month: 2021-05
+    last_month: 2024-12
+    listed: 2021-05
+    spot_symbol: ICPUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ICXUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: ICXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  IDEXUSDT:
+    first_month: 2023-05
+    last_month: 2024-12
+    spot_symbol: IDEXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  IDUSDT:
+    first_month: 2023-03
+    last_month: 2024-12
+    spot_symbol: IDUSDT
+    spot_first_month: 2023-03
+    spot_last_month: 2024-12
+  ILVUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: ILVUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  IMXUSDT:
+    first_month: 2022-02
+    last_month: 2024-12
+    spot_symbol: IMXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  INJUSDT:
+    first_month: 2022-08
+    last_month: 2024-12
+    spot_symbol: INJUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  IOSTUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: IOSTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  IOTAUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: IOTAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  IOTXUSDT:
+    first_month: 2021-08
+    last_month: 2024-12
+    listed: 2021-08
+    spot_symbol: IOTXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  IOUSDT:
+    first_month: 2024-06
+    last_month: 2024-12
+    spot_symbol: IOUSDT
+    spot_first_month: 2024-06
+    spot_last_month: 2024-12
+  JASMYUSDT:
+    first_month: 2022-04
+    last_month: 2024-12
+    spot_symbol: JASMYUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  JOEUSDT:
+    first_month: 2023-03
+    last_month: 2024-12
+    spot_symbol: JOEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  JTOUSDT:
+    first_month: 2023-12
+    last_month: 2024-12
+    spot_symbol: JTOUSDT
+    spot_first_month: 2023-12
+    spot_last_month: 2024-12
+  JUPUSDT:
+    first_month: 2024-01
+    last_month: 2024-12
+    spot_symbol: JUPUSDT
+    spot_first_month: 2024-01
+    spot_last_month: 2024-12
+  KAIAUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: KAIAUSDT
+    spot_first_month: 2024-10
+    spot_last_month: 2024-12
+  KASUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: KASUSDT
+  KAVAUSDT:
+    first_month: 2020-07
+    last_month: 2024-12
+    listed: 2020-07
+    spot_symbol: KAVAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  KDAUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: KDAUSDT
+    spot_first_month: 2022-03
+    spot_last_month: 2024-12
+  KEEPUSDT:
+    first_month: 2021-06
+    last_month: 2022-02
+    listed: 2021-06
+    spot_symbol: KEEPUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2022-02
+  KEYUSDT:
+    first_month: 2023-05
+    last_month: 2024-12
+    spot_symbol: KEYUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  KLAYUSDT:
+    first_month: 2021-10
+    last_month: 2024-12
+    listed: '2021-10-12'
+    spot_symbol: KLAYUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-10
+  KMNOUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: KMNOUSDT
+  KNCUSDT:
+    first_month: 2020-06
+    last_month: 2024-12
+    listed: 2020-06
+    spot_symbol: KNCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  KOMAUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: KOMAUSDT
+  KSMUSDT:
+    first_month: 2020-10
+    last_month: 2024-12
+    listed: 2020-10
+    spot_symbol: KSMUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  LDOUSDT:
+    first_month: 2022-09
+    last_month: 2024-12
+    spot_symbol: LDOUSDT
+    spot_first_month: 2022-05
+    spot_last_month: 2024-12
+  LEVERUSDT:
+    first_month: 2023-03
+    last_month: 2024-12
+    spot_symbol: LEVERUSDT
+    spot_first_month: 2022-07
+    spot_last_month: 2024-12
+  LINAUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: LINAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  LINKUSDT:
+    first_month: 2020-01
+    last_month: 2024-12
+    listed: 2020-01
+    spot_symbol: LINKUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  LISTAUSDT:
+    first_month: 2024-06
+    last_month: 2024-12
+    spot_symbol: LISTAUSDT
+    spot_first_month: 2024-06
+    spot_last_month: 2024-12
+  LITUSDT:
+    first_month: 2021-02
+    last_month: 2024-12
+    listed: 2021-02
+    spot_symbol: LITUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  LOKAUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: LOKAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  LOOMUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: LOOMUSDT
+    spot_first_month: 2023-03
+    spot_last_month: 2024-08
+  LPTUSDT:
+    first_month: 2021-11
+    last_month: 2024-12
+    listed: '2021-11-11'
+    spot_symbol: LPTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  LQTYUSDT:
+    first_month: 2023-03
+    last_month: 2024-12
+    spot_symbol: LQTYUSDT
+    spot_first_month: 2023-02
+    spot_last_month: 2024-12
+  LRCUSDT:
+    first_month: 2020-10
+    last_month: 2024-12
+    listed: 2020-10
+    spot_symbol: LRCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  LSKUSDT:
+    first_month: 2024-01
+    last_month: 2024-12
+    spot_symbol: LSKUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  LTCUSDT:
+    first_month: 2020-01
+    last_month: 2024-12
+    listed: 2020-01
+    spot_symbol: LTCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  LUMIAUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: LUMIAUSDT
+    spot_first_month: 2024-10
+    spot_last_month: 2024-12
+  LUNA2USDT:
+    first_month: 2022-09
+    last_month: 2024-12
+    spot_symbol: LUNA2USDT
+  LUNAUSDT:
+    first_month: 2021-01
+    last_month: 2022-05
+    listed: 2021-01
+    spot_symbol: LUNAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  MAGICUSDT:
+    first_month: 2023-01
+    last_month: 2024-12
+    spot_symbol: MAGICUSDT
+    spot_first_month: 2022-12
+    spot_last_month: 2024-12
+  MANAUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: MANAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  MANTAUSDT:
+    first_month: 2024-01
+    last_month: 2024-12
+    spot_symbol: MANTAUSDT
+    spot_first_month: 2024-01
+    spot_last_month: 2024-12
+  MASKUSDT:
+    first_month: 2021-08
+    last_month: 2024-12
+    listed: 2021-08
+    spot_symbol: MASKUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  MATICUSDT:
+    first_month: 2020-10
+    last_month: 2024-09
+    listed: 2020-10
+    spot_symbol: MATICUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-09
+  MAVIAUSDT:
+    first_month: 2024-02
+    last_month: 2024-12
+    spot_symbol: MAVIAUSDT
+  MAVUSDT:
+    first_month: 2023-06
+    last_month: 2024-12
+    spot_symbol: MAVUSDT
+    spot_first_month: 2023-06
+    spot_last_month: 2024-12
+  MBLUSDT:
+    first_month: 2023-11
+    last_month: 2024-05
+    spot_symbol: MBLUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  MBOXUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: MBOXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  MDTUSDT:
+    first_month: 2023-06
+    last_month: 2024-12
+    spot_symbol: MDTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  MEMEUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: MEMEUSDT
+    spot_first_month: 2023-11
+    spot_last_month: 2024-12
+  METISUSDT:
+    first_month: 2024-03
+    last_month: 2024-12
+    spot_symbol: METISUSDT
+    spot_first_month: 2024-03
+    spot_last_month: 2024-12
+  MEUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: MEUSDT
+    spot_first_month: 2024-12
+    spot_last_month: 2024-12
+  MEWUSDT:
+    first_month: 2024-06
+    last_month: 2024-12
+    spot_symbol: MEWUSDT
+  MINAUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: MINAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  MKRUSDT:
+    first_month: 2020-08
+    last_month: 2024-12
+    listed: 2020-08
+    spot_symbol: MKRUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  MOCAUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: MOCAUSDT
+  MOODENGUSDT:
+    first_month: 2024-10
+    last_month: 2024-12
+    spot_symbol: MOODENGUSDT
+  MORPHOUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: MORPHOUSDT
+  MOVEUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: MOVEUSDT
+    spot_first_month: 2024-12
+    spot_last_month: 2024-12
+  MOVRUSDT:
+    first_month: 2023-12
+    last_month: 2024-12
+    spot_symbol: MOVRUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  MTLUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: MTLUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  MYROUSDT:
+    first_month: 2024-03
+    last_month: 2024-12
+    spot_symbol: MYROUSDT
+  NEARUSDT:
+    first_month: 2020-10
+    last_month: 2024-12
+    listed: 2020-10
+    spot_symbol: NEARUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  NEIROETHUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: NEIROETHUSDT
+  NEIROUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: NEIROUSDT
+    spot_first_month: 2024-09
+    spot_last_month: 2024-12
+  NEOUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: NEOUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  NFPUSDT:
+    first_month: 2023-12
+    last_month: 2024-12
+    spot_symbol: NFPUSDT
+    spot_first_month: 2023-12
+    spot_last_month: 2024-12
+  NKNUSDT:
+    first_month: 2021-04
+    last_month: 2024-12
+    listed: 2021-04
+    spot_symbol: NKNUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  NMRUSDT:
+    first_month: 2023-06
+    last_month: 2024-12
+    spot_symbol: NMRUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  NOTUSDT:
+    first_month: 2024-05
+    last_month: 2024-12
+    spot_symbol: NOTUSDT
+    spot_first_month: 2024-05
+    spot_last_month: 2024-12
+  NTRNUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: NTRNUSDT
+    spot_first_month: 2023-10
+    spot_last_month: 2024-12
+  NULSUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: NULSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  NUUSDT:
+    first_month: 2021-10
+    last_month: 2022-02
+    listed: '2021-10-21'
+    spot_symbol: NUUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2022-02
+  OCEANUSDT:
+    first_month: 2020-11
+    last_month: 2024-12
+    listed: 2020-11
+    spot_symbol: OCEANUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-07
+  OGNUSDT:
+    first_month: 2021-04
+    last_month: 2024-12
+    listed: 2021-04
+    spot_symbol: OGNUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  OMGUSDT:
+    first_month: 2020-07
+    last_month: 2024-12
+    listed: 2020-07
+    spot_symbol: OMGUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-06
+  OMNIUSDT:
+    first_month: 2024-04
+    last_month: 2024-12
+    spot_symbol: OMNIUSDT
+    spot_first_month: 2024-04
+    spot_last_month: 2024-12
+  OMUSDT:
+    first_month: 2024-02
+    last_month: 2024-12
+    spot_symbol: OMUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ONDOUSDT:
+    first_month: 2024-01
+    last_month: 2024-12
+    spot_symbol: ONDOUSDT
+  ONEUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: ONEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ONGUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: ONGUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ONTUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: ONTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  OPUSDT:
+    first_month: 2022-06
+    last_month: 2024-12
+    spot_symbol: OPUSDT
+    spot_first_month: 2022-06
+    spot_last_month: 2024-12
+  ORBSUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: ORBSUSDT
+  ORCAUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: ORCAUSDT
+    spot_first_month: 2024-12
+    spot_last_month: 2024-12
+  ORDIUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: ORDIUSDT
+    spot_first_month: 2023-11
+    spot_last_month: 2024-12
+  OXTUSDT:
+    first_month: 2023-08
+    last_month: 2024-12
+    spot_symbol: OXTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  PENDLEUSDT:
+    first_month: 2023-07
+    last_month: 2024-12
+    spot_symbol: PENDLEUSDT
+    spot_first_month: 2023-07
+    spot_last_month: 2024-12
+  PENGUUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: PENGUUSDT
+    spot_first_month: 2024-12
+    spot_last_month: 2024-12
+  PEOPLEUSDT:
+    first_month: 2021-12
+    last_month: 2024-12
+    listed: '2021-12-24'
+    spot_symbol: PEOPLEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  PERPUSDT:
+    first_month: 2023-03
+    last_month: 2024-12
+    spot_symbol: PERPUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  PHAUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: PHAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  PHBUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: PHBUSDT
+    spot_first_month: 2022-11
+    spot_last_month: 2024-12
+  PIXELUSDT:
+    first_month: 2024-02
+    last_month: 2024-12
+    spot_symbol: PIXELUSDT
+    spot_first_month: 2024-02
+    spot_last_month: 2024-12
+  PNUTUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: PNUTUSDT
+    spot_first_month: 2024-11
+    spot_last_month: 2024-12
+  POLUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: POLUSDT
+    spot_first_month: 2024-09
+    spot_last_month: 2024-12
+  POLYXUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: POLYXUSDT
+    spot_first_month: 2022-10
+    spot_last_month: 2024-12
+  PONKEUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: PONKEUSDT
+  POPCATUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: POPCATUSDT
+  PORTALUSDT:
+    first_month: 2024-02
+    last_month: 2024-12
+    spot_symbol: PORTALUSDT
+    spot_first_month: 2024-02
+    spot_last_month: 2024-12
+  POWRUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: POWRUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  PYTHUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: PYTHUSDT
+    spot_first_month: 2024-02
+    spot_last_month: 2024-12
+  QNTUSDT:
+    first_month: 2022-10
+    last_month: 2024-12
+    spot_symbol: QNTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  QTUMUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: QTUMUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  QUICKUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: QUICKUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  RADUSDT:
+    first_month: 2023-05
+    last_month: 2024-12
+    spot_symbol: RADUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  RAREUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: RAREUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  RAYSOLUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: RAYSOLUSDT
+  RAYUSDT:
+    first_month: 2021-08
+    last_month: 2024-12
+    listed: 2021-08
+    spot_symbol: RAYUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  RDNTUSDT:
+    first_month: 2023-04
+    last_month: 2024-12
+    spot_symbol: RDNTUSDT
+    spot_first_month: 2023-03
+    spot_last_month: 2024-12
+  REEFUSDT:
+    first_month: 2021-02
+    last_month: 2024-12
+    listed: 2021-02
+    spot_symbol: REEFUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-08
+  REIUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: REIUSDT
+    spot_first_month: 2022-05
+    spot_last_month: 2024-12
+  RENDERUSDT:
+    first_month: 2024-07
+    last_month: 2024-12
+    spot_symbol: RENDERUSDT
+    spot_first_month: 2024-07
+    spot_last_month: 2024-12
+  RENUSDT:
+    first_month: 2020-10
+    last_month: 2024-12
+    listed: 2020-10
+    spot_symbol: RENUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  REZUSDT:
+    first_month: 2024-04
+    last_month: 2024-12
+    spot_symbol: REZUSDT
+    spot_first_month: 2024-04
+    spot_last_month: 2024-12
+  RIFUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: RIFUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  RLCUSDT:
+    first_month: 2020-07
+    last_month: 2024-12
+    listed: 2020-07
+    spot_symbol: RLCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  RNDRUSDT:
+    first_month: 2023-02
+    last_month: 2024-07
+    spot_symbol: RNDRUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-07
+  RONINUSDT:
+    first_month: 2024-02
+    last_month: 2024-12
+    spot_symbol: RONINUSDT
+    spot_first_month: 2024-02
+    spot_last_month: 2024-12
+  ROSEUSDT:
+    first_month: 2021-12
+    last_month: 2024-12
+    listed: '2021-12-31'
+    spot_symbol: ROSEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  RPLUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: RPLUSDT
+    spot_first_month: 2023-01
+    spot_last_month: 2024-12
+  RSRUSDT:
+    first_month: 2020-10
+    last_month: 2024-12
+    listed: 2020-10
+    spot_symbol: RSRUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  RUNEUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: RUNEUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  RVNUSDT:
+    first_month: 2021-02
+    last_month: 2024-12
+    listed: 2021-02
+    spot_symbol: RVNUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SAFEUSDT:
+    first_month: 2024-10
+    last_month: 2024-12
+    spot_symbol: SAFEUSDT
+  SAGAUSDT:
+    first_month: 2024-04
+    last_month: 2024-12
+    spot_symbol: SAGAUSDT
+    spot_first_month: 2024-04
+    spot_last_month: 2024-12
+  SANDUSDT:
+    first_month: 2021-01
+    last_month: 2024-12
+    listed: 2021-01
+    spot_symbol: SANDUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SANTOSUSDT:
+    first_month: 2024-10
+    last_month: 2024-12
+    spot_symbol: SANTOSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SCRTUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: SCRTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SCRUSDT:
+    first_month: 2024-10
+    last_month: 2024-12
+    spot_symbol: SCRUSDT
+    spot_first_month: 2024-10
+    spot_last_month: 2024-12
+  SCUSDT:
+    first_month: 2021-04
+    last_month: 2024-12
+    listed: 2021-04
+    spot_symbol: SCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SEIUSDT:
+    first_month: 2023-08
+    last_month: 2024-12
+    spot_symbol: SEIUSDT
+    spot_first_month: 2023-08
+    spot_last_month: 2024-12
+  SFPUSDT:
+    first_month: 2021-02
+    last_month: 2024-12
+    listed: 2021-02
+    spot_symbol: SFPUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SKLUSDT:
+    first_month: 2020-12
+    last_month: 2024-12
+    listed: 2020-12
+    spot_symbol: SKLUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SLERFUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: SLERFUSDT
+  SLPUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: SLPUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SNTUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: SNTUSDT
+    spot_first_month: 2023-05
+    spot_last_month: 2024-12
+  SNXUSDT:
+    first_month: 2020-08
+    last_month: 2024-12
+    listed: 2020-08
+    spot_symbol: SNXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SOLUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: SOLUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SPELLUSDT:
+    first_month: 2022-09
+    last_month: 2024-12
+    spot_symbol: SPELLUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SPXUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: SPXUSDT
+  SRMUSDT:
+    first_month: 2020-09
+    last_month: 2024-05
+    listed: 2020-09
+    spot_symbol: SRMUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2022-11
+  SSVUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: SSVUSDT
+    spot_first_month: 2023-02
+    spot_last_month: 2024-12
+  STEEMUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: STEEMUSDT
+    spot_first_month: 2022-04
+    spot_last_month: 2024-12
+  STGUSDT:
+    first_month: 2022-08
+    last_month: 2024-12
+    spot_symbol: STGUSDT
+    spot_first_month: 2022-08
+    spot_last_month: 2024-12
+  STMXUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: STMXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  STORJUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: STORJUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  STPTUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: STPTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  STRAXUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: STRAXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  STRKUSDT:
+    first_month: 2024-02
+    last_month: 2024-12
+    spot_symbol: STRKUSDT
+    spot_first_month: 2024-02
+    spot_last_month: 2024-12
+  STXUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: STXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SUIUSDT:
+    first_month: 2023-05
+    last_month: 2024-12
+    spot_symbol: SUIUSDT
+    spot_first_month: 2023-05
+    spot_last_month: 2024-12
+  SUNUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: SUNUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SUPERUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: SUPERUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SUSHIUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: SUSHIUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SWELLUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: SWELLUSDT
+  SXPUSDT:
+    first_month: 2020-07
+    last_month: 2024-12
+    listed: 2020-07
+    spot_symbol: SXPUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  SYNUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: SYNUSDT
+    spot_first_month: 2023-02
+    spot_last_month: 2024-12
+  SYSUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: SYSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  TAOUSDT:
+    first_month: 2024-04
+    last_month: 2024-12
+    spot_symbol: TAOUSDT
+    spot_first_month: 2024-04
+    spot_last_month: 2024-12
+  THETAUSDT:
+    first_month: 2020-05
+    last_month: 2024-12
+    listed: 2020-05
+    spot_symbol: THETAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  THEUSDT:
+    first_month: 2024-11
+    last_month: 2024-12
+    spot_symbol: THEUSDT
+    spot_first_month: 2024-11
+    spot_last_month: 2024-12
+  TIAUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: TIAUSDT
+    spot_first_month: 2023-10
+    spot_last_month: 2024-12
+  TLMUSDT:
+    first_month: 2021-07
+    last_month: 2024-12
+    listed: 2021-07
+    spot_symbol: TLMUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  TNSRUSDT:
+    first_month: 2024-04
+    last_month: 2024-12
+    spot_symbol: TNSRUSDT
+    spot_first_month: 2024-04
+    spot_last_month: 2024-12
+  TOKENUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: TOKENUSDT
+  TOMOUSDT:
+    first_month: 2020-10
+    last_month: 2024-05
+    listed: 2020-10
+    spot_symbol: TOMOUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2023-11
+  TONUSDT:
+    first_month: 2024-03
+    last_month: 2024-12
+    spot_symbol: TONUSDT
+    spot_first_month: 2024-08
+    spot_last_month: 2024-12
+  TRBUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: TRBUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  TROYUSDT:
+    first_month: 2024-10
+    last_month: 2024-12
+    spot_symbol: TROYUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  TRUUSDT:
+    first_month: 2023-03
+    last_month: 2024-12
+    spot_symbol: TRUUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  TRXUSDT:
+    first_month: 2020-01
+    last_month: 2024-12
+    listed: 2020-01
+    spot_symbol: TRXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  TURBOUSDT:
+    first_month: 2024-05
+    last_month: 2024-12
+    spot_symbol: TURBOUSDT
+    spot_first_month: 2024-09
+    spot_last_month: 2024-12
+  TUSDT:
+    first_month: 2023-02
+    last_month: 2024-12
+    spot_symbol: TUSDT
+    spot_first_month: 2022-02
+    spot_last_month: 2024-12
+  TWTUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: TWTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  UMAUSDT:
+    first_month: 2023-05
+    last_month: 2024-12
+    spot_symbol: UMAUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  UNFIUSDT:
+    first_month: 2021-02
+    last_month: 2024-12
+    listed: 2021-02
+    spot_symbol: UNFIUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-11
+  UNIUSDT:
+    first_month: 2020-09
+    last_month: 2024-12
+    listed: 2020-09
+    spot_symbol: UNIUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  USDCUSDT:
+    first_month: 2023-03
+    last_month: 2024-12
+    spot_symbol: USDCUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  USTCUSDT:
+    first_month: 2023-11
+    last_month: 2024-12
+    spot_symbol: USTCUSDT
+    spot_first_month: 2023-03
+    spot_last_month: 2024-12
+  USUALUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: USUALUSDT
+    spot_first_month: 2024-11
+    spot_last_month: 2024-12
+  UXLINKUSDT:
+    first_month: 2024-09
+    last_month: 2024-12
+    spot_symbol: UXLINKUSDT
+  VANAUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: VANAUSDT
+    spot_first_month: 2024-12
+    spot_last_month: 2024-12
+  VANRYUSDT:
+    first_month: 2024-03
+    last_month: 2024-12
+    spot_symbol: VANRYUSDT
+    spot_first_month: 2023-12
+    spot_last_month: 2024-12
+  VELODROMEUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: VELODROMEUSDT
+    spot_first_month: 2024-12
+    spot_last_month: 2024-12
+  VETUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: VETUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  VIDTUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: VIDTUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  VIRTUALUSDT:
+    first_month: 2024-12
+    last_month: 2024-12
+    spot_symbol: VIRTUALUSDT
+  VOXELUSDT:
+    first_month: 2024-08
+    last_month: 2024-12
+    spot_symbol: VOXELUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  WAVESUSDT:
+    first_month: 2020-08
+    last_month: 2024-12
+    listed: 2020-08
+    spot_symbol: WAVESUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-06
+  WAXPUSDT:
+    first_month: 2023-10
+    last_month: 2024-12
+    spot_symbol: WAXPUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  WIFUSDT:
+    first_month: 2024-01
+    last_month: 2024-12
+    spot_symbol: WIFUSDT
+    spot_first_month: 2024-03
+    spot_last_month: 2024-12
+  WLDUSDT:
+    first_month: 2023-07
+    last_month: 2024-12
+    spot_symbol: WLDUSDT
+    spot_first_month: 2023-07
+    spot_last_month: 2024-12
+  WOOUSDT:
+    first_month: 2022-04
+    last_month: 2024-12
+    spot_symbol: WOOUSDT
+    spot_first_month: 2022-02
+    spot_last_month: 2024-12
+  WUSDT:
+    first_month: 2024-04
+    last_month: 2024-12
+    spot_symbol: WUSDT
+    spot_first_month: 2024-04
+    spot_last_month: 2024-12
+  XAIUSDT:
+    first_month: 2024-01
+    last_month: 2024-12
+    spot_symbol: XAIUSDT
+    spot_first_month: 2024-01
+    spot_last_month: 2024-12
+  XEMUSDT:
+    first_month: 2021-03
+    last_month: 2024-12
+    listed: 2021-03
+    spot_symbol: XEMUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-06
+  XLMUSDT:
+    first_month: 2020-01
+    last_month: 2024-12
+    listed: 2020-01
+    spot_symbol: XLMUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  XMRUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: XMRUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-02
+  XRPUSDT:
+    first_month: 2020-01
+    last_month: 2024-12
+    listed: 2020-01
+    spot_symbol: XRPUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  XTZUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: XTZUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  XVGUSDT:
+    first_month: 2023-07
+    last_month: 2024-12
+    spot_symbol: XVGUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  XVSUSDT:
+    first_month: 2023-04
+    last_month: 2024-12
+    spot_symbol: XVSUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  YFIIUSDT:
+    first_month: 2020-09
+    last_month: 2022-04
+    listed: 2020-09
+    spot_symbol: YFIIUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2023-08
+  YFIUSDT:
+    first_month: 2020-08
+    last_month: 2024-12
+    listed: 2020-08
+    spot_symbol: YFIUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  YGGUSDT:
+    first_month: 2023-08
+    last_month: 2024-12
+    spot_symbol: YGGUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ZECUSDT:
+    first_month: 2020-02
+    last_month: 2024-12
+    listed: 2020-02
+    spot_symbol: ZECUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ZENUSDT:
+    first_month: 2020-11
+    last_month: 2024-12
+    listed: 2020-11
+    spot_symbol: ZENUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ZETAUSDT:
+    first_month: 2024-02
+    last_month: 2024-12
+    spot_symbol: ZETAUSDT
+  ZILUSDT:
+    first_month: 2020-06
+    last_month: 2024-12
+    listed: 2020-06
+    spot_symbol: ZILUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
+  ZKUSDT:
+    first_month: 2024-06
+    last_month: 2024-12
+    spot_symbol: ZKUSDT
+    spot_first_month: 2024-06
+    spot_last_month: 2024-12
+  ZROUSDT:
+    first_month: 2024-06
+    last_month: 2024-12
+    spot_symbol: ZROUSDT
+    spot_first_month: 2024-06
+    spot_last_month: 2024-12
+  ZRXUSDT:
+    first_month: 2020-06
+    last_month: 2024-12
+    listed: 2020-06
+    spot_symbol: ZRXUSDT
+    spot_first_month: 2022-01
+    spot_last_month: 2024-12
