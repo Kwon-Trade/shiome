@@ -69,3 +69,12 @@ validation:
   price_zone_high:
     lookback_days: 30
     percentile_threshold: 20   # 高値からの下落率が下位20パーセンタイル以内
+
+# 局面判定(ステージ3)で使うパーセンタイルしきい値。
+# 「固定の数値」ではなく「パーセンタイルの区切り値」として、銘柄ごとの90日ローリング窓に
+# 適用する(docs/methodology.md #1)。ここだけ変更すれば全局面のしきい値を一括調整できる。
+phase_thresholds:
+  high_percentile: 80     # 「高い」「急増」「急上昇」(①②③④)
+  low_percentile: 20      # 「低い」「縮小」「ショート寄り」(④⑥、高値圏の定義にも流用)
+  extreme_percentile: 90  # 「急落」「急減」「急低下」(⑤、より極端な事象)
+  neutral_band: [30, 70]  # 「平常」「中立」(①⑥)
