@@ -43,7 +43,9 @@ validation:
   random_symbol_split_seed: 42
 
   # しきい値(パーセンタイル)計算用のローリング窓。docs/methodology.md #1
-  percentile_lookback_days: 180
+  # 90日(1時間足2,160本)あれば安定するので、これより長くしても意味は薄い。
+  # 窓が埋まるまでの最初の90日間は局面判定そのものを行わない(助走期間)。
+  percentile_lookback_days: 90
 
   # イベント重複カウント防止。docs/methodology.md #3
   min_recount_gap_hours: 24
