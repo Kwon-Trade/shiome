@@ -1,0 +1,178 @@
+<title>潮目 清算連鎖の答え合わせ</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #F5F6F8; --surface: #FFFFFF; --surface-2: #EEF0F4; --border: #DDE1E8;
+  --fg: #1B1F27; --fg-muted: #63697A; --fg-faint: #9099AA;
+  --accent: #2C4870; --accent-soft: #EAF0FA;
+  --good: #1E7A4C; --good-soft: #E6F5EC;
+  --bad: #B23A2E; --bad-soft: #FBEAE8;
+  --warn: #9A6B12; --warn-soft: #FBF1DE;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161B; --surface: #1B1E26; --surface-2: #21242D; --border: #333846;
+    --fg: #E7E9EE; --fg-muted: #9BA1B0; --fg-faint: #6B7180;
+    --accent: #7FA6DE; --accent-soft: #22304A;
+    --good: #5FBE8B; --good-soft: #16281F;
+    --bad: #E28074; --bad-soft: #2E1B19;
+    --warn: #D9B25E; --warn-soft: #2E2716;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14161B; --surface: #1B1E26; --surface-2: #21242D; --border: #333846;
+  --fg: #E7E9EE; --fg-muted: #9BA1B0; --fg-faint: #6B7180;
+  --accent: #7FA6DE; --accent-soft: #22304A;
+  --good: #5FBE8B; --good-soft: #16281F;
+  --bad: #E28074; --bad-soft: #2E1B19;
+  --warn: #D9B25E; --warn-soft: #2E2716;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  margin: 0; padding: 0 16px; padding-block: 32px;
+}
+.page { max-width: 920px; margin: 0 auto; }
+h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(28px, 5vw, 38px); font-weight: 600; letter-spacing: -0.01em; }
+h2 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+h3 { font-size: 18px; font-weight: 600; }
+h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+p { line-height: 1.7; color: var(--fg); max-width: 68ch; }
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-muted); margin-bottom: 10px;
+}
+header.hero { padding-block: 8px 28px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+.hero-sub { color: var(--fg-muted); margin-top: 10px; font-size: 15px; }
+.verdict-card {
+  background: var(--bad-soft); border: 1px solid var(--bad);
+  border-radius: 12px; padding: 22px 24px; margin-top: 20px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 20px;
+}
+.verdict-big { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 700; color: var(--bad); }
+.verdict-text { flex: 1; min-width: 240px; color: var(--fg); line-height: 1.7; }
+.verdict-text strong { color: var(--fg); }
+.stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0 32px; }
+.stat-tile {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 18px; flex: 1; min-width: 140px;
+}
+.stat-tile .label { font-size: 12px; color: var(--fg-muted); margin-bottom: 4px; }
+.stat-tile .value { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+section { margin-bottom: 40px; }
+section > p.lede { color: var(--fg-muted); margin-top: -4px; margin-bottom: 18px; }
+.group-block {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px; margin-bottom: 20px;
+}
+.group-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.n-sym { color: var(--fg-muted); font-size: 14px; font-weight: 400; font-family: 'IBM Plex Sans', sans-serif; }
+.group-verdict { font-size: 14px; color: var(--fg-muted); font-family: 'IBM Plex Mono', monospace; }
+.group-verdict strong { color: var(--fg); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 720px; }
+thead th {
+  text-align: left; font-weight: 600; color: var(--fg-muted); font-size: 11.5px;
+  text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+}
+tbody td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+td.num { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.center { text-align: center; }
+.vs { display: block; font-size: 11px; color: var(--fg-faint); }
+.phase-name { font-weight: 600; }
+.phase-dir { font-size: 12px; color: var(--fg-muted); margin-top: 2px; }
+.badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; }
+.badge-fail { background: var(--bad-soft); color: var(--bad); }
+.badge-pending { background: var(--warn-soft); color: var(--warn); }
+.badge-pass { background: var(--good-soft); color: var(--good); }
+.badge-no-data { background: var(--surface-2); color: var(--fg-faint); }
+.mini-badge { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 13px; }
+.mini-pass { color: var(--good); }
+.mini-fail { color: var(--bad); }
+.mini-no-data { color: var(--fg-faint); }
+.spotlight { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+.spotlight-chart { width: 100%; height: auto; margin: 12px 0 4px; }
+.gridline { stroke: var(--border); stroke-width: 1; }
+.axis-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; fill: var(--fg-faint); }
+.axis-label-g { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; fill: var(--fg-muted); }
+.bar-baseline { fill: var(--fg-faint); }
+.bar-phase { fill: var(--accent); }
+.bar-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; fill: var(--fg); font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 18px; font-size: 13px; color: var(--fg-muted); margin-top: 6px; }
+.legend-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.sw-baseline { background: var(--fg-faint); }
+.sw-phase { background: var(--accent); }
+.supp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.supp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+.supp-note { font-size: 13px; color: var(--fg-muted); margin: 4px 0 12px; line-height: 1.6; }
+.supp-table { font-size: 13px; min-width: 0; }
+.supp-table th, .supp-table td { padding: 6px 8px; }
+.method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.method-card { background: var(--surface-2); border-radius: 10px; padding: 14px 16px; }
+.method-card .k { font-size: 12px; color: var(--fg-muted); margin-bottom: 4px; }
+.method-card .v { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; }
+.check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.check-list li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.6; }
+.check-icon { color: var(--good); font-weight: 700; flex-shrink: 0; }
+footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--fg-faint); font-size: 12.5px; line-height: 1.8; }
+
+.verdict-card.neutral { background: var(--accent-soft); border-color: var(--accent); }
+.verdict-card.neutral .verdict-big { color: var(--accent); }
+.verdict-card.good { background: var(--good-soft); border-color: var(--good); }
+.verdict-card.good .verdict-big { color: var(--good); }
+.win { font-family: 'IBM Plex Mono', monospace; font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.win.up { color: var(--good); } .win.down { color: var(--bad); } .win.flat { color: var(--fg-muted); }
+.ci { display: block; font-size: 11px; color: var(--fg-faint); font-family: 'IBM Plex Mono', monospace; }
+.pos { color: var(--good); } .neg { color: var(--bad); }
+.hyp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; }
+.hyp-card h3 { margin-bottom: 4px; }
+.hyp-card .sub { color: var(--fg-muted); font-size: 13.5px; margin: 0 0 12px; }
+.hyp-card table { min-width: 680px; }
+.key-list { display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0; list-style: none; }
+.key-list li { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; line-height: 1.7; }
+.read-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 14px; }
+.read-grid > * { min-width: 0; }
+.read-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; line-height: 1.7; font-size: 14px; }
+.read-card strong { display: block; font-size: 15px; margin-bottom: 4px; }
+.tag-cand { background: var(--good-soft); color: var(--good); }
+.tag-no { background: var(--surface-2); color: var(--fg-faint); }
+.period-sep td { border-top: 2px solid var(--border); }
+details summary { cursor: pointer; color: var(--accent); font-size: 14px; margin: 8px 0; }
+.note { font-size: 13px; color: var(--fg-muted); line-height: 1.7; }
+</style>
+<div class="page">
+  <header class="hero">
+    <div class="eyebrow">SHIOME — 第3ラウンド A 答え合わせ(2025年1月〜2026年8月)</div>
+    <h1>「30分で5%以上の下げ × すぐ買う × 4時間」を確かめた</h1>
+    <p class="hero-sub">清算の連鎖(先物価格の急落と建玉の急減が同時、テイカーの売り優勢)のうち30分で5%以上下げたものを、検知した5分足の次の足の始値ですぐ買い、4時間持った場合。
+    2025年1月〜2026年8月の暗号資産の先物661銘柄で、事前に記録した条件どおり1回だけ計算した。基準を記録したコミット: 23699b0。</p>
+    <div class="verdict-card"><div class="verdict-big">不合格</div>
+      <div class="verdict-text"><strong>合格の条件を2つとも満たさなかった。</strong>平均はプラスだったが偶然と区別できず、清算を伴わない下げ(物差し)より良くもなかった。儲けのほとんどは2025年10月の大暴落1回から来ている。</div></div>
+  </header>
+  <section><h2>合格の条件</h2>
+    <div class="table-wrap"><table><thead><tr><th>条件</th><th>結果</th><th>判定</th></tr></thead><tbody>
+      <tr><td>① コスト込みの平均がプラスで、95%の幅の下限も0より上</td><td class="num"><span class='pos'>+0.93%</span><span class='ci'>-0.42〜+2.84%</span><span class='ci'>3868件・中央値 +0.02%・勝率 50.2%</span></td><td><span class='badge badge-fail'>満たさない</span></td></tr>
+      <tr><td>② 物差し(同じ幅の下げで建玉が減っていない場面、すぐ買って4時間)より平均が高い</td><td class="num"><span class='pos'>+0.93%</span> 対 物差し <span class='pos'>+1.03%</span><span class='ci'>物差し 5101件・勝率 50.4%</span></td><td><span class='badge badge-fail'>満たさない</span></td></tr>
+    </tbody></table></div></section>
+  <section><h2>実用の判定(合否とは別)</h2>
+    <div class="table-wrap"><table><thead><tr><th>場合</th><th>件数</th><th>コスト込み平均<span class='vs'>95%の幅</span></th><th>勝率</th></tr></thead><tbody><tr><td>遅れなし(本番の条件)</td><td class='num'>3868</td><td class='num'><span class='pos'>+0.93%</span><span class='ci'>-0.42〜+2.84%</span></td><td class='num'>50.2%</td></tr><tr><td>検知から5分遅れ</td><td class='num'>3868</td><td class='num'><span class='pos'>+1.14%</span><span class='ci'>-0.32〜+3.26%</span></td><td class='num'>49.2%</td></tr><tr><td>検知から15分遅れ</td><td class='num'>3868</td><td class='num'><span class='pos'>+0.91%</span><span class='ci'>-0.38〜+2.79%</span></td><td class='num'>47.5%</td></tr><tr><td>スリッページ3倍</td><td class='num'>3868</td><td class='num'><span class='pos'>+0.64%</span><span class='ci'>-0.71〜+2.55%</span></td><td class='num'>47.5%</td></tr><tr><td>イベントが多かった上位10日を除く</td><td class='num'>3016</td><td class='num'><span class='neg'>-0.24%</span><span class='ci'>-0.68〜+0.22%</span></td><td class='num'>49.5%</td></tr></tbody></table></div>
+    <ul class="key-list" style="margin-top:14px">
+      <li>1か月あたり平均 193件。毎回同じ金額で買った場合の累積の損益は <span class='pos'>+3611%</span>(1回の金額に対する%)だが、そのうち<strong>2025年10月だけで <span class='pos'>+3948%</span></strong>(10月10日の大暴落からの戻り)。10月を除くと累積はマイナス。</li>
+      <li>途中の最大の落ち込み(累積損益の最高値からの下落): <span class='neg'>-1630%</span>(1回の金額に対する%)。</li>
+      <li>除いた上位10日: 2025-10-10, 2025-08-14, 2025-09-22, 2025-05-30, 2025-11-03, 2026-08-22, 2026-06-04, 2026-01-19, 2025-07-23, 2025-07-11</li></ul>
+    <details><summary>月ごとの件数と損益を開く</summary><div class="table-wrap"><table><thead><tr><th>月</th><th>件数</th><th>損益の合計</th><th>1回あたり</th></tr></thead><tbody><tr><td>2025-01</td><td class='num'>25</td><td class='num'><span class='neg'>-11.5%</span></td><td class='num'><span class='neg'>-0.46%</span></td></tr><tr><td>2025-02</td><td class='num'>164</td><td class='num'><span class='neg'>-410.8%</span></td><td class='num'><span class='neg'>-2.50%</span></td></tr><tr><td>2025-03</td><td class='num'>101</td><td class='num'><span class='pos'>+168.8%</span></td><td class='num'><span class='pos'>+1.67%</span></td></tr><tr><td>2025-04</td><td class='num'>156</td><td class='num'><span class='pos'>+98.6%</span></td><td class='num'><span class='pos'>+0.63%</span></td></tr><tr><td>2025-05</td><td class='num'>198</td><td class='num'><span class='pos'>+45.0%</span></td><td class='num'><span class='pos'>+0.23%</span></td></tr><tr><td>2025-06</td><td class='num'>68</td><td class='num'><span class='neg'>-32.7%</span></td><td class='num'><span class='neg'>-0.48%</span></td></tr><tr><td>2025-07</td><td class='num'>142</td><td class='num'><span class='neg'>-11.2%</span></td><td class='num'><span class='neg'>-0.08%</span></td></tr><tr><td>2025-08</td><td class='num'>246</td><td class='num'><span class='pos'>+24.5%</span></td><td class='num'><span class='pos'>+0.10%</span></td></tr><tr><td>2025-09</td><td class='num'>187</td><td class='num'><span class='pos'>+21.0%</span></td><td class='num'><span class='pos'>+0.11%</span></td></tr><tr><td>2025-10</td><td class='num'>373</td><td class='num'><span class='pos'>+3948.1%</span></td><td class='num'><span class='pos'>+10.58%</span></td></tr><tr><td>2025-11</td><td class='num'>337</td><td class='num'><span class='neg'>-122.3%</span></td><td class='num'><span class='neg'>-0.36%</span></td></tr><tr><td>2025-12</td><td class='num'>114</td><td class='num'><span class='neg'>-261.8%</span></td><td class='num'><span class='neg'>-2.30%</span></td></tr><tr><td>2026-01</td><td class='num'>224</td><td class='num'><span class='neg'>-27.6%</span></td><td class='num'><span class='neg'>-0.12%</span></td></tr><tr><td>2026-02</td><td class='num'>171</td><td class='num'><span class='pos'>+98.3%</span></td><td class='num'><span class='pos'>+0.57%</span></td></tr><tr><td>2026-03</td><td class='num'>131</td><td class='num'><span class='neg'>-56.7%</span></td><td class='num'><span class='neg'>-0.43%</span></td></tr><tr><td>2026-04</td><td class='num'>254</td><td class='num'><span class='pos'>+92.9%</span></td><td class='num'><span class='pos'>+0.37%</span></td></tr><tr><td>2026-05</td><td class='num'>180</td><td class='num'><span class='pos'>+75.1%</span></td><td class='num'><span class='pos'>+0.42%</span></td></tr><tr><td>2026-06</td><td class='num'>329</td><td class='num'><span class='pos'>+398.1%</span></td><td class='num'><span class='pos'>+1.21%</span></td></tr><tr><td>2026-07</td><td class='num'>167</td><td class='num'><span class='neg'>-213.6%</span></td><td class='num'><span class='neg'>-1.28%</span></td></tr><tr><td>2026-08</td><td class='num'>301</td><td class='num'><span class='neg'>-211.1%</span></td><td class='num'><span class='neg'>-0.70%</span></td></tr></tbody></table></div></details>
+  </section>
+  <section><h2>この結果の読み方</h2><ul class="key-list">
+    <li>清算の連鎖の直後に買うと、<strong>まれに起きる相場全体の大暴落の後には大きく戻る</strong>(2023年8月、2025年10月など)。しかし普段の連鎖では、勝つ回数と負ける回数はほぼ半々で、平均はほぼゼロ。</li>
+    <li>2025年以降は、清算を伴わない急落(物差し)でも同じくらい戻っていて、「清算を伴う下げの方が戻りやすい」という違いは見られなかった。</li>
+    <li>この条件は2022〜23年の結果を見てから作った後付けのもので、第3ラウンド A では36通りを試した。答え合わせを通らなかったので、<strong>このまま使える作戦とは言えない</strong>。</li>
+  </ul></section>
+  <footer>作成: scripts/build_cascade_holdout_report.py ／ 計算: scripts/run_cascade_holdout.py run(1回だけ) ／ 条件と記録: docs/hypotheses_v3.md §13</footer>
+</div>
