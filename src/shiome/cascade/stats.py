@@ -77,7 +77,7 @@ def robustness(df: pd.DataFrame, periods: list[str]) -> dict:
     casc = df[df["kind"] == "cascade"]
     for fam in S0_FAMILY:
         for d in ("", "-d5", "-d10", "-d15"):
-            name = fam.replace("S0", "S0" + d, 1) if d else fam
+            name = f"{fam}{d}"  # expand() と同じ名前(例: S0-market-d5)
             for h in HZ:
                 for per in periods:
                     out["delay"].setdefault(fam, {}).setdefault(d or "-d0", {}).setdefault(h, {})[per] = summarize(
