@@ -29,6 +29,9 @@ VOL_CALM = 1.5
 WICK = 0.5
 MARKET_MIN_OTHERS = 5
 SIGNALS = ["S0", "S1", "S2-15", "S2-30", "S2-60", "S3", "S4", "S5", "S1+S2-30", "S1+S3"]
+# 耐久テスト(§12-2): 検知から5・10・15分遅れて買う(判定には使わない)
+DELAYS = {"S0-d5": 1, "S0-d10": 2, "S0-d15": 3}
+ALL_SIGNALS = SIGNALS + list(DELAYS)
 
 
 @dataclass
@@ -131,8 +134,10 @@ def detect(s: Sym) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
 def signal_bars(s: Sym, i: int) -> dict[str, int | None]:
     """イベントの足 i の後、各合図が最初に出た足の位置(その足の次の足の始値で買う)。6時間以内に出なければ None。"""
     n = len(s.t)
-    out: dict[str, int | None] = {k: None for k in SIGNALS}
+    out: dict[str, int | None] = {k: None for k in ALL_SIGNALS}
     out["S0"] = i
+    for name, k in DELAYS.items():
+        out[name] = i + k if i + k < n - 1 else None
     pre = slice(max(0, i - WIN + 1 - PRE_BARS), i - WIN + 1)
     pre_taker = s.tb[pre] / np.where(s.qv[pre] > 0, s.qv[pre], np.nan)
     taker_med = np.nanmedian(pre_taker) if np.isfinite(pre_taker).any() else np.nan

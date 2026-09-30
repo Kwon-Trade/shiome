@@ -21,7 +21,7 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from shiome.cascade.events import (  # noqa: E402
-    BAR, MARKET_MIN_OTHERS, SIGNALS, detect, load_sym, outcome, signal_bars,
+    ALL_SIGNALS, BAR, MARKET_MIN_OTHERS, detect, load_sym, outcome, signal_bars,
 )
 from shiome.config import PROCESSED_DIR  # noqa: E402
 from shiome.crosssection.data import DEV_END, HARD_END, full_universe  # noqa: E402
@@ -67,7 +67,7 @@ def main() -> None:
                 sig = signal_bars(s, i)
                 base = {"symbol": name, "kind": kind, "t0": pd.Timestamp(s.t[i]) + BAR,
                         "r30": s.r30[i], "oi30": s.oi30[i], "taker30": s.taker30[i]}
-                for sname in SIGNALS:
+                for sname in ALL_SIGNALS:
                     j = sig[sname]
                     res = outcome(s, i, j, end) if j is not None else None
                     rows.append({**base, "signal": sname, "fired": j is not None, **(res or {})})

@@ -11,6 +11,20 @@ HZ = ["1h", "4h", "24h"]
 PERIODS = {"2022": ("2022-01-01", "2023-01-01"), "2023": ("2023-01-01", "2024-01-01"),
            "2022-23": ("2022-01-01", "2024-01-01"), "2024": ("2024-01-01", "2025-01-01")}
 MIN_N = 30
+EXTRA = ["S0-market", "S0-drop5"]           # §12-1 後付けの追加条件
+S0_FAMILY = ["S0", "S0-market", "S0-drop5"]
+DELAY_BASES = ["S0", "S0-d5", "S0-d10", "S0-d15"]
+TOP_DAYS = 10
+
+
+def expand(df: pd.DataFrame) -> pd.DataFrame:
+    """S0(と遅れて買う版)から、S0-market・S0-drop5 の行を作って足す(物差しも同じ絞り込み)。"""
+    parts = [df]
+    for base in DELAY_BASES:
+        b = df[df["signal"] == base]
+        parts.append(b[b["scope"] == "market"].assign(signal=base.replace("S0", "S0-market", 1)))
+        parts.append(b[b["r30"] <= -0.05].assign(signal=base.replace("S0", "S0-drop5", 1)))
+    return pd.concat(parts, ignore_index=True)
 
 
 def add_costs(df: pd.DataFrame) -> pd.DataFrame:
@@ -57,8 +71,40 @@ def summarize(sub: pd.DataFrame, h: str) -> dict:
     return out
 
 
+def robustness(df: pd.DataFrame, periods: list[str]) -> dict:
+    """§12-2 の耐久テスト(参考)。df は add_costs・expand 済み。"""
+    out: dict = {"delay": {}, "top_days_removed": {}, "monthly": {}}
+    casc = df[df["kind"] == "cascade"]
+    for fam in S0_FAMILY:
+        for d in ("", "-d5", "-d10", "-d15"):
+            name = fam.replace("S0", "S0" + d, 1) if d else fam
+            for h in HZ:
+                for per in periods:
+                    out["delay"].setdefault(fam, {}).setdefault(d or "-d0", {}).setdefault(h, {})[per] = summarize(
+                        period(casc[casc["signal"] == name], per), h)
+    s0 = casc[casc["signal"] == "S0"]
+    for per in [p for p in periods if p in ("2022-23", "2024")]:
+        ev = period(s0, per)
+        top = ev["t0"].dt.floor("D").value_counts().head(TOP_DAYS)
+        out["top_days_removed"].setdefault("_days", {})[per] = [str(d.date()) for d in top.index]
+        for fam in S0_FAMILY:
+            sub = period(casc[casc["signal"] == fam], per)
+            sub = sub[~sub["t0"].dt.floor("D").isin(top.index)]
+            for h in HZ:
+                out["top_days_removed"].setdefault(fam, {}).setdefault(h, {})[per] = summarize(sub, h)
+    for fam in S0_FAMILY:
+        sub = casc[(casc["signal"] == fam) & casc["fired"]]
+        month = sub["t0"].dt.to_period("M").astype(str)
+        rows = {}
+        for m, g in sub.groupby(month):
+            rows[m] = {"n": int(len(g)), **{f"sum_{h}": float(g[f"net_{h}"].sum()) for h in HZ},
+                       **{f"mean_{h}": float(g[f"net_{h}"].mean()) for h in HZ}}
+        out["monthly"][fam] = rows
+    return out
+
+
 def full_summary(df: pd.DataFrame, periods: list[str], signals: list[str]) -> dict:
-    df = add_costs(df)
+    df = expand(add_costs(df))
     res: dict = {"main": {}, "splits": {}, "promising": []}
     for kind in ("cascade", "bench"):
         for sig in signals:
@@ -74,6 +120,7 @@ def full_summary(df: pd.DataFrame, periods: list[str], signals: list[str]) -> di
                         sub = period(df[(df["kind"] == "cascade") & (df["signal"] == sig) & (df[col] == val)], per)
                         s = summarize(sub, h)
                         res["splits"].setdefault(col, {}).setdefault(str(val), {}).setdefault(sig, {}).setdefault(h, {})[per] = s
+    res["robustness"] = robustness(df, periods)
     if "2024" in periods:
         for sig in signals:
             for h in HZ:
