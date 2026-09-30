@@ -23,8 +23,10 @@ CUT = pd.Timestamp("2023-07-01")
 
 def events_with_signals(name: str, end: pd.Timestamp) -> dict:
     s = load_sym(name, end)
-    casc, bench, _ = detect(s)
     out = {}
+    if s is None:  # 90日分のデータがそろわない(上場直後など)
+        return out
+    casc, bench, _ = detect(s)
     for kind, pos in (("cascade", casc), ("bench", bench)):
         for i in pos:
             t0 = pd.Timestamp(s.t[i]) + BAR
